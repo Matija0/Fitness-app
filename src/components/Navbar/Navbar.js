@@ -1,0 +1,97 @@
+import React, { useState } from "react";
+import { GiWeightLiftingUp, GiMeal } from "react-icons/gi";
+import { BiHomeAlt2 } from "react-icons/bi";
+import { HiOutlineCalculator } from "react-icons/hi";
+import { AiOutlineBarChart } from "react-icons/ai";
+import { MdOutlineAccountCircle } from "react-icons/md";
+import { Link } from "react-router-dom";
+import "./Navbar.css";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+  Button
+} from "@chakra-ui/react";
+
+const Navbar = () => {
+  return (
+    <navbar className="flex flex-row justify-between px-3 py-7  bg-gray-900 ">
+      <div className=" hidden md:flex flex-row gap-11 items-center">
+        <Link to="/">
+          <div className=" text-lg text-white flex flex-row gap-2 items-center hover:text-red-800 cursor-pointer">
+            <BiHomeAlt2 /> <h1>Home</h1>
+          </div>
+        </Link>
+        <Link to="/workout">
+          <div className=" text-lg text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
+            <GiWeightLiftingUp /> <h1>Workout plan</h1>
+          </div>
+        </Link>
+        <div>
+        <Menu>
+          {({isOpen}) => (
+            <>
+          <MenuButton isActive={isOpen} as={Button}  bg="none" color={"white"}  _hover={{bg: "none", color: "#971a1b"}}  _expanded={{ color: '#971a1b', bg: "none" }}>
+            <div className="text-lg flex flex-row items-center gap-2 font-normal"><HiOutlineCalculator />Calculators {isOpen? (<i class="bi bi-chevron-up"></i>): (<i class="bi bi-chevron-down"></i>)}</div>
+          </MenuButton>
+          <MenuList bg={"#1a202c"}>
+            <Link to="/calculator"><MenuItem bg={"#1a202c"} color="white" _hover={{bg: "#515151"}}>1RM Calculator</MenuItem></Link>
+            <Link to="/tdee"><MenuItem bg={"#1a202c"} color="white" _hover={{bg: "#515151"}}>TDEE Calculator</MenuItem></Link>
+            <Link to="/bodyweight"><MenuItem bg={"#1a202c"} color="white" _hover={{bg: "#515151"}}>Ideal Bodyweight Calculator</MenuItem></Link>
+           
+          </MenuList>
+          </>
+          )}
+        </Menu>
+        </div>
+        <Link to="/meals">
+          <div className="text-lg text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
+            <GiMeal /> <h1>Meals</h1>
+          </div>
+        </Link>
+      </div>
+      <div className=" hidden  md:flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer text-white text-lg">
+        <MdOutlineAccountCircle /> <h1>Account</h1>
+      </div>
+      {/*Mobile menu */}
+      <div className="flex flex-row gap-7 md:hidden">
+        <Link to="/">
+          <div className=" text-2xl text-white flex flex-row gap-2 items-center hover:text-red-800 cursor-pointer">
+            <BiHomeAlt2 />
+          </div>
+        </Link>
+        <Link to="/workout">
+          <div className=" text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
+            <GiWeightLiftingUp />
+          </div>
+        </Link>
+        <Link to="/calculator">
+          <div className="text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
+            <HiOutlineCalculator />
+          </div>
+        </Link>
+        <Link to="/calories">
+          <div className="text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
+            <AiOutlineBarChart />
+          </div>
+        </Link>
+        <Link to="/meals">
+          <div className="text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
+            <GiMeal />
+          </div>
+        </Link>
+      </div>
+
+      <div className=" text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer md:hidden">
+        <MdOutlineAccountCircle />
+      </div>
+    </navbar>
+  );
+};
+
+export default Navbar;
