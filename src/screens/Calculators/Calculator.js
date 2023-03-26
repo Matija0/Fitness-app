@@ -49,6 +49,7 @@ const Calculator = () => {
     event.preventDefault();
     calculate();
     clear();
+    console.log("WERKS!!")
   };
 
   return (

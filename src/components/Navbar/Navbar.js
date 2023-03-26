@@ -20,7 +20,7 @@ import {
 
 const Navbar = () => {
   return (
-    <navbar className="flex flex-row justify-between px-3 py-7  bg-gray-900 ">
+    <navbar className="flex flex-row justify-between px-3 py-5  bg-gray-900 ">
       <div className=" hidden md:flex flex-row gap-11 items-center">
         <Link to="/">
           <div className=" text-lg text-white flex flex-row gap-2 items-center hover:text-red-800 cursor-pointer">
@@ -36,7 +36,7 @@ const Navbar = () => {
         <Menu>
           {({isOpen}) => (
             <>
-          <MenuButton isActive={isOpen} as={Button}  bg="none" color={"white"}  _hover={{bg: "none", color: "#971a1b"}}  _expanded={{ color: '#971a1b', bg: "none" }}>
+          <MenuButton isActive={isOpen} as={Button}  bg="none" color={"white"}  _hover={{bg: "none", color: "#971a1b"}}  _expanded={{ color: '#971a1b', bg: "none" }} paddingX="0">
             <div className="text-lg flex flex-row items-center gap-2 font-normal"><HiOutlineCalculator />Calculators {isOpen? (<i class="bi bi-chevron-up"></i>): (<i class="bi bi-chevron-down"></i>)}</div>
           </MenuButton>
           <MenuList bg={"#1a202c"}>
@@ -59,7 +59,7 @@ const Navbar = () => {
         <MdOutlineAccountCircle /> <h1>Account</h1>
       </div>
       {/*Mobile menu */}
-      <div className="flex flex-row gap-7 md:hidden">
+      <div className="flex flex-row gap-7 items-center md:hidden">
         <Link to="/">
           <div className=" text-2xl text-white flex flex-row gap-2 items-center hover:text-red-800 cursor-pointer">
             <BiHomeAlt2 />
@@ -70,16 +70,24 @@ const Navbar = () => {
             <GiWeightLiftingUp />
           </div>
         </Link>
-        <Link to="/calculator">
-          <div className="text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
-            <HiOutlineCalculator />
-          </div>
-        </Link>
-        <Link to="/calories">
-          <div className="text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
-            <AiOutlineBarChart />
-          </div>
-        </Link>
+        
+        <Menu>
+          {({isOpen}) => (
+            <>
+          <MenuButton isActive={isOpen} as={Button}  bg="none" color={"white"}  _hover={{bg: "none", color: "#971a1b"}}  _expanded={{ color: '#971a1b', bg: "none" }} paddingX="0">
+            <div className="text-2xl flex flex-row items-center gap-2 font-normal"><HiOutlineCalculator /> {isOpen? (<i class="bi bi-chevron-up"></i>): (<i class="bi bi-chevron-down"></i>)}</div>
+          </MenuButton>
+          <MenuList bg={"#1a202c"}>
+            <Link to="/calculator"><MenuItem bg={"#1a202c"} color="white" _hover={{bg: "#515151"}}>1RM Calculator</MenuItem></Link>
+            <Link to="/tdee"><MenuItem bg={"#1a202c"} color="white" _hover={{bg: "#515151"}}>TDEE Calculator</MenuItem></Link>
+            <Link to="/bodyweight"><MenuItem bg={"#1a202c"} color="white" _hover={{bg: "#515151"}}>Ideal Bodyweight Calculator</MenuItem></Link>
+           
+          </MenuList>
+          </>
+          )}
+        </Menu>
+        
+        
         <Link to="/meals">
           <div className="text-2xl text-white flex flex-row items-center gap-2 hover:text-red-800 cursor-pointer">
             <GiMeal />
