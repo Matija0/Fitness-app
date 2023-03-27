@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Calculator = () => {
   const [lift, setLift] = useState();
   const [reps, setReps] = useState();
-  const [unit, setUnit] = useState();
+  const [unit, setUnit] = useState("kg");
   const [result, setResult] = useState();
 
   const calculate = () => {
@@ -53,7 +53,7 @@ const Calculator = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto my-8">
       <div className="border py-7 px-5 rounded-xl">
         <div className="text-white my-10">
           <h1 style={{ fontWeight: "600" }} className="text-2xl mb-4">
@@ -70,28 +70,30 @@ const Calculator = () => {
           className="text-white flex flex-col items-center gap-4 mt-5"
         >
           <div className=" flex flex-col gap-4">
+            <div className="text-lg">Enter weight of the lift:</div>
             <div className=" flex flex-row">
               <input
                 type="number"
                 id="lift"
-                placeholder="Enter Lift Weight"
+
                 className=" bg-gray-800 p-2 rounded-sm text-white border"
                 onChange={(e) => setLift(e.target.value)}
               />
               <select
-                className=" bg-gray-800 text-white border rounded-sm"
+                className=" bg-gray-800 text-white border rounded-slg"
                 onChange={(e) => setUnit(e.target.value)}
               >
                 <option>kg</option>
                 <option>lb</option>
               </select>
             </div>
-            <div className=" flex flex-row mr-3">
+            <div className=" flex flex-col gap-3 mr-3">
+              <div className="text-lg">Enter Repetitions:</div>
               <input
                 type="number"
                 id="reps"
-                placeholder="Enter Repetitions"
-                className=" bg-gray-800  p-2 rounded-sm text-white border"
+
+                className=" bg-gray-800  p-2 rounded-sm text-white border w-1/4"
                 min="1"
                 max="10"
                 onChange={(e) => setReps(e.target.value)}
@@ -106,17 +108,17 @@ const Calculator = () => {
           </div>
         </form>
       </div>
-      
-        {result ? (
-          <div className=" border p-5 text-white my-4 rounded-xl">
+
+      {result ? (
+        <div className=" border p-5 text-white my-4 rounded-xl">
           <h1 className="text-xl">
             Your one-rep max is: {Math.round(result)}
             <span className="ml-1">{unit}</span>
           </h1>
-          </div>
-        ) : null}
-     
-     
+        </div>
+      ) : null}
+
+
     </div>
   );
 };
