@@ -67,7 +67,7 @@ const Tdee = () => {
             calculator will also display your BMI, BMR, Macros & many other useful
             statistics!
           </h2>
-          <div className="w-1/2 self-center bg-gray-700 py-5 px-4 my-4 rounded-lg">
+          <div className=" w-3/4 self-center bg-gray-700 py-5 px-4 my-4 rounded-lg md:w-1/2">
             <form onSubmit={handleSubmit} className="text-white">
               <div className="mb-3">Gender</div>
               <div className=" space-x-1">
@@ -81,26 +81,26 @@ const Tdee = () => {
               <div className="my-3">Age</div>
               <input
                 type="number"
-                className=" bg-gray-800 w-1/2 rounded-md py-1 px-2 focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2"
+                className=" bg-gray-800 w-1/2 rounded-md py-1 px-2 text-sm focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2 md:text-lg"
                 onChange={e => setAge(e.target.value)}
               />
               <div className="my-3">Weight</div>
               <input
                 type="number"
-                className=" bg-gray-800 w-1/2 rounded-md py-1 px-2 focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2 "
+                className=" bg-gray-800 w-1/2 rounded-md py-1 px-2 text-sm focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2 md:text-lg"
                 onChange={e => setWeight(e.target.value)}
               />
               <div className="my-3">Height</div>
               <input
                 type="number"
-                className=" bg-gray-800 w-1/2 rounded-md py-1 px-2 focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2"
+                className=" bg-gray-800 w-1/2 rounded-md py-1 px-2 focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2 md:text-lg"
                 onChange={e => setHeight(e.target.value)}
               />
               <div className="my-3">
                 <div className="mb-3">Activity</div>
                 <select
                   onChange={(e) => setActivity(e.target.value)}
-                  className=" w-3/4 bg-gray-800 p-2 rounded-md text-white md:w-full"
+                  className=" w-fit bg-gray-800 p-2 rounded-md text-white text-sm md:w-auto md:text-lg"
                 >
                   <option value={1.2}>Sedentary</option>
                   <option value={1.375}>Light exercise(1/2 days a week)</option>
@@ -111,7 +111,7 @@ const Tdee = () => {
               </div>
               <button
                 type="submit"
-                className=" bg-red-800 py-2 px-3  hover:bg-red-700 rounded-lg"
+                className=" bg-violet-700 py-2 px-3  hover:bg-violet-600 rounded-lg"
               >
                 Calculate
               </button>
@@ -120,7 +120,7 @@ const Tdee = () => {
         </div>
 
       </div>
-      {TDEE ? (<div className=" hidden md:flex flex-col gap-5 mx-auto my-7 bg-gray-200 border-4  border-indigo-600 rounded-lg py-5 px-3 w-3/4 text-xl">
+      {TDEE ? (<div className=" hidden md:flex flex-col gap-5 mx-auto my-7  border-4  border-indigo-600 rounded-lg py-5 px-3 w-fit  text-xl">
         <div className="flex flex-row items-center gap-7 text-black ">
           <div className=" bg-blue-600 py-2 px-3  rounded-md w-24 text-white">TDEE </div>
           <span className=" bg-blue-300 py-2 px-3 rounded-lg">Maintaining weight: {Math.round(TDEE)} cal</span>
@@ -147,22 +147,22 @@ const Tdee = () => {
         </div>
       </div>) : null}
       {console.log(activity, "acti")}
-      <div className=" mx-5 flex flex-row gap-3 mb-60  md:hidden">
+      
+      {TDEE? (<div className=" mx-4 flex flex-row gap-3 mb-60  md:hidden">
         <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"blue.600"} color={"white"} _hover={{ bg: "blue.500" }} _expanded={{ bg: "blue.500" }} width={"7rem"}>
+          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"blue.600"} color={"white"} _hover={{ bg: "blue.500" }} _expanded={{ bg: "blue.500" }} width={"7rem"} fontSize="sm">
             TDEE
           </MenuButton>
           <MenuList>
-            <MenuItem>Download</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
+            <MenuItem>Maintaining weight: {Math.round(TDEE)} cal</MenuItem>
+            <MenuItem>Losing weight: {Math.round(deficit)} cal</MenuItem>
+            <MenuItem>Gaining weight: {Math.round(suficit)} cal</MenuItem>
+            
           </MenuList>
         </Menu>
         <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"red.600"} color={"white"} _hover={{ bg: "red.500" }} _expanded={{ bg: "red.500" }} width={"7rem"}>
-            Protein
+          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"red.600"} color={"white"} _hover={{ bg: "red.500" }} _expanded={{ bg: "red.500" }} width={"7rem"}  fontSize="sm">
+            P
           </MenuButton>
           <MenuList>
             <MenuItem>Download</MenuItem>
@@ -173,8 +173,8 @@ const Tdee = () => {
           </MenuList>
         </Menu>
         <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"green.600"} color={"white"} _hover={{ bg: "green.500" }} _expanded={{ bg: "green.500" }} width={"7rem"}>
-            Fat
+          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"green.600"} color={"white"} _hover={{ bg: "green.500" }} _expanded={{ bg: "green.500" }} width={"7rem"} fontSize="sm">
+            F
           </MenuButton>
           <MenuList>
             <MenuItem>Download</MenuItem>
@@ -185,8 +185,8 @@ const Tdee = () => {
           </MenuList>
         </Menu>
         <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"orange.600"} color={"white"} _hover={{ bg: "orange.500" }} _expanded={{ bg: "orange.500" }} width={"7rem"}>
-            Carbs
+          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"orange.600"} color={"white"} _hover={{ bg: "orange.500" }} _expanded={{ bg: "orange.500" }} width={"7rem"} fontSize="sm">
+            C
           </MenuButton>
           <MenuList _expanded={{ bg: "orange.500" }}>
             <MenuItem>Download</MenuItem>
@@ -196,7 +196,7 @@ const Tdee = () => {
             <MenuItem>Attend a Workshop</MenuItem>
           </MenuList>
         </Menu>
-      </div>
+      </div>) : null}
     </>
   );
 };
