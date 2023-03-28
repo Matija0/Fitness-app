@@ -111,7 +111,7 @@ const Tdee = () => {
               </div>
               <button
                 type="submit"
-                className=" bg-violet-700 py-2 px-3  hover:bg-violet-600 rounded-lg"
+                className=" bg-red-800 py-2 px-3  hover:bg-red-700 rounded-lg"
               >
                 Calculate
               </button>
@@ -120,43 +120,51 @@ const Tdee = () => {
         </div>
 
       </div>
-      {TDEE ? (<div className=" hidden md:flex flex-col gap-5 mx-auto my-7  border-4  border-indigo-600 rounded-lg py-5 px-3 w-fit  text-xl">
-        <div className="flex flex-row items-center gap-7 text-black ">
-          <div className=" bg-blue-600 py-2 px-3  rounded-md w-24 text-white">TDEE </div>
-          <span className=" bg-blue-300 py-2 px-3 rounded-lg">Maintaining weight: {Math.round(TDEE)} cal</span>
-          <span className=" bg-blue-300 py-2 px-3 rounded-lg">Losing weight: {Math.round(deficit)} cal</span>
-          <span className=" bg-blue-300 py-2 px-3 rounded-lg">Gaining weight: {Math.round(suficit)} cal</span>
+      {TDEE ? (<div className=" hidden md:flex flex-col gap-5 mx-auto my-7  border-4  border-indigo-600 rounded-lg py-5 px-3 w-fit  text-xl ">
+        <div className="flex flex-row gap-5 text-white text-center ">
+          <div className=" bg-blue-600 py-2 px-3  rounded-md  text-white w-24">TDEE </div>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
+          <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg ">Maintaining weight: {Math.round(TDEE)} cal</span>
+          <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">Losing weight: {Math.round(deficit)} cal</span>
+          <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">Gaining weight: {Math.round(suficit)} cal</span>
+          </div>
         </div>
-        <div className="flex flex-row items-center gap-7 text-black ">
+        <div className="flex flex-row  gap-5 text-white text-center ">
           <div className=" bg-red-600 py-2 px-3  rounded-md w-24 text-white">Protein </div>
-          <span className=" bg-red-300 py-2 px-3 rounded-lg">Maintaining weight: {prot = weight * 2} gr </span>
-          <span className=" bg-red-300 py-2 px-3 rounded-lg">Losing weight: {prot = weight * 2.5} gr </span>
-          <span className=" bg-red-300 py-2 px-3 rounded-lg">Gaining weight: {prot = weight * 2.2} gr </span>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
+          <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Maintaining weight: {prot = Math.round(weight * 2)} gr </span>
+          <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Losing weight: {prot = Math.round(weight * 2.5)} gr </span>
+          <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Gaining weight: {prot = Math.round(weight * 2.2)} gr </span>
+          </div>
         </div>
-        <div className="flex flex-row items-center gap-7 text-black  ">
-          <div className=" bg-green-600 py-2 px-3  rounded-md w-24 text-white">Fat </div>
-          <span className=" bg-green-300 py-2 px-3 rounded-lg">Maintaining weight: {f = weight * 0.95} gr</span>
-          <span className=" bg-green-300 py-2 px-3 rounded-lg">Losing weight: {f = weight * 1.1} gr</span>
-          <span className=" bg-green-300 py-2 px-3 rounded-lg">Gaining weight: {f = weight * 1} gr</span>
+        <div className="flex flex-row items-center gap-5 text-white text-center  ">
+          <div className=" bg-emerald-600 py-2 px-3  rounded-md w-24 text-white">Fat </div>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
+          <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Maintaining weight: {f = Math.round(weight * 0.95)} gr</span>
+          <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Losing weight: {f = Math.round(weight * 1.1)} gr</span>
+          <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Gaining weight: {f = Math.round(weight * 1)} gr</span>
+          </div>
         </div>
-        <div className="flex flex-row gap-7 items-center text-black ">
-          <div className=" bg-orange-600 py-2 px-3 rounded-md w-24 text-white">Carbs </div>
-          <span className=" bg-orange-300 py-2 px-3 rounded-lg">Maintaining weight: {carb = Math.round((TDEE - (weight * 2) - (weight * 1)) / 4)} gr</span>
-          <span className=" bg-orange-300 py-2 px-3 rounded-lg">Losing weight: {carb = Math.round((TDEE - (weight * 2.2) - (weight * 1.2)) / 4)} gr</span>
-          <span className=" bg-orange-300 py-2 px-3 rounded-lg">Gaining weight: {carb = Math.round((TDEE - (weight * 2.5) - (weight * 1.1)) / 4)} gr</span>
+        <div className="flex flex-row gap-5 items-center text-white text-center ">
+          <div className=" bg-yellow-600 py-2 px-3 rounded-md w-24 text-white">Carbs </div>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
+          <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Maintaining weight: {carb = Math.round((TDEE - (weight * 2) - (weight * 1)) / 4)} gr</span>
+          <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Losing weight: {carb = Math.round((TDEE - (weight * 2.2) - (weight * 1.2)) / 4)} gr</span>
+          <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Gaining weight: {carb = Math.round((TDEE - (weight * 2.5) - (weight * 1.1)) / 4)} gr</span>
+          </div>
         </div>
       </div>) : null}
       {console.log(activity, "acti")}
       
       {TDEE? (<div className=" mx-4 flex flex-row gap-3 mb-60  md:hidden">
-        <Menu>
+        <Menu >
           <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"blue.600"} color={"white"} _hover={{ bg: "blue.500" }} _expanded={{ bg: "blue.500" }} width={"7rem"} fontSize="sm">
             TDEE
           </MenuButton>
-          <MenuList>
-            <MenuItem>Maintaining weight: {Math.round(TDEE)} cal</MenuItem>
-            <MenuItem>Losing weight: {Math.round(deficit)} cal</MenuItem>
-            <MenuItem>Gaining weight: {Math.round(suficit)} cal</MenuItem>
+          <MenuList bg={"none"} border="2px" borderColor={"purple.600"} >
+            <MenuItem bg={"none"} color="gray.400">Maintaining weight: {Math.round(TDEE)} cal</MenuItem>
+            <MenuItem bg={"none"} color="gray.400">Losing weight: {Math.round(deficit)} cal</MenuItem>
+            <MenuItem bg={"none"} color="gray.400">Gaining weight: {Math.round(suficit)} cal</MenuItem>
             
           </MenuList>
         </Menu>
@@ -165,7 +173,7 @@ const Tdee = () => {
             P
           </MenuButton>
           <MenuList>
-            <MenuItem>Download</MenuItem>
+            <MenuItem></MenuItem>
             <MenuItem>Create a Copy</MenuItem>
             <MenuItem>Mark as Draft</MenuItem>
             <MenuItem>Delete</MenuItem>
@@ -173,7 +181,7 @@ const Tdee = () => {
           </MenuList>
         </Menu>
         <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"green.600"} color={"white"} _hover={{ bg: "green.500" }} _expanded={{ bg: "green.500" }} width={"7rem"} fontSize="sm">
+          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"teal.600"} color={"white"} _hover={{ bg: "teal.600" }} _expanded={{ bg: "teal.600" }} width={"7rem"} fontSize="sm">
             F
           </MenuButton>
           <MenuList>
@@ -185,10 +193,10 @@ const Tdee = () => {
           </MenuList>
         </Menu>
         <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"orange.600"} color={"white"} _hover={{ bg: "orange.500" }} _expanded={{ bg: "orange.500" }} width={"7rem"} fontSize="sm">
+          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"yellow.600"} color={"white"} _hover={{ bg: "yellow.500" }} _expanded={{ bg: "yellow.500" }} width={"7rem"} fontSize="sm">
             C
           </MenuButton>
-          <MenuList _expanded={{ bg: "orange.500" }}>
+          <MenuList _expanded={{ bg: "yellow.500" }}>
             <MenuItem>Download</MenuItem>
             <MenuItem>Create a Copy</MenuItem>
             <MenuItem>Mark as Draft</MenuItem>
