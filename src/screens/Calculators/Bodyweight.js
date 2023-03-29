@@ -1,31 +1,69 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import "./Calculators.css";
 
 const Bodyweight = () => {
-
-  const [age, setAge] = useState()
-  const [height, setHeight] = useState()
-  let result
-
-  const handleSubmit = () => {
-
+  const [weight, setWeight] = useState();
+  const [height, setHeight] = useState();
+  const [gender, setGender]= useState()
+  const [result, setResult] = useState()
+  const [BMI, setBMI] = useState()
+  const calculateIdealBW = () =>{
+      if(gender==="Male"){
+        setResult(50 + (0.91 * (height-152.4)))
+      }else{
+        setResult(45.5 + (0.91 *(height-152.4)))
+      }
   }
-  return (
-    <div className=' container mx-auto'>
-      <div className='flex flex-col gap-4 mt-7 text-white '>
-        <h1 className='text-xl'>Calculate your ideal bodyweight for your height</h1>
-        <p className='text-lg'>Maintaning ideal bodyweight is beneficial for your long term health</p>
-      </div>
-      <div className=' w-3/4 mx-auto bg-gray-700 py-5 px-4 my-4 rounded-lg md:w-1/2'>
-        <form>
-          <div className='flex flex-col gap-4'>
-            <input className='bg-gray-800 w-1/2 rounded-md py-1 px-2 text-sm focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2 md:text-lg text-white' type="number" />
-            <input className='bg-gray-800 w-1/2 rounded-md py-1 px-2 text-sm focus:ring-2 focus:outline-none focus:ring-primary-300 md:w-1/2 md:text-lg' type="number" />
-          </div>
-          <button type='submit' className='text-white bg-red-800 py-2 px-3  hover:bg-red-700 rounded-lg mt-5' >Calculate</button>
-        </form>
-      </div>
-    </div>
-  )
-}
 
-export default Bodyweight
+  const calculateBMI = () =>{
+      let square= Math.pow(height, 2)
+      setBMI(weight/(square*0.0001))
+      console.log(weight, "w")
+      console.log(height, "h")
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    calculateIdealBW();
+    calculateBMI();
+    
+    
+  };
+  return (
+    <div className="container mx-auto mt-10 px-3">
+       <h1 className='text-xl text-white'>Calculate your BMI and ideal bodyweight for your height</h1>
+        <p className='text-lg text-white'>Maintaning ideal bodyweight is beneficial for your long term health</p>
+      
+      <form onSubmit={handleSubmit} className=" my-7 ml-4">
+        <div className="text-white">
+        <input type="radio" id="Male" name="gender" value="Male" className="mr-2" onChange={e=>setGender(e.target.value)}/>
+        <label for="Male">Male</label>
+        </div>
+        <div className="text-white mb-7">
+        <input type="radio" id="Female" name="gender" value="Female" className="mr-2" onChange={e=>setGender(e.target.value)}/>
+        <label for="Female">Female</label>
+        </div>
+        <div class="group">
+          <input className="body-input" type="text" required onChange={e=>setWeight(e.target.value)}/>
+          <span className="highlight"></span>
+          <span className="bar"></span>
+          <label className="body-label">Weight</label>
+        </div>
+
+        <div class="group">
+          <input className="body-input" type="text" required onChange={e=>setHeight(e.target.value)}/>
+          <span className="highlight"></span>
+          <span className="bar"></span>
+          <label className="body-label">Height</label>
+        </div>
+        <button type="submit" className=" bg-blue-600 text-white rounded-lg hover:bg-blue-500 py-2 px-3">Calculate</button>
+      </form>
+      {result? (<div className=" w-fit text-white flex flex-col gap-3 md:w-1/4 my-5">
+        <span className="border-2 border-gray-500 p-3 rounded-md">Your BMI is: {BMI.toFixed(2)}</span>
+        <span className="border-2 border-gray-500 p-3 rounded-md">Your ideal bodyweight is: {Math.round(result)} kg</span>
+      </div>) : null}
+    </div>
+  );
+};
+
+export default Bodyweight;

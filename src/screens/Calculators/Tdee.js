@@ -57,7 +57,7 @@ const Tdee = () => {
   return (
     <>
       <div className=" container mx-auto my-10">
-        <div className="flex flex-col gap-3 ">
+        <div className="flex flex-col gap-3 px-3">
           <h1 className="text-white text-xl">
             Learn How Many Calories You Burn Every Day
           </h1>
@@ -157,11 +157,12 @@ const Tdee = () => {
       {console.log(activity, "acti")}
       
       {TDEE? (<div className=" mx-4 flex flex-row gap-3 mb-60  md:hidden">
+        {/*ACCORDION MENU INSTEAD OF MENU*/}
         <Menu >
           <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"blue.600"} color={"white"} _hover={{ bg: "blue.500" }} _expanded={{ bg: "blue.500" }} width={"7rem"} fontSize="sm">
             TDEE
           </MenuButton>
-          <MenuList bg={"none"} border="2px" borderColor={"purple.600"} >
+          <MenuList bg={"none"} border="2px" borderColor={"blue.600"} >
             <MenuItem bg={"none"} color="gray.400">Maintaining weight: {Math.round(TDEE)} cal</MenuItem>
             <MenuItem bg={"none"} color="gray.400">Losing weight: {Math.round(deficit)} cal</MenuItem>
             <MenuItem bg={"none"} color="gray.400">Gaining weight: {Math.round(suficit)} cal</MenuItem>
