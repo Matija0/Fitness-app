@@ -1,6 +1,15 @@
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+
 import React, { useState } from "react";
-import { GiMatchTip } from "react-icons/gi";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
+  Flex,
+} from '@chakra-ui/react'
+
 
 
 const Tdee = () => {
@@ -13,7 +22,7 @@ const Tdee = () => {
   const [TDEE, setTDEE] = useState("");
   const [deficit, setDeficit] = useState("");
   const [suficit, setSuficit] = useState("");
-  const [protein, setProtein] = useState("")
+
   const [fat, setFat] = useState("")
   const [carbs, setCarbs] = useState("")
   let prot = "";
@@ -123,89 +132,108 @@ const Tdee = () => {
       {TDEE ? (<div className=" hidden md:flex flex-col gap-5 mx-auto my-7  border-4  border-indigo-600 rounded-lg py-5 px-3 w-fit  text-xl ">
         <div className="flex flex-row gap-5 text-white text-center ">
           <div className=" bg-blue-600 py-2 px-3  rounded-md  text-white w-24">TDEE </div>
-          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
-          <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg ">Maintaining weight: {Math.round(TDEE)} cal</span>
-          <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">Losing weight: {Math.round(deficit)} cal</span>
-          <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">Gaining weight: {Math.round(suficit)} cal</span>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
+            <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg ">Maintaining weight: {Math.round(TDEE)} cal</span>
+            <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">Losing weight: {Math.round(deficit)} cal</span>
+            <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">Gaining weight: {Math.round(suficit)} cal</span>
           </div>
         </div>
         <div className="flex flex-row  gap-5 text-white text-center ">
           <div className=" bg-red-600 py-2 px-3  rounded-md w-24 text-white">Protein </div>
-          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
-          <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Maintaining weight: {prot = Math.round(weight * 2)} gr </span>
-          <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Losing weight: {prot = Math.round(weight * 2.5)} gr </span>
-          <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Gaining weight: {prot = Math.round(weight * 2.2)} gr </span>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
+            <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Maintaining weight: {prot = Math.round(weight * 2)} gr </span>
+            <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Losing weight: {prot = Math.round(weight * 2.5)} gr </span>
+            <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">Gaining weight: {prot = Math.round(weight * 2.2)} gr </span>
           </div>
         </div>
         <div className="flex flex-row items-center gap-5 text-white text-center  ">
           <div className=" bg-emerald-600 py-2 px-3  rounded-md w-24 text-white">Fat </div>
-          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
-          <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Maintaining weight: {f = Math.round(weight * 0.95)} gr</span>
-          <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Losing weight: {f = Math.round(weight * 1.1)} gr</span>
-          <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Gaining weight: {f = Math.round(weight * 1)} gr</span>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
+            <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Maintaining weight: {f = Math.round(weight * 0.95)} gr</span>
+            <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Losing weight: {f = Math.round(weight * 1.1)} gr</span>
+            <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">Gaining weight: {f = Math.round(weight * 1)} gr</span>
           </div>
         </div>
         <div className="flex flex-row gap-5 items-center text-white text-center ">
           <div className=" bg-yellow-600 py-2 px-3 rounded-md w-24 text-white">Carbs </div>
-          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-400">
-          <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Maintaining weight: {carb = Math.round((TDEE - (weight * 2) - (weight * 1)) / 4)} gr</span>
-          <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Losing weight: {carb = Math.round((TDEE - (weight * 2.2) - (weight * 1.2)) / 4)} gr</span>
-          <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Gaining weight: {carb = Math.round((TDEE - (weight * 2.5) - (weight * 1.1)) / 4)} gr</span>
+          <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
+            <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Maintaining weight: {carb = Math.round((TDEE - (weight * 2) - (weight * 1)) / 4)} gr</span>
+            <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Losing weight: {carb = Math.round((TDEE - (weight * 2.2) - (weight * 1.2)) / 4)} gr</span>
+            <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">Gaining weight: {carb = Math.round((TDEE - (weight * 2.5) - (weight * 1.1)) / 4)} gr</span>
           </div>
         </div>
       </div>) : null}
       {console.log(activity, "acti")}
-      
-      {TDEE? (<div className=" mx-4 flex flex-row gap-3 mb-60  md:hidden">
-        {/*ACCORDION MENU INSTEAD OF MENU*/}
-        <Menu >
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"blue.600"} color={"white"} _hover={{ bg: "blue.500" }} _expanded={{ bg: "blue.500" }} width={"7rem"} fontSize="sm">
-            TDEE
-          </MenuButton>
-          <MenuList bg={"none"} border="2px" borderColor={"blue.600"} >
-            <MenuItem bg={"none"} color="gray.400">Maintaining weight: {Math.round(TDEE)} cal</MenuItem>
-            <MenuItem bg={"none"} color="gray.400">Losing weight: {Math.round(deficit)} cal</MenuItem>
-            <MenuItem bg={"none"} color="gray.400">Gaining weight: {Math.round(suficit)} cal</MenuItem>
-            
-          </MenuList>
-        </Menu>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"red.600"} color={"white"} _hover={{ bg: "red.500" }} _expanded={{ bg: "red.500" }} width={"7rem"}  fontSize="sm">
-            P
-          </MenuButton>
-          <MenuList>
-            <MenuItem></MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"teal.600"} color={"white"} _hover={{ bg: "teal.600" }} _expanded={{ bg: "teal.600" }} width={"7rem"} fontSize="sm">
-            F
-          </MenuButton>
-          <MenuList>
-            <MenuItem>Download</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<i class="bi bi-chevron-down"></i>} bg={"yellow.600"} color={"white"} _hover={{ bg: "yellow.500" }} _expanded={{ bg: "yellow.500" }} width={"7rem"} fontSize="sm">
-            C
-          </MenuButton>
-          <MenuList _expanded={{ bg: "yellow.500" }}>
-            <MenuItem>Download</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList>
-        </Menu>
-      </div>) : null}
+
+      {TDEE ? (<div className='text-white my-7 md:hidden'>
+        <Accordion defaultIndex={[0]} allowMultiple width={"-moz-fit-content"} mx={"auto"} py={"5px"}>
+          <AccordionItem>
+            <div>
+              <AccordionButton bg={"blue.700"} _expanded={{ bg: "blue.600" }} _hover={{ bg: "blue.600" }}>
+                <Box as="span" flex='1' textAlign='left'>
+                  TDEE
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </div>
+            <AccordionPanel pb={4} color="gray.300">
+
+              <Box>Maintaining weight: {Math.round(TDEE)} cal</Box>
+              <Box>Losing weight: {Math.round(deficit)} cal</Box>
+              <Box>Gaining weight: {Math.round(suficit)} cal</Box>
+
+            </AccordionPanel>
+          </AccordionItem>
+
+          <AccordionItem>
+            <div>
+              <AccordionButton bg={"red.700"} _expanded={{ bg: "red.600" }} _hover={{ bg: "red.600" }}>
+                <Box as="span" flex='1' textAlign='left'>
+                  Protein
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </div>
+            <AccordionPanel pb={4} color="gray.300">
+              <Box>Maintaining weight: {prot = Math.round(weight * 2)} gr</Box>
+              <Box>Losing weight: {prot = Math.round(weight * 2.5)} gr</Box>
+              <Box>Gaining weight: {prot = Math.round(weight * 2.5)} gr </Box>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <div>
+              <AccordionButton bg={"teal.600"} _expanded={{ bg: "teal.500" }} _hover={{ bg: "teal.500" }}>
+                <Box as="span" flex='1' textAlign='left'>
+                  Fat
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </div>
+            <AccordionPanel pb={4} color="gray.300">
+              <Box>Maintaining weight:  {f = Math.round(weight * 0.95)} gr</Box>
+              <Box>Losing weight:  {f = Math.round(weight * 1.1)} gr</Box>
+              <Box>Gaining weight: {f = Math.round(weight * 1)} gr </Box>
+            </AccordionPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <div>
+              <AccordionButton bg={"yellow.600"} _expanded={{ bg: "yellow.500" }} _hover={{ bg: "yellow.500" }}>
+                <Box as="span" flex='1' textAlign='left'>
+                  Carbs
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+            </div>
+            <AccordionPanel pb={4} color="gray.300">
+              <Box>Maintaining weight: {carb = Math.round((TDEE - (weight * 2) - (weight * 1)) / 4)} gr</Box>
+              <Box>Losing weight:  {carb = Math.round((TDEE - (weight * 2.2) - (weight * 1.2)) / 4)} gr</Box>
+              <Box>Gaining weight:  {carb = Math.round((TDEE - (weight * 2.5) - (weight * 1.1)) / 4)} gr </Box>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </div>
+
+      ) : null}
     </>
   );
 };
