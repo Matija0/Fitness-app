@@ -31,7 +31,7 @@ const Bodyweight = () => {
 
   };
   return (
-    <div className="container mx-auto mt-10 grid grid-cols-2 gap-4">
+    <div className="container mx-auto mt-14 grid grid-cols-2 gap-4">
       <div className="p-3">
         <h1 className='text-xl text-white'>Calculate your BMI and ideal bodyweight for your height</h1>
         <p className='text-lg text-white'>Maintaning ideal bodyweight is beneficial for your long term health</p>
@@ -58,16 +58,14 @@ const Bodyweight = () => {
             <span className="bar"></span>
             <label className="body-label">Height</label>
           </div>
-          <button type="submit" className=" bg-blue-600 text-white rounded-lg hover:bg-blue-500 py-2 px-3">Calculate</button>
+          <button type="submit" className=" bg-teal-700 text-white rounded-lg hover:bg-teal-600 py-2 px-3">Calculate</button>
         </form>
         {result ? (<div className=" w-fit text-white flex flex-col gap-3 my-5">
           <span className="border-2 border-gray-500 p-3 rounded-md">Your BMI is: {BMI.toFixed(2)}</span>
           <span className="border-2 border-gray-500 p-3 rounded-md">Your ideal bodyweight is: {Math.round(result)} kg</span>
         </div>) : null}
       </div>
-      <div className="text-white p-3">
-        <img className=" h-3/4 rounded-md" src={""} alt="Chart with bmi" />
-      </div>
+      
     </div>
   );
 };

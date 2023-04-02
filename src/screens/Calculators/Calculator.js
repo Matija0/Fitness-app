@@ -91,20 +91,20 @@ const Calculator = () => {
           </div>
           <button
             type="submit"
-            className=" bg-blue-600 text-white rounded-lg hover:bg-blue-500 py-2 px-3"
+            className=" bg-teal-700 text-white rounded-lg hover:bg-teal-600 py-2 px-3"
           >
             Calculate
           </button>
         </form>
         {result ? (
-          <div className=" bg-zinc-600 p-5 text-white my-4 rounded-xl w-fit">
+          <div className=" bg-gray-600 p-5 text-white my-4 rounded-xl w-fit">
             <h1 className="text-lg md:text-xl">
               Your one-rep max is: {Math.round(result)} kg
             </h1>
           </div>
         ) : null}
       </div>
-      <div className="mx-auto">
+      {result?  (<div className="mx-auto">
         <h1 className="text-white text-sm mb-4 md:text-lg">Bellow is a table of other estimated rep maxes:</h1>
         <table className=" text-gray-100 w-11/12 md:w-full">
           <thead className=" bg-gray-700 text-sm md:text-xl">
@@ -156,7 +156,7 @@ const Calculator = () => {
             </tr>
           </tbody>
         </table>
-      </div>
+      </div>) : null}
     </div>
   );
 };
