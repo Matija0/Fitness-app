@@ -33,6 +33,14 @@ const Workout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
+  
+  const [exercise, setExercise]=useState()  
+  const [data, setData]=useState([])
+
+  const addExercise = () =>{
+      setData([...data, exercise])
+  }
+
   return (
     <div className=" container mx-auto ">
       <div
@@ -59,6 +67,7 @@ const Workout = () => {
           <TabPanels>
             <TabPanel>
               <div className=" mt-7">
+                
                 <button
                   className=" bg-teal-700 rounded-lg text-white px-3 py-2"
                   onClick={() => {
@@ -157,8 +166,8 @@ const Workout = () => {
             <div className="flex justify-end p-2"><button className=" text-xl text-gray-300" onClick={onClose}><i class="bi bi-x-lg"></i></button></div>
             <div className=" my-5 flex flex-col gap-3 items-center">
               <h1 className=" text-white text-lg mb-3">Search for an exercise</h1>
-            <input type="text" className=" bg-gray-500 w-4/5 rounded-md p-2 text-white" />
-            <button onClick={onClose} className=" bg-slate-700 px-5 py-2 text-white rounded-lg hover:bg-gray-800">Save</button>
+            <input type="text" className=" bg-gray-500 w-4/5 rounded-md p-2 text-white" onChange={e=>setExercise(e.target.value)}/>
+            <button onClick={()=>{addExercise(); onClose();}} className=" bg-slate-700 px-5 py-2 text-white rounded-lg hover:bg-gray-800">Save</button>
             </div>
           </div>
         </ModalContent>

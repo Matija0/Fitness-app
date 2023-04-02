@@ -21,8 +21,6 @@ const Tdee = () => {
   const [deficit, setDeficit] = useState("");
   const [suficit, setSuficit] = useState("");
 
-  const [fat, setFat] = useState("");
-  const [carbs, setCarbs] = useState("");
   let prot = "";
   let f = "";
   let carb = "";
@@ -30,10 +28,10 @@ const Tdee = () => {
   const calculateBMR = () => {
     switch (gender) {
       case "Male":
-        setBMR(655 + (9.6 * weight) + (1.8 * height) - (4.7 * age));
+        setBMR(655 + 9.6 * weight + 1.8 * height - 4.7 * age);
         break;
       case "Female":
-        setBMR(66 + (13.7 * weight) + (5 * height) - (6.8 * age));
+        setBMR(66 + 13.7 * weight + 5 * height - 6.8 * age);
         break;
       default:
         console.log("No gender was entered!");
@@ -50,14 +48,12 @@ const Tdee = () => {
 
   const calculateDeficit = () => {
     let val = TDEE * 0.2;
-    console.log(TDEE, "D")
+    console.log(TDEE, "D");
     setDeficit(TDEE - val);
-    
   };
 
   const calculateSuficit = () => {
     setSuficit(TDEE + 300);
-   
   };
 
   const clear = () => {};
@@ -163,7 +159,7 @@ const Tdee = () => {
         <div className=" hidden md:flex flex-col gap-5 mx-auto my-7  border-4  border-indigo-600 rounded-lg py-5 px-3 w-fit  text-xl ">
           <div className="flex flex-row gap-5 text-white text-center ">
             <div className=" bg-blue-600 py-2 px-3  rounded-md  text-white w-24">
-              TDEE{" "}
+              TDEE
             </div>
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg ">

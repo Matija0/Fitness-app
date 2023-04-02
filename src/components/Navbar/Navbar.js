@@ -39,10 +39,10 @@ const Navbar = () => {
                 <MenuButton isActive={isOpen} as={Button} bg="none" color={"white"} _hover={{ bg: "gray.500" }} _expanded={{ bg: "gray.500" }}>
                   <div className="text-lg flex flex-row items-center gap-2 font-normal"><HiOutlineCalculator />Calculators {isOpen ? (<i class="bi bi-chevron-up"></i>) : (<i class="bi bi-chevron-down"></i>)}</div>
                 </MenuButton>
-                <MenuList bg={"blue.700"}>
-                  <Link to="/calculator"><MenuItem bg={"blue.700"} color="white" _hover={{ bg: "gray.500" }}>1RM Calculator</MenuItem></Link>
-                  <Link to="/tdee"><MenuItem bg={"blue.700"} color="white" _hover={{ bg: "gray.500" }}>TDEE Calculator</MenuItem></Link>
-                  <Link to="/bodyweight"><MenuItem bg={"blue.700"} color="white" _hover={{ bg: "gray.500" }}>Ideal Bodyweight Calculator</MenuItem></Link>
+                <MenuList bg={"#1e3a8a"}>
+                  <Link to="/calculator"><MenuItem bg={"#1e3a8a"} color="white" _hover={{ bg: "gray.500" }}>1RM Calculator</MenuItem></Link>
+                  <Link to="/tdee"><MenuItem bg={"#1e3a8a"} color="white" _hover={{ bg: "gray.500" }}>TDEE Calculator</MenuItem></Link>
+                  <Link to="/bodyweight"><MenuItem bg={"#1e3a8a"} color="white" _hover={{ bg: "gray.500" }}>Ideal Bodyweight Calculator</MenuItem></Link>
 
                 </MenuList>
               </>
