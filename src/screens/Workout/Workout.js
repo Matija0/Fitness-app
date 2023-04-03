@@ -1,4 +1,5 @@
 import React from "react";
+import "./Workout.css"
 import {
   Tabs,
   TabList,
@@ -18,6 +19,7 @@ import {
   ModalHeader,
   VStack,
 } from "@chakra-ui/react";
+import { exerciseoptions, fetchData } from "../../utils/fetchData";
 
 import { useState } from "react";
 
@@ -33,12 +35,27 @@ const Workout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
 
-  
-  const [exercise, setExercise]=useState()  
-  const [data, setData]=useState([])
+  const [search, setSearch] = useState()
+  const [exercises, setExercises] = useState([])
 
-  const addExercise = () =>{
-      setData([...data, exercise])
+  const handleSearch = async() =>{
+      if(search){
+        const exercisesData= await fetchData("https://exercisedb.p.rapidapi.com/exercises/", exerciseoptions)
+        
+        const searchedExercises = exercisesData.filter((exercise)=>exercise.name.toLowerCase().includes(search) 
+        || exercise.target.toLowerCase().includes(search)
+        || exercise.equipment.toLowerCase().includes(search)
+        || exercise.bodyPart.toLowerCase().includes(search)   
+        );
+        setSearch("")
+        setExercises(searchedExercises);
+        console.log(exercises)
+      }
+  }
+
+  const handleSubmit = (event) =>{
+      event.preventDefault()
+      handleSearch();
   }
 
   return (
@@ -69,7 +86,7 @@ const Workout = () => {
               <div className=" mt-7">
                 
                 <button
-                  className=" bg-teal-700 rounded-lg text-white px-3 py-2"
+                  className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
                   onClick={() => {
                     setOverlay(<OverlayOne />);
                     onOpen();
@@ -165,9 +182,12 @@ const Workout = () => {
           <div>
             <div className="flex justify-end p-2"><button className=" text-xl text-gray-300" onClick={onClose}><i class="bi bi-x-lg"></i></button></div>
             <div className=" my-5 flex flex-col gap-3 items-center">
-              <h1 className=" text-white text-lg mb-3">Search for an exercise</h1>
-            <input type="text" className=" bg-gray-500 w-4/5 rounded-md p-2 text-white" onChange={e=>setExercise(e.target.value)}/>
-            <button onClick={()=>{addExercise(); onClose();}} className=" bg-slate-700 px-5 py-2 text-white rounded-lg hover:bg-gray-800">Save</button>
+              <h1 className=" text-white text-xl mb-3">Search for exercises</h1>
+             <form onSubmit={handleSubmit} className="flex flex-row gap-2 mb-4">
+            <input type="text" className=" bg-gray-500 w-4/5 rounded-md p-2 text-white" value={search}  onChange={(e)=>setSearch(e.target.value.toLowerCase())}/>
+            <button type="submit" className="py-2 px-3 text-gray-300"><i class="bi bi-search"></i></button>
+            </form> 
+            
             </div>
           </div>
         </ModalContent>

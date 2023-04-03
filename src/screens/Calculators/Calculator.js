@@ -97,9 +97,9 @@ const Calculator = () => {
           </button>
         </form>
         {result ? (
-          <div className=" bg-gray-600 p-5 text-white my-4 rounded-xl w-fit">
+          <div className=" bg-gray-700 p-5 text-white my-4 rounded-xl w-fit">
             <h1 className="text-lg md:text-xl">
-              Your one-rep max is: {Math.round(result)} kg
+              Estimated one-rep max is: {Math.round(result)} kg
             </h1>
           </div>
         ) : null}
