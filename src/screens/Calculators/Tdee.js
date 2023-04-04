@@ -7,7 +7,6 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
-  Flex,
 } from "@chakra-ui/react";
 
 const Tdee = () => {
@@ -44,6 +43,7 @@ const Tdee = () => {
     setTDEE(BMR * activity);
     calculateDeficit();
     calculateSuficit();
+    clear();
   };
 
   const calculateDeficit = () => {
@@ -56,7 +56,12 @@ const Tdee = () => {
     setSuficit(TDEE + 300);
   };
 
-  const clear = () => {};
+  const clear = () => {
+    setGender("")
+    setAge("")
+    setWeight("")
+    setHeight("")
+  };
 
   return (
     <>
@@ -80,6 +85,7 @@ const Tdee = () => {
                   id="Male"
                   name="gender"
                   value="Male"
+                  checked={gender === 'Male'}
                   onChange={(e) => setGender(e.target.value)}
                 />
                 <label for="Male">Male</label>
@@ -90,6 +96,7 @@ const Tdee = () => {
                   id="Female"
                   name="gender"
                   value="Female"
+                  checked={gender === 'Female'}
                   onChange={(e) => setGender(e.target.value)}
                 />
                 <label for="Female">Female</label>

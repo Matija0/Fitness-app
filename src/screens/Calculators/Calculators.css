@@ -92,6 +92,13 @@
 }
 
 
+input[type="radio"] {
+  background-color: transparent;
+  color: #757575;
+
+}
+
+
 
 
 

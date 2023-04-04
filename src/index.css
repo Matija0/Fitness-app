@@ -16,11 +16,14 @@
 
 body{
   
-  background-color: #1f1f23!important;
+  background: #1f1f23 !important;
+
   
  
 }
-/* #273549 blugray*/
+/* #1f1f23 dark
+   #22223b*/
+
 
  input:focus{
   outline: black;
