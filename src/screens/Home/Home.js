@@ -19,9 +19,9 @@ const Home = () => {
       setTime("Morning")
     } else if (time > "12:00" && time <= "18:00") {
       setTime("Afternoon")
-    } else if (time > "18:00" && time <= "00:00") {
+    } else if (time > "18:00" && time <= "24:00") {
       setTime("Evening")
-    } else {
+    } else{
       setTime("Night")
     }
   }
