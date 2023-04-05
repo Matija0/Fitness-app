@@ -6,3 +6,41 @@
 .btn:hover{
     background-color: #6b8ead;
 }
+
+
+
+.row-el{
+    display: flex;
+    gap: 8px !important;
+    padding: 10px 20px;
+    overflow-y: hidden !important;
+    overflow-x: scroll !important;
+    padding-bottom: 30px;
+    margin-bottom: 20px;
+   
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #bdbbb0;
+    border-radius: 5px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #353535;
+    border-radius: 5px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #383838;
+  }
+
+  
