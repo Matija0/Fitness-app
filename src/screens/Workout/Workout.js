@@ -253,11 +253,11 @@ const Workout = () => {
             </div>
 
             <form onSubmit={handleData} className="flex flex-col items-center gap-3 my-10">
-              <input className="bg-neutral-500 rounded-md  p-2 text-white" className="bg-black rounded-md  p-2 text-white" type="number" placeholder="Number of reps" required value={reps} onChange={(e) => setReps(e.target.value)} />
+              <input className="bg-black rounded-md  p-2 text-white" type="number" placeholder="Number of reps" required value={reps} onChange={(e) => setReps(e.target.value)} />
               <div className="flex flex-row items-center gap-4">
-                <input className="bg-neutral-500 rounded-md  p-2 text-white" className="bg-black rounded-md  p-2 text-white" type="number" placeholder="Percentage" value={percentage} onChange={(e) => setPercentage(e.target.value)} />
+                <input className="bg-black rounded-md  p-2 text-white" type="number" placeholder="Percentage" value={percentage} onChange={(e) => setPercentage(e.target.value)} />
                 <span className="text-gray-200">or</span>
-                <input className="bg-neutral-500 rounded-md  p-2 text-white" className="bg-black rounded-md  p-2 text-white" type="number" placeholder="RPE" value={rpe} onChange={(e) => setRpe(e.target.value)} />
+                <input className="bg-black rounded-md  p-2 text-white" type="number" placeholder="RPE" value={rpe} onChange={(e) => setRpe(e.target.value)} />
               </div>
               <button type="submit" className=" bg-gray-800 py-2 px-3 rounded-lg hover:bg-gray-700 text-white" onClick={onSecondClose}>Save</button>
             </form>
@@ -266,7 +266,7 @@ const Workout = () => {
         </Modal>
       </div>
       <div className="flex flex-col items-center gap-5">
-        <h1 className="text-white text-xl">Enter 1RMs:</h1>
+        <h1 className="text-white text-xl">Enter your 1RMs:</h1>
         <form className="flex flex-col gap-3 items-center">
           <input className="bg-neutral-500 rounded-md  p-2 text-white" type="number" placeholder="Squat" />
           <input className="bg-neutral-500 rounded-md  p-2 text-white" type="number" placeholder="Deadlift" />
