@@ -36,8 +36,8 @@ const Bodyweight = () => {
     setWeight("")
   }
   return (
-    <div className="container mx-auto mt-14 grid grid-cols-2 gap-4">
-      <div className="p-3">
+    <div className="container mx-auto my-14 grid grid-cols-2 gap-4">
+      <div className="p-4 md:border rounded-lg">
         <h1 className='text-xl text-white'>Calculate your BMI and ideal bodyweight for your height</h1>
         <p className='text-lg text-white'>Maintaning ideal bodyweight is beneficial for your long term health</p>
 

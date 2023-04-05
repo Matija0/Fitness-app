@@ -13,7 +13,7 @@ const SearchedExercise = ({ card }) => {
               <h1 className=" h-14 text-lg">{item.name}</h1>
               <h2 className="text-sm font-bold mt-2">Bodypart: <span className="font-normal text-red-800">{item.bodyPart}</span></h2>
             </div>
-            <button className="text-gray-200 text-lg py-1 px-2 bg-green-700 hover:bg-green-600 mt-auto"><i class="bi bi-plus-square"></i></button>
+            <button className="text-gray-200 text-lg py-1 px-2 bg-emerald-700 hover:bg-emerald-600 mt-auto"><i class="bi bi-plus-square"></i></button>
           </div>
         );
       })}
