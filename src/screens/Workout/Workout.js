@@ -87,7 +87,7 @@ const Workout = () => {
 
 
   return (
-    <div className=" mx-8 flex flex-row gap-8 my-11">
+    <div className=" container mx-auto flex flex-row gap-8 my-11">
       <div
         style={{ minHeight: "700px" }}
         className=" w-4/5  border-2 border-gray-400 rounded-lg px-3 py-2 flex justify-center"
@@ -227,7 +227,7 @@ const Workout = () => {
                   onSubmit={handleSubmit}
                   className="flex flex-row gap-2  mb-4"
                 >
-                  <input className="bg-neutral-500 rounded-md  p-2 text-white"
+                  <input className="bg-gray-700 rounded-md  p-2 text-white"
                     type="text"
 
                     value={search}

@@ -17,6 +17,8 @@
     overflow-x: scroll !important;
     padding-bottom: 30px;
     margin-bottom: 20px;
+    scrollbar-color: #353535 #bdbbb0;
+    scrollbar-width: 10px;
    
 }
 
@@ -43,4 +45,6 @@
     background: #383838;
   }
 
+
+ 
   
