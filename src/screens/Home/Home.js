@@ -21,7 +21,7 @@ const Home = () => {
       setTime("Afternoon")
     } else if (time > "18:00" && time <= "24:00") {
       setTime("Evening")
-    } else{
+    } else {
       setTime("Night")
     }
   }
@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <div className=' container mx-auto flex flex-col items-center'>
-      <div className='w-full my-5'><h1 className=' text-white text-xl w-fit font-bold'>Good {timeOfDay} (AccName)</h1></div>
+      <div className='w-full my-5'><h1 className=' text-black text-xl w-fit font-bold'>Good {timeOfDay} (AccName)</h1></div>
       <div className=' '><img style={{ height: "25vh" }} className='' src={Logo} alt="" /></div>
       <Main />
 

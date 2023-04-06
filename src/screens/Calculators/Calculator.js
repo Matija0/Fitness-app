@@ -54,9 +54,9 @@ const Calculator = () => {
 
   return (
     <div className="container mx-auto my-8 grid grid-cols-1 gap-7 md:grid-cols-2">
-      <div className=" py-7 px-5 rounded-xl md:border">
-        <div className="text-white mt-5 mb-14">
-          <h1  className="text-lg mb-4 font-semibold md:text-xl">
+      <div className=" py-7 px-5 bg-gray-800  rounded-lg">
+        <div className="text-gray-300 mt-5 mb-14">
+          <h1 className="text-lg mb-4 font-semibold md:text-xl">
             One Rep Max Calculator
           </h1>
           <p className="text-sm md:text-lg">
@@ -97,15 +97,15 @@ const Calculator = () => {
           </button>
         </form>
         {result ? (
-          <div className=" bg-gray-700 p-5 text-white my-4 rounded-xl w-fit">
+          <div className=" bg-gray-600 p-5 text-white my-4 rounded-xl w-fit">
             <h1 className="text-lg md:text-xl">
               Estimated one-rep max is: {Math.round(result)} kg
             </h1>
           </div>
         ) : null}
       </div>
-      {result?  (<div className="mx-auto">
-        <h1 className="text-white text-sm mb-4 md:text-lg">Bellow is a table of other estimated rep maxes:</h1>
+      {result ? (<div className="mx-auto">
+        <h1 className="text-gray-800 text-sm mb-4 md:text-lg">Bellow is a table of other estimated rep maxes:</h1>
         <table className=" text-gray-100 w-11/12 md:w-full">
           <thead className=" bg-gray-700 text-sm md:text-xl">
             <tr>

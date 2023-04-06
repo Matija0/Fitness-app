@@ -67,19 +67,19 @@ const Tdee = () => {
     <>
       <div className=" container mx-auto my-10">
         <div className="flex flex-col gap-3 px-3">
-          <h1 className="text-white text-xl">
+          <h1 className="text-gray-800 text-xl">
             Learn How Many Calories You Burn Every Day
           </h1>
-          <h2 className="text-white text-sm">
+          <h2 className="text-gray-800 text-lg">
             Use the TDEE calculator to learn your Total Daily Energy
             Expenditure, a measure of how many calories you burn per day. This
             calorie calculator will also display your BMI, BMR, Macros & many
             other useful statistics!
           </h2>
-          <div className=" w-3/4 self-center  py-5 px-4 my-4 rounded-lg flex flex-col items-center md:w-1/2 md:border-2 md:border-gray-400">
+          <div className=" w-3/4 self-center bg-gray-800 shadow-sm  py-5 px-4 my-4 rounded-lg flex flex-col items-center md:w-1/2 ">
             <form onSubmit={handleSubmit} className=" my-7">
-              <div className="mb-3 text-gray-200">Gender:</div>
-              <div className=" space-x-1 text-gray-200">
+              <div className="mb-3 text-gray-300">Gender:</div>
+              <div className=" space-x-1 text-gray-300">
                 <input
                   type="radio"
                   id="Male"
@@ -90,7 +90,7 @@ const Tdee = () => {
                 />
                 <label for="Male">Male</label>
               </div>
-              <div className=" space-x-1 text-gray-200 mb-7">
+              <div className=" space-x-1 text-gray-300 mb-7">
                 <input
                   type="radio"
                   id="Female"
@@ -137,11 +137,11 @@ const Tdee = () => {
                 <label className="body-label">Height</label>
               </div>
               <div className=" my-10">
-                <div className="mb-3 text-gray-200">Activity:</div>
+                <div className="mb-3 text-gray-300">Activity:</div>
                 <select
-                  style={{ backgroundColor: "#1f1f23" }}
+                  style={{ backgroundColor: "#1f2937" }}
                   onChange={(e) => setActivity(e.target.value)}
-                  className=" w-fit  p-2 rounded-md border border-gray-400 text-white text-sm md:w-auto md:text-lg"
+                  className=" w-fit  p-2 rounded-md border border-sky-600 text-gray-300 text-sm md:w-auto md:text-lg"
                 >
                   <option value={1.2}>Sedentary</option>
                   <option value={1.375}>Light exercise(1/2 days a week)</option>
@@ -163,8 +163,8 @@ const Tdee = () => {
         </div>
       </div>
       {TDEE ? (
-        <div className=" hidden md:flex flex-col gap-5 mx-auto my-7  border-4  border-indigo-600 rounded-lg py-5 px-3 w-fit  text-xl ">
-          <div className="flex flex-row gap-5 text-white text-center ">
+        <div className=" hidden md:flex flex-col gap-5 mx-auto my-7  bg-gray-800 shadow-sm rounded-lg py-5 px-3 w-fit  text-xl ">
+          <div className="flex flex-row gap-5 text-gray-800 text-center ">
             <div className=" bg-blue-600 py-2 px-3  rounded-md  text-white w-24">
               TDEE
             </div>

@@ -11,7 +11,7 @@
     width:300px;
     border:none;
     border-bottom:1px solid #757575;
-    color: white;
+    color: #e2e8f0;
 }
 
 .body-input:focus{ outline:none; }
