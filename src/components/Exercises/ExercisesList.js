@@ -14,7 +14,7 @@ const ExercisesList = ({ card }) => {
     <>
       {card.map((item) => {
         return (
-          <div style={{ maxHeight: "390px" }} className="flex flex-col gap-4 text-gray-900 bg-slate-400" key={item.id}>
+          <div style={{ maxHeight: "390px" }} className="flex flex-col gap-4 text-black bg-gray-500" key={item.id}>
             <img style={{ maxWidth: "200px" }} src={item.gifUrl} alt="" />
             <div className="flex flex-col gap-5  px-5">
               <h1 className=" h-14 text-lg">{item.name}</h1>

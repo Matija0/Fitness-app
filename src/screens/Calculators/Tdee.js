@@ -67,10 +67,10 @@ const Tdee = () => {
     <>
       <div className=" container mx-auto my-10">
         <div className="flex flex-col gap-3 px-3">
-          <h1 className="text-gray-800 text-xl">
+          <h1 className="text-gray-300 text-xl">
             Learn How Many Calories You Burn Every Day
           </h1>
-          <h2 className="text-gray-800 text-lg">
+          <h2 className="text-gray-300 text-lg">
             Use the TDEE calculator to learn your Total Daily Energy
             Expenditure, a measure of how many calories you burn per day. This
             calorie calculator will also display your BMI, BMR, Macros & many

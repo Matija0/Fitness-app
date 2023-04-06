@@ -9,7 +9,7 @@ const Bodyweight = () => {
   const [result, setResult] = useState()
   const [BMI, setBMI] = useState()
 
-  const [pixels, setPixels] = useState(0)
+  const [percentage, setPercentage] = useState(0)
   const calculateIdealBW = () => {
     if (gender === "Male") {
       setResult(50 + (0.91 * (height - 152.4)))
@@ -20,32 +20,31 @@ const Bodyweight = () => {
 
   const calculateBMI = () => {
     let square = Math.pow(height, 2)
-    setBMI(weight / (square * 0.0001))
-    console.log(weight, "w")
-    console.log(height, "h")
+    setBMI((weight / (square * 0.0001)).toFixed(1))
+    
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     calculateIdealBW();
     calculateBMI();
-    getPixels();
+    getPercentage();
     clear();
   };
 
-  const getPixels = () => {
+  const getPercentage = () => {
     if (BMI <= 18.5) {
-      setPixels(20)
+      setPercentage(8)
     } else if (BMI > 18.5 && BMI <= 24.9) {
-      setPixels(80)
+      setPercentage(27)
     } else if (BMI >= 25 && BMI <= 29.9) {
-      setPixels(150)
+      setPercentage(48)
     } else if (BMI >= 30 && BMI >= 34.9) {
-      setPixels(300)
+      setPercentage(68)
     } else {
-      setPixels(400)
+      setPercentage(87)
     }
-    console.log(BMI)
+    
   }
 
   const clear = () => {
@@ -53,6 +52,8 @@ const Bodyweight = () => {
     setHeight("")
     setWeight("")
   }
+  console.log(BMI, "test")
+  console.log(percentage, "p")
   return (
     <div className="container mx-auto my-14 grid grid-cols-2 gap-7">
       <div className="p-4 bg-gray-800 shadow-sm rounded-lg">
@@ -94,12 +95,12 @@ const Bodyweight = () => {
             <div className=" w-1/5 bg-orange-400 text-black text-lg py-2  px-2 flex flex-col">Between 30-34.9 <span className="text-sm text-gray-800">Obese</span></div>
             <div className=" w-1/5 bg-red-400 text-black text-lg py-2  px-2 flex flex-col justify-center">35 or higher <span className="text-sm text-gray-800">Extremly obese</span></div>
           </div>
-          <div className=" bg-gray-800 text-4xl py-7 relative"><motion.div className="absolute top-2 text-gray-300" animate={{ x: `${pixels}px` }} transition={{ type: "tween", duration: 0.5 }}><i class="bi bi-arrow-up-square"></i></motion.div></div>
+          <div className=" bg-gray-800 text-4xl py-4 "><motion.div className=" text-gray-300" animate={{ x: `${percentage}%` }} transition={{ type: "tween", duration: 0.5 }}><i class="bi bi-arrow-up-square"></i></motion.div></div>
         </div>
         {result ? (<div className=" w-fit text-gray-800 flex flex-col gap-3 my-5">
 
-          <span className="bg-white shadow-sm p-3 rounded-md font-bold">Your BMI is: {BMI.toFixed(1)}</span>
-          <span className="bg-white shadow-sm p-3 rounded-md font-bold">Your ideal bodyweight is: {Math.round(result)} kg</span>
+          <span className="bg-gray-800  p-3 rounded-md font-bold text-gray-200">Your BMI is: {BMI}</span>
+          <span className="bg-gray-800  p-3 rounded-md font-bold text-gray-200">Your ideal bodyweight is: {Math.round(result)} kg</span>
         </div>) : null}
       </div>
 

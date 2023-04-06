@@ -105,7 +105,7 @@ const Calculator = () => {
         ) : null}
       </div>
       {result ? (<div className="mx-auto">
-        <h1 className="text-gray-800 text-sm mb-4 md:text-lg">Bellow is a table of other estimated rep maxes:</h1>
+        <h1 className="text-gray-300 text-sm mb-4 md:text-lg">Bellow is a table of other estimated rep maxes:</h1>
         <table className=" text-gray-100 w-11/12 md:w-full">
           <thead className=" bg-gray-700 text-sm md:text-xl">
             <tr>

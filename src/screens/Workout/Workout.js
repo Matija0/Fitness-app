@@ -42,7 +42,7 @@ const Workout = () => {
   const [show, setShow] = useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
-
+  
 
 
 
@@ -86,10 +86,10 @@ const Workout = () => {
 
 
   return (
-    <div className="mx-7 flex flex-row gap-8 my-11">
+    <div className="container mx-auto flex flex-row gap-8 my-11">
       <div
-        style={{ minHeight: "700px" }}
-        className=" w-4/5 bg-gray-800 shadow-sm rounded-lg px-3 py-2 flex justify-center"
+        style={{ minHeight: "700px"}}
+        className=" w-4/5 bg-gray-800  rounded-lg px-3 py-2 flex justify-center"
       >
         <Tabs variant="unstyled" paddingX={"5px"}>
           <TabList color={"gray.300"}>
@@ -120,7 +120,7 @@ const Workout = () => {
                 >
                   Add exercise
                 </button>
-                <div className="flex flex-row gap-4 my-7 py-2 rounded-md">
+                <div className="flex flex-row gap-4 my-7 py-2 border border-gray-400 rounded-md">
                   <h1 className=" text-gray-300 pl-4 text-lg">(Exercise name)</h1>
 
                   <button className=" border border-gray-300 py-1  px-2 rounded-lg text-sm font-bold text-gray-300" onClick={() => { setOverlay(<OverlayOne />); onSecondOpen(); }}><i class="bi bi-plus-lg"></i> set</button>
@@ -211,7 +211,7 @@ const Workout = () => {
         </Tabs>
         <Modal isCentered isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
           {overlay}
-          <ModalContent bg="gray.200">
+          <ModalContent bg="gray.400">
             <div>
               <div className="flex justify-end p-2">
                 <button className=" text-lg text-gray-800 " onClick={onMainClose}>
@@ -226,13 +226,13 @@ const Workout = () => {
                   onSubmit={handleSubmit}
                   className="flex flex-row gap-2  mb-4"
                 >
-                  <input className="bg-gray-800 rounded-md  p-2 text-white"
+                  <input className="bg-gray-700 rounded-md  p-2 text-white"
                     type="text"
 
                     value={search}
                     onChange={(e) => setSearch(e.target.value.toLowerCase())}
                   />
-                  <button type="submit" className="py-2 px-3 text-gray-800 rounded-md border-2 border-gray-800">
+                  <button type="submit" className="py-2 px-3 text-gray-700 rounded-md border-2 border-gray-700 hover:bg-gray-700 hover:text-gray-200">
                     <i class="bi bi-search"></i>
                   </button>
                 </form>
@@ -246,19 +246,19 @@ const Workout = () => {
           <ModalContent bg="gray.400">
 
             <div className="flex justify-end p-2">
-              <button className=" text-lg text-gray-300 " onClick={onSecondClose}>
+              <button className=" text-lg text-gray-900 " onClick={onSecondClose}>
                 <i class="bi bi-x-lg"></i>
               </button>
             </div>
 
             <form onSubmit={handleData} className="flex flex-col items-center gap-3 my-10">
-              <input className="bg-black rounded-md  p-2 text-white" type="number" placeholder="Number of reps" required />
-              <div className="flex flex-col items-center gap-3">
-                <input className="bg-black rounded-md  p-2 text-white" type="number" placeholder="Percentage" />
+              <input className="bg-gray-700 rounded-md  p-2 text-white" type="number" placeholder="Number of reps" required />
+              <div className="flex flex-row items-center gap-3">
+                <input className="bg-gray-700 rounded-md  p-2 text-white" type="number" placeholder="Percentage" />
                 <span className="text-gray-200">or</span>
-                <input className="bg-black rounded-md  p-2 text-white" type="number" placeholder="RPE" />
+                <input className="bg-gray-700 rounded-md  p-2 text-white" type="number" placeholder="RPE" />
               </div>
-              <button type="submit" className=" bg-gray-800 py-2 px-3 rounded-lg hover:bg-gray-700 text-white" onClick={onSecondClose}>Save</button>
+              <button type="submit" className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white" onClick={onSecondClose}>Save</button>
             </form>
 
           </ModalContent>

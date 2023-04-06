@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <div className=' container mx-auto flex flex-col items-center'>
-      <div className='w-full my-5'><h1 className=' text-black text-xl w-fit font-bold'>Good {timeOfDay} (AccName)</h1></div>
+      <div className='w-full my-5'><h1 className=' text-gray-200 text-xl w-fit font-bold'>Good {timeOfDay} (AccName)</h1></div>
       <div className=' '><img style={{ height: "25vh" }} className='' src={Logo} alt="" /></div>
       <Main />
 
