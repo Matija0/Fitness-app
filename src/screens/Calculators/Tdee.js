@@ -16,9 +16,9 @@ const Tdee = () => {
   const [height, setHeight] = useState("");
   const [activity, setActivity] = useState(1.2);
   const [BMR, setBMR] = useState("");
-  const [TDEE, setTDEE] = useState("");
+  const [TDEE, setTDEE] = useState();
   const [deficit, setDeficit] = useState("");
-  const [suficit, setSuficit] = useState("");
+  const [test, setTest]=useState("")
 
   
 
@@ -33,35 +33,27 @@ const Tdee = () => {
       default:
         console.log("No gender was entered!");
     }
+    
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     calculateBMR();
-    setTDEE(BMR * activity);
-    calculateDeficit();
-    calculateSuficit();
     
   };
 
-  const calculateDeficit = () => {
-    let val = TDEE * 0.2;
-    console.log(TDEE, "D");
-    setDeficit(TDEE - val);
-  };
+  
+  
 
-  const calculateSuficit = () => {
-    setSuficit(TDEE + 300);
-  };
-
+  
   const clear = () => {
     setGender("")
     setAge("")
     setWeight("")
     setHeight("")
   };
-  console.log(weight, "test")
-
+  
+  
   return (
     <>
       <div className=" container mx-auto my-10">
@@ -165,21 +157,21 @@ const Tdee = () => {
           </div>
         </div>
       </div>
-      {TDEE ? (
-        <div className=" hidden md:flex flex-col gap-5 mx-auto my-7  bg-gray-800 shadow-sm rounded-lg py-5 px-3 w-fit  text-xl ">
+      {BMR ? (
+        <div className=" hidden md:flex flex-col gap-5 mx-auto my-7  bg-gray-800 border border-gray-500 shadow-sm rounded-lg py-5 px-5 w-fit  text-xl ">
           <div className="flex flex-row gap-5 text-gray-800 text-center ">
             <div className=" bg-blue-600 py-2 px-3  rounded-md  text-white w-24">
               TDEE
             </div>
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg ">
-                Maintaining weight: {Math.round(TDEE)} cal
+                Maintaining weight: {Math.round(BMR*activity)} cal
               </span>
               <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">
-                Losing weight: {Math.round(deficit)} cal
+                Losing weight: {Math.round((BMR*activity)-((BMR*activity)*0.2))} cal
               </span>
               <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">
-                Gaining weight: {Math.round(suficit)} cal
+                Gaining weight: {Math.round((BMR*activity)+300)} cal
               </span>
             </div>
           </div>
@@ -222,16 +214,16 @@ const Tdee = () => {
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Maintaining weight:{" "}
-                {Math.round((TDEE - weight * 2 - weight * 1) / 4)} gr
+                {Math.round((BMR*activity) - (weight * 2 - weight * 1) / 4)} gr
               </span>
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Losing weight:{" "}
-                {Math.round((TDEE - weight * 2.2 - weight * 1.2) / 4)}{" "}
+                {Math.round((BMR*activity) - (weight * 2.2 - weight * 1.2) / 4)}{" "}
                 gr
               </span>
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Gaining weight:{" "}
-                {Math.round((TDEE - weight * 2.5 - weight * 1.1) / 4)}{" "}
+                {Math.round(((BMR*activity) - (weight * 2.5) - (weight * 1.1)) / 4)}{" "}
                 gr
               </span>
             </div>
@@ -240,21 +232,23 @@ const Tdee = () => {
       ) : null}
       {console.log(activity, "acti")}
 
-      {TDEE ? (
-        <div className="text-white my-7 md:hidden">
+      {BMR ? (
+        <div className="text-white my-7 mx-auto w-3/4  md:hidden">
           <Accordion
             defaultIndex={[0]}
             allowMultiple
             width={"100%"}
             mx={"auto"}
             py={"5px"}
+            
           >
-            <AccordionItem>
+            <AccordionItem border={"none"}  marginBottom={"5px"}>
               <div>
                 <AccordionButton
                   bg={"blue.700"}
                   _expanded={{ bg: "blue.600" }}
                   _hover={{ bg: "blue.600" }}
+                  borderRadius={"5px"}
                 >
                   <Box as="span" flex="1" textAlign="left">
                     TDEE
@@ -263,18 +257,19 @@ const Tdee = () => {
                 </AccordionButton>
               </div>
               <AccordionPanel pb={4} color="gray.300">
-                <Box>Maintaining weight: {Math.round(TDEE)} cal</Box>
-                <Box>Losing weight: {Math.round(deficit)} cal</Box>
-                <Box>Gaining weight: {Math.round(suficit)} cal</Box>
+                <Box>Maintaining weight: {Math.round(BMR*activity)} cal</Box>
+                <Box>Losing weight: {Math.round((BMR*activity)-((BMR*activity)*0.2))} cal</Box>
+                <Box>Gaining weight: {Math.round((BMR*activity)+300)} cal</Box>
               </AccordionPanel>
             </AccordionItem>
 
-            <AccordionItem>
+            <AccordionItem border={"none"} marginBottom={"5px"}>
               <div>
                 <AccordionButton
                   bg={"red.700"}
                   _expanded={{ bg: "red.600" }}
                   _hover={{ bg: "red.600" }}
+                  borderRadius={"5px"}
                 >
                   <Box as="span" flex="1" textAlign="left">
                     Protein
@@ -292,12 +287,13 @@ const Tdee = () => {
                 </Box>
               </AccordionPanel>
             </AccordionItem>
-            <AccordionItem>
+            <AccordionItem border={"none"} marginBottom={"5px"}>
               <div>
                 <AccordionButton
                   bg={"teal.600"}
                   _expanded={{ bg: "teal.500" }}
                   _hover={{ bg: "teal.500" }}
+                  borderRadius={"5px"}
                 >
                   <Box as="span" flex="1" textAlign="left">
                     Fat
@@ -313,12 +309,13 @@ const Tdee = () => {
                 <Box>Gaining weight: { Math.round(weight * 1)} gr </Box>
               </AccordionPanel>
             </AccordionItem>
-            <AccordionItem>
+            <AccordionItem border={"none"} marginBottom={"5px"}>
               <div>
                 <AccordionButton
                   bg={"yellow.600"}
                   _expanded={{ bg: "yellow.500" }}
                   _hover={{ bg: "yellow.500" }}
+                  borderRadius={"5px"}
                 >
                   <Box as="span" flex="1" textAlign="left">
                     Carbs
@@ -329,13 +326,13 @@ const Tdee = () => {
               <AccordionPanel pb={4} color="gray.300">
                 <Box>
                   Maintaining weight:{" "}
-                  {Math.round((TDEE - weight * 2 - weight * 1) / 4)} gr
+                  {Math.round((BMR*activity) - (weight * 2)-(weight * 1) / 4)} gr
                 </Box>
                 <Box>
                   Losing weight:{" "}
                   {
                     Math.round(
-                      (TDEE - weight * 2.2 - weight * 1.2) / 4
+                      ((BMR*activity) - (weight * 2.2) - (weight * 1.2)) / 4
                     )
                   }{" "}
                   gr
@@ -344,7 +341,7 @@ const Tdee = () => {
                   Gaining weight:{" "}
                   {
                     Math.round(
-                      (TDEE - weight * 2.5 - weight * 1.1) / 4
+                      (BMR*activity) - (weight * 2.5) - (weight * 1.1) / 4
                     )
                   }{" "}
                   gr{" "}
