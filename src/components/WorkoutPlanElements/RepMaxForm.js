@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const RepMaxForm = () => {
     return (
-        <div className=" bg-gray-800 flex flex-col items-center gap-5 px-2 py-3 rounded-lg">
+        <div className=" bg-gray-800 border border-gray-500 flex flex-col items-center gap-5 px-2 py-3 rounded-lg">
             <h1 className="text-white text-xl">Enter your 1RMs:</h1>
             <form className="flex flex-col gap-3 items-center">
                 <input className="bg-gray-500 rounded-md  p-2 text-white" type="number" placeholder="Squat" />

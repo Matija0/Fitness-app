@@ -20,9 +20,7 @@ const Tdee = () => {
   const [deficit, setDeficit] = useState("");
   const [suficit, setSuficit] = useState("");
 
-  let prot = "";
-  let f = "";
-  let carb = "";
+  
 
   const calculateBMR = () => {
     switch (gender) {
@@ -43,7 +41,7 @@ const Tdee = () => {
     setTDEE(BMR * activity);
     calculateDeficit();
     calculateSuficit();
-    clear();
+    
   };
 
   const calculateDeficit = () => {
@@ -62,6 +60,7 @@ const Tdee = () => {
     setWeight("")
     setHeight("")
   };
+  console.log(weight, "test")
 
   return (
     <>
@@ -76,7 +75,7 @@ const Tdee = () => {
             calorie calculator will also display your BMI, BMR, Macros & many
             other useful statistics!
           </h2>
-          <div className=" w-3/4 self-center bg-gray-800 shadow-sm  py-5 px-4 my-4 rounded-lg flex flex-col items-center md:w-1/2 ">
+          <div className=" w-3/4 self-center bg-gray-800 border border-gray-500 py-5 px-4 my-4 rounded-lg flex flex-col items-center md:w-1/2 ">
             <form onSubmit={handleSubmit} className=" my-7">
               <div className="mb-3 text-gray-300">Gender:</div>
               <div className=" space-x-1 text-gray-300">
@@ -106,6 +105,7 @@ const Tdee = () => {
                   className="body-input"
                   type="text"
                   required
+                  value={age}
                   onChange={(e) => setAge(e.target.value)}
                   max="99"
                 />
@@ -119,6 +119,7 @@ const Tdee = () => {
                   className="body-input"
                   type="text"
                   required
+                  value={weight}
                   onChange={(e) => setWeight(e.target.value)}
                 />
                 <span className="highlight"></span>
@@ -130,6 +131,7 @@ const Tdee = () => {
                   className="body-input"
                   type="text"
                   required
+                  value={height}
                   onChange={(e) => setHeight(e.target.value)}
                 />
                 <span className="highlight"></span>
@@ -141,7 +143,8 @@ const Tdee = () => {
                 <select
                   style={{ backgroundColor: "#1f2937" }}
                   onChange={(e) => setActivity(e.target.value)}
-                  className=" w-fit  p-2 rounded-md border border-sky-600 text-gray-300 text-sm md:w-auto md:text-lg"
+                  className=" w-fit  p-2 rounded-md border  cursor-pointer text-gray-300 text-sm md:w-auto md:text-lg"
+                  value={activity}
                 >
                   <option value={1.2}>Sedentary</option>
                   <option value={1.375}>Light exercise(1/2 days a week)</option>
@@ -186,13 +189,13 @@ const Tdee = () => {
             </div>
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">
-                Maintaining weight: {(prot = Math.round(weight * 2))} gr{" "}
+                Maintaining weight: {Math.round(weight * 2)} gr{" "}
               </span>
               <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">
-                Losing weight: {(prot = Math.round(weight * 2.5))} gr{" "}
+                Losing weight: {Math.round(weight * 2.5)} gr{" "}
               </span>
               <span className=" border-2 border-red-500 py-2 px-3 rounded-lg">
-                Gaining weight: {(prot = Math.round(weight * 2.2))} gr{" "}
+                Gaining weight: {Math.round(weight * 2.2)} gr{" "}
               </span>
             </div>
           </div>
@@ -202,13 +205,13 @@ const Tdee = () => {
             </div>
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">
-                Maintaining weight: {(f = Math.round(weight * 0.95))} gr
+                Maintaining weight: {Math.round(weight * 0.95)} gr
               </span>
               <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">
-                Losing weight: {(f = Math.round(weight * 1.1))} gr
+                Losing weight: {Math.round(weight * 1.1)} gr
               </span>
               <span className=" border-2 border-emerald-500 py-2 px-3 rounded-lg">
-                Gaining weight: {(f = Math.round(weight * 1))} gr
+                Gaining weight: {Math.round(weight * 1)} gr
               </span>
             </div>
           </div>
@@ -219,16 +222,16 @@ const Tdee = () => {
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Maintaining weight:{" "}
-                {(carb = Math.round((TDEE - weight * 2 - weight * 1) / 4))} gr
+                {Math.round((TDEE - weight * 2 - weight * 1) / 4)} gr
               </span>
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Losing weight:{" "}
-                {(carb = Math.round((TDEE - weight * 2.2 - weight * 1.2) / 4))}{" "}
+                {Math.round((TDEE - weight * 2.2 - weight * 1.2) / 4)}{" "}
                 gr
               </span>
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Gaining weight:{" "}
-                {(carb = Math.round((TDEE - weight * 2.5 - weight * 1.1) / 4))}{" "}
+                {Math.round((TDEE - weight * 2.5 - weight * 1.1) / 4)}{" "}
                 gr
               </span>
             </div>
@@ -281,11 +284,11 @@ const Tdee = () => {
               </div>
               <AccordionPanel pb={4} color="gray.300">
                 <Box>
-                  Maintaining weight: {(prot = Math.round(weight * 2))} gr
+                  Maintaining weight: { Math.round(weight * 2)} gr
                 </Box>
-                <Box>Losing weight: {(prot = Math.round(weight * 2.5))} gr</Box>
+                <Box>Losing weight: { Math.round(weight * 2.5)} gr</Box>
                 <Box>
-                  Gaining weight: {(prot = Math.round(weight * 2.5))} gr{" "}
+                  Gaining weight: { Math.round(weight * 2.5)} gr{" "}
                 </Box>
               </AccordionPanel>
             </AccordionItem>
@@ -304,10 +307,10 @@ const Tdee = () => {
               </div>
               <AccordionPanel pb={4} color="gray.300">
                 <Box>
-                  Maintaining weight: {(f = Math.round(weight * 0.95))} gr
+                  Maintaining weight: {Math.round(weight * 0.95)} gr
                 </Box>
-                <Box>Losing weight: {(f = Math.round(weight * 1.1))} gr</Box>
-                <Box>Gaining weight: {(f = Math.round(weight * 1))} gr </Box>
+                <Box>Losing weight: { Math.round(weight * 1.1)} gr</Box>
+                <Box>Gaining weight: { Math.round(weight * 1)} gr </Box>
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem>
@@ -326,23 +329,23 @@ const Tdee = () => {
               <AccordionPanel pb={4} color="gray.300">
                 <Box>
                   Maintaining weight:{" "}
-                  {(carb = Math.round((TDEE - weight * 2 - weight * 1) / 4))} gr
+                  {Math.round((TDEE - weight * 2 - weight * 1) / 4)} gr
                 </Box>
                 <Box>
                   Losing weight:{" "}
                   {
-                    (carb = Math.round(
+                    Math.round(
                       (TDEE - weight * 2.2 - weight * 1.2) / 4
-                    ))
+                    )
                   }{" "}
                   gr
                 </Box>
                 <Box>
                   Gaining weight:{" "}
                   {
-                    (carb = Math.round(
+                    Math.round(
                       (TDEE - weight * 2.5 - weight * 1.1) / 4
-                    ))
+                    )
                   }{" "}
                   gr{" "}
                 </Box>

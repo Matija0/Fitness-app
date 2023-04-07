@@ -15,7 +15,7 @@ const MealsList = () => {
 
 
   return (
-    <div className='mt-5 bg-gray-800 shadow-sm rounded-lg px-3 py-4'>
+    <div className='mt-5 bg-gray-800 border border-gray-500  rounded-lg px-3 py-4'>
       <button className='text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white'><i class="bi bi-plus"></i> meal</button>
       <Accordion defaultIndex={[0]} allowMultiple width={"30%"} marginX={"auto"}>
         <AccordionItem border={"none"}>

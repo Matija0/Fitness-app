@@ -89,7 +89,7 @@ const Workout = () => {
     <div className="container mx-auto flex flex-row gap-8 my-11">
       <div
         style={{ minHeight: "700px"}}
-        className=" w-4/5 bg-gray-800  rounded-lg px-3 py-2 flex justify-center"
+        className=" w-4/5 bg-gray-800 border border-gray-500  rounded-lg px-3 py-2 flex justify-center"
       >
         <Tabs variant="unstyled" paddingX={"5px"}>
           <TabList color={"gray.300"}>
@@ -120,10 +120,10 @@ const Workout = () => {
                 >
                   Add exercise
                 </button>
-                <div className="flex flex-row gap-4 my-7 py-2 border border-gray-400 rounded-md">
+                <div className="flex flex-row gap-4 my-7 py-2 bg-gray-700 rounded-md">
                   <h1 className=" text-gray-300 pl-4 text-lg">(Exercise name)</h1>
 
-                  <button className=" border border-gray-300 py-1  px-2 rounded-lg text-sm font-bold text-gray-300" onClick={() => { setOverlay(<OverlayOne />); onSecondOpen(); }}><i class="bi bi-plus-lg"></i> set</button>
+                  <button className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500" onClick={() => { setOverlay(<OverlayOne />); onSecondOpen(); }}><i class="bi bi-plus-lg"></i> set</button>
                 </div>
 
               </div>

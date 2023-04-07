@@ -9,7 +9,7 @@ const DashBoard = () => {
 
 
     return (
-        <div className="text-gray-300 bg-gray-800 shadow-sm rounded-md self-center py-4 px-3">
+        <div className="text-gray-300 bg-gray-800 border border-gray-500 shadow-sm rounded-lg self-center py-4 px-3">
             <div className='flex flex-row justify-center items-center gap-3'>
                 <div className='flex flex-col gap-2'>
                     <h1 className='text-lg font-bold'>{eaten}</h1>
