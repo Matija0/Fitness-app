@@ -34,13 +34,15 @@ const Bodyweight = () => {
   };
 
   const getPercentage = () => {
-    if (BMI <= 18.5) {
+    let square = Math.pow(height, 2)
+    let val= (weight / (square * 0.0001)).toFixed(1)
+    if (val <= 18.5) {
       setPercentage(8)
-    } else if (BMI > 18.5 && BMI <= 24.9) {
+    } else if (val > 18.5 && val <= 24.9) {
       setPercentage(27)
-    } else if (BMI >= 25 && BMI <= 29.9) {
+    } else if (val >= 25 && val <= 29.9) {
       setPercentage(48)
-    } else if (BMI >= 30 && BMI >= 34.9) {
+    } else if (val >= 30 && val >= 34.9) {
       setPercentage(68)
     } else {
       setPercentage(87)
@@ -87,7 +89,7 @@ const Bodyweight = () => {
 
       </div>
       <div className="">
-        <div className="flex flex-col">
+        <div className="flex flex-col border border-gray-500">
           <div className="  flex flex-row">
             <div className=" w-1/5 bg-indigo-400 text-black text-lg py-2 px-2 flex flex-col justify-center"> Bellow 18.5 <span className="text-sm text-gray-800">Underweight</span> </div>
             <div className=" w-1/5 bg-emerald-400 text-black text-lg py-2  px-2 flex flex-col">Between 18.5-24.9 <span className="text-sm text-gray-800">Normal weight</span></div>

@@ -92,11 +92,7 @@
 }
 
 
-input[type="radio"] {
-  background-color: transparent;
-  color: #757575;
 
-}
 
 input[type=number] {
   -moz-appearance: textfield;
@@ -109,8 +105,13 @@ input::-webkit-inner-spin-button {
 }
 
 
-
-
+input[type="radio"] {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+  background-color: gray;
+  accent-color:#5264AE;
+}
 
 
 

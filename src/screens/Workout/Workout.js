@@ -211,28 +211,28 @@ const Workout = () => {
         </Tabs>
         <Modal isCentered isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
           {overlay}
-          <ModalContent bg="gray.400">
+          <ModalContent bg="gray.600">
             <div>
               <div className="flex justify-end p-2">
-                <button className=" text-lg text-gray-800 " onClick={onMainClose}>
+                <button className=" text-lg text-gray-200 " onClick={onMainClose}>
                   <i class="bi bi-x-lg"></i>
                 </button>
               </div>
               <div className=" my-5 flex flex-col gap-3 items-center">
-                <h1 className=" text-gray-800 text-xl mb-3">
+                <h1 className=" text-gray-200 text-xl mb-3">
                   Search for exercises
                 </h1>
                 <form
                   onSubmit={handleSubmit}
                   className="flex flex-row gap-2  mb-4"
                 >
-                  <input className="bg-gray-700 rounded-md  p-2 text-white"
+                  <input className="bg-gray-900 rounded-md  p-2 text-white"
                     type="text"
 
                     value={search}
                     onChange={(e) => setSearch(e.target.value.toLowerCase())}
                   />
-                  <button type="submit" className="py-2 px-3 text-gray-700 rounded-md border-2 border-gray-700 hover:bg-gray-700 hover:text-gray-200">
+                  <button type="submit" className="py-2 px-3 text-gray-900 rounded-md border-2 border-gray-900 hover:bg-gray-900 hover:text-gray-200">
                     <i class="bi bi-search"></i>
                   </button>
                 </form>
@@ -243,7 +243,7 @@ const Workout = () => {
         </Modal>
         <Modal isCentered isOpen={isSecondOpen} onClose={onSecondClose} size={"2xl"}>
           {overlay}
-          <ModalContent bg="gray.400">
+          <ModalContent bg="gray.500">
 
             <div className="flex justify-end p-2">
               <button className=" text-lg text-gray-900 " onClick={onSecondClose}>
