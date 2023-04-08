@@ -54,7 +54,7 @@ const Calculator = () => {
 
   return (
     <div className="container mx-auto my-8 grid grid-cols-1 gap-7 md:grid-cols-2">
-      <div className=" py-7 px-5 bg-gray-800  rounded-lg">
+      <div className=" py-7 px-5 bg-gray-800 border border-gray-500  rounded-lg">
         <div className="text-gray-300 mt-5 mb-14">
           <h1 className="text-lg mb-4 font-semibold md:text-xl">
             One Rep Max Calculator

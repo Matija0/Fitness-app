@@ -8,8 +8,8 @@ const Bodyweight = () => {
   const [gender, setGender] = useState()
   const [result, setResult] = useState()
   const [BMI, setBMI] = useState()
-
   const [percentage, setPercentage] = useState(0)
+
   const calculateIdealBW = () => {
     if (gender === "Male") {
       setResult(50 + (0.91 * (height - 152.4)))
@@ -21,6 +21,7 @@ const Bodyweight = () => {
   const calculateBMI = () => {
     let square = Math.pow(height, 2)
     setBMI((weight / (square * 0.0001)).toFixed(1))
+    
     
   }
 
@@ -46,17 +47,16 @@ const Bodyweight = () => {
     }
     
   }
-
+  
   const clear = () => {
     setGender("")
     setHeight("")
     setWeight("")
   }
-  console.log(BMI, "test")
-  console.log(percentage, "p")
+  
   return (
     <div className="container mx-auto my-14 grid grid-cols-2 gap-7">
-      <div className="p-4 bg-gray-800 shadow-sm rounded-lg">
+      <div className="p-4 bg-gray-800 border border-gray-500 shadow-sm rounded-lg">
         <h1 className='text-xl text-gray-300 mb-3'>Calculate your BMI and ideal bodyweight for your height</h1>
         <p className='text-lg text-gray-300'>Maintaning ideal bodyweight is beneficial for your long term health</p>
 
@@ -95,12 +95,13 @@ const Bodyweight = () => {
             <div className=" w-1/5 bg-orange-400 text-black text-lg py-2  px-2 flex flex-col">Between 30-34.9 <span className="text-sm text-gray-800">Obese</span></div>
             <div className=" w-1/5 bg-red-400 text-black text-lg py-2  px-2 flex flex-col justify-center">35 or higher <span className="text-sm text-gray-800">Extremly obese</span></div>
           </div>
-          <div className=" bg-gray-800 text-4xl py-4 "><motion.div className=" text-gray-300" animate={{ x: `${percentage}%` }} transition={{ type: "tween", duration: 0.5 }}><i class="bi bi-arrow-up-square"></i></motion.div></div>
+          
+          <div className=" bg-gray-800 text-4xl py-4 "><motion.div className=" text-gray-300" animate={{ x:  `${percentage}%`}} transition={{ type: "tween", duration: 0.5 }}><i class="bi bi-arrow-up-square"></i></motion.div></div>
         </div>
         {result ? (<div className=" w-fit text-gray-800 flex flex-col gap-3 my-5">
 
-          <span className="bg-gray-800  p-3 rounded-md font-bold text-gray-200">Your BMI is: {BMI}</span>
-          <span className="bg-gray-800  p-3 rounded-md font-bold text-gray-200">Your ideal bodyweight is: {Math.round(result)} kg</span>
+          <span className="bg-gray-800 border border-gray-500  p-3 rounded-md text-xl text-gray-200">Your BMI is: {BMI}</span>
+          <span className="bg-gray-800 border border-gray-500 p-3 rounded-md text-xl text-gray-200">Your ideal bodyweight is: {Math.round(result)} kg</span>
         </div>) : null}
       </div>
 
