@@ -12,7 +12,7 @@ const Lunch = () => {
   return (
     <div className="">
       <Accordion
-        defaultIndex={[0]}
+        defaultIndex={[1]}
         allowMultiple
         width={"30%"}
         marginX={"auto"}

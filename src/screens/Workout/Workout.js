@@ -10,24 +10,28 @@ import {
   ModalOverlay,
   Modal,
   ModalContent,
-  ModalCloseButton,
-  ModalBody,
-  Text,
-  ModalFooter,
   useDisclosure,
-  Button,
-  ModalHeader,
-  VStack,
-  CircularProgress,
-  CircularProgressLabel,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
 } from "@chakra-ui/react";
 import { exerciseoptions, fetchData } from "../../utils/fetchData";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ExercisesList from "../../components/WorkoutPlanElements/ExercisesList";
 import RepMaxForm from "../../components/WorkoutPlanElements/RepMaxForm";
-import {db} from "../../firebase-config"
-import {collection, getDocs} from "firebase/firestore"
+import { db } from "../../firebase-config";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
 const Workout = () => {
   const OverlayOne = () => (
@@ -37,23 +41,50 @@ const Workout = () => {
     />
   );
 
-  const { isOpen: isMainOpen, onOpen: onMainOpen, onClose: onMainClose } = useDisclosure();
-  const { isOpen: isSecondOpen, onOpen: onSecondOpen, onClose: onSecondClose } = useDisclosure();
+  const {
+    isOpen: isMainOpen,
+    onOpen: onMainOpen,
+    onClose: onMainClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSecondOpen,
+    onOpen: onSecondOpen,
+    onClose: onSecondClose,
+  } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
-  const [exercisesData, setData]=useState([])
-  const exercisesCollectionRef= collection(db, "exercises")
+  const [exercisesData, setData] = useState([]);
+  const exercisesCollectionRef = collection(db, "exercises");
+  const [newTitle, setNewTitle] = useState("");
+  const [newSet, setNewSet] = useState(0);
 
-    useEffect(()=>{
-        const getExercises = async () =>{
-            const data= await getDocs(exercisesCollectionRef)
-            setData(data.docs.map((doc)=>({...doc.data(), id: doc.id})))
-        }
+  const addExercise = async () => {
+    await addDoc(exercisesCollectionRef, {
+      title: newTitle,
+      sets: Number(newSet),
+    });
+  };
 
-        getExercises()
-    },[])
+  const updateExercise = async (id, sets) => {
+    const exerciseDoc = doc(db, "exercises", id);
+    const newFields = { sets: sets + 1 };
+    await updateDoc(exerciseDoc, newFields);
+  };
+
+  const deleteExercise = async (id) => {
+    const exerciseDoc = doc(db, "exercises", id);
+    await deleteDoc(exerciseDoc);
+  };
+  useEffect(() => {
+    const getExercises = async () => {
+      const data = await getDocs(exercisesCollectionRef);
+      setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getExercises();
+  }, []);
 
   const handleSearch = async () => {
     if (search) {
@@ -72,9 +103,8 @@ const Workout = () => {
         )
       );
       setSearch("");
-
     }
-    setShow(true)
+    setShow(true);
   };
 
   const handleSubmit = (event) => {
@@ -82,22 +112,14 @@ const Workout = () => {
     handleSearch();
   };
 
-
-
-
-
   const handleData = (event) => {
-    event.preventDefault()
-
-
-  }
-
-
+    event.preventDefault();
+  };
 
   return (
     <div className="container mx-auto flex flex-row gap-8 my-11">
       <div
-        style={{ minHeight: "700px"}}
+        style={{ minHeight: "700px" }}
         className=" w-4/5 bg-gray-800 border border-gray-500  rounded-lg px-3 py-2 flex justify-center"
       >
         <Tabs variant={"unstyled"} paddingX={"5px"}>
@@ -129,17 +151,48 @@ const Workout = () => {
                 >
                   Add exercise
                 </button>
-                <div className="flex flex-row gap-4 my-7 py-2 bg-gray-700 rounded-md">
-                  
-                  {exercisesData.map((exercise)=>{
-                    return <div>
-                      <h1>Title: {exercise.title}</h1>
-                      <h1>Sets: {exercise.sets}</h1>
-                    </div>
-                    })}
-                  <button className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500" onClick={() => { setOverlay(<OverlayOne />); onSecondOpen(); }}><i class="bi bi-plus-lg"></i> set</button>
+
+                <div className="mt-4">
+                  {exercisesData.map((exercise) => {
+                    return (
+                      <Accordion defaultIndex={[1]} allowMultiple backgroundColor={"gray.800"} borderRadius={"5px"}>
+                        <AccordionItem border={"none"} marginBottom={"15px"}>
+                          <h2>
+                            <AccordionButton
+                              bg={"none"}
+                              _expanded={{ bg: "gray.700", borderRadius: "5px" }}
+                              _hover={{ bg: "gray.700", borderRadius: "5px" }}
+                              paddingY={"10px"}
+                              color={"gray.300"}
+                            >
+                              <Box
+                                as="span"
+                                flex="1"
+                                textAlign="left"
+                                color={"gray.200"}
+                                fontSize={"lg"}
+                              >
+                                {exercise.title}
+                              </Box>
+                              <AccordionIcon />
+                            </AccordionButton>
+                          </h2>
+                          <AccordionPanel pb={4}>
+                            <button
+                              className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
+                              onClick={() => {
+                                setOverlay(<OverlayOne />);
+                                onSecondOpen();
+                              }}
+                            >
+                              <i class="bi bi-plus-lg"></i> set
+                            </button>
+                          </AccordionPanel>
+                        </AccordionItem>
+                      </Accordion>
+                    );
+                  })}
                 </div>
-
               </div>
             </TabPanel>
             <TabPanel>
@@ -148,21 +201,6 @@ const Workout = () => {
                   className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
                   onClick={() => {
                     setOverlay(<OverlayOne />);
-
-                  }}
-                >
-                  Add exercise
-                </button>
-
-              </div>
-            </TabPanel>
-            <TabPanel>
-              <div className=" mt-7">
-                <button
-                  className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
-                  onClick={() => {
-                    setOverlay(<OverlayOne />);
-
                   }}
                 >
                   Add exercise
@@ -175,7 +213,6 @@ const Workout = () => {
                   className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
                   onClick={() => {
                     setOverlay(<OverlayOne />);
-
                   }}
                 >
                   Add exercise
@@ -188,7 +225,6 @@ const Workout = () => {
                   className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
                   onClick={() => {
                     setOverlay(<OverlayOne />);
-
                   }}
                 >
                   Add exercise
@@ -201,7 +237,6 @@ const Workout = () => {
                   className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
                   onClick={() => {
                     setOverlay(<OverlayOne />);
-
                   }}
                 >
                   Add exercise
@@ -214,7 +249,18 @@ const Workout = () => {
                   className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
                   onClick={() => {
                     setOverlay(<OverlayOne />);
-
+                  }}
+                >
+                  Add exercise
+                </button>
+              </div>
+            </TabPanel>
+            <TabPanel>
+              <div className=" mt-7">
+                <button
+                  className=" bg-red-800 rounded-lg text-white px-3 py-2 hover:bg-red-700"
+                  onClick={() => {
+                    setOverlay(<OverlayOne />);
                   }}
                 >
                   Add exercise
@@ -223,12 +269,20 @@ const Workout = () => {
             </TabPanel>
           </TabPanels>
         </Tabs>
-        <Modal isCentered isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
+        <Modal
+          isCentered
+          isOpen={isMainOpen}
+          onClose={onMainClose}
+          size={"2xl"}
+        >
           {overlay}
           <ModalContent bg="gray.500">
             <div>
               <div className="flex justify-end p-2">
-                <button className=" text-lg text-gray-200 " onClick={onMainClose}>
+                <button
+                  className=" text-lg text-gray-200 "
+                  onClick={onMainClose}
+                >
                   <i class="bi bi-x-lg"></i>
                 </button>
               </div>
@@ -240,41 +294,76 @@ const Workout = () => {
                   onSubmit={handleSubmit}
                   className="flex flex-row gap-2  mb-4"
                 >
-                  <input className="bg-gray-900 rounded-md  p-2 text-white"
+                  <input
+                    className="bg-gray-700 rounded-md  p-2 text-white"
                     type="text"
-
                     value={search}
                     onChange={(e) => setSearch(e.target.value.toLowerCase())}
                   />
-                  <button type="submit" className="py-2 px-3 text-gray-900 rounded-md border-2 border-gray-900 hover:bg-gray-900 hover:text-gray-200">
+                  <button
+                    type="submit"
+                    className="py-2 px-3 text-gray-700 rounded-md border-2 border-gray-700 hover:bg-gray-700 hover:text-gray-200"
+                  >
                     <i class="bi bi-search"></i>
                   </button>
                 </form>
               </div>
-              {show ? (<div className=" row-el">{<ExercisesList card={exercises} />}</div>) : null}
+              {show ? (
+                <div className=" row-el">
+                  {<ExercisesList card={exercises} />}
+                </div>
+              ) : null}
             </div>
           </ModalContent>
         </Modal>
-        <Modal isCentered isOpen={isSecondOpen} onClose={onSecondClose} size={"2xl"}>
+        <Modal
+          isCentered
+          isOpen={isSecondOpen}
+          onClose={onSecondClose}
+          size={"2xl"}
+        >
           {overlay}
           <ModalContent bg="gray.500">
-
             <div className="flex justify-end p-2">
-              <button className=" text-lg text-gray-900 " onClick={onSecondClose}>
+              <button
+                className=" text-lg text-gray-900 "
+                onClick={onSecondClose}
+              >
                 <i class="bi bi-x-lg"></i>
               </button>
             </div>
 
-            <form onSubmit={handleData} className="flex flex-col items-center gap-3 my-10">
-              <input className="bg-gray-700 rounded-md  p-2 text-white" type="number" placeholder="Number of reps" required />
+            <form
+              onSubmit={handleData}
+              className="flex flex-col items-center gap-3 my-10"
+            >
+              <input
+                className="bg-gray-700 rounded-md  p-2 text-white"
+                type="number"
+                placeholder="Number of reps"
+                required
+              />
               <div className="flex flex-row items-center gap-3">
-                <input className="bg-gray-700 rounded-md  p-2 text-white" type="number" placeholder="Percentage" />
+                <input
+                  className="bg-gray-700 rounded-md  p-2 text-white"
+                  type="number"
+                  placeholder="Percentage"
+                />
                 <span className="text-gray-200">or</span>
-                <input className="bg-gray-700 rounded-md  p-2 text-white" type="number" placeholder="RPE" />
+                <input
+                  className="bg-gray-700 rounded-md  p-2 text-white"
+                  type="number"
+                  placeholder="RPE"
+                />
               </div>
-              <button type="submit" className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white" onClick={onSecondClose}>Save</button>
+              <button
+                type="submit"
+                className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
+                onClick={onSecondClose}
+              >
+                Save
+              </button>
             </form>
-
           </ModalContent>
         </Modal>
       </div>
