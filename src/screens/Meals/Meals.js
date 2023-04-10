@@ -5,6 +5,10 @@ import Breakfast from "../../components/MealComponents/Breakfast";
 import Lunch from "../../components/MealComponents/Lunch";
 import Snack from "../../components/MealComponents/Snack";
 import Dinner from "../../components/MealComponents/Dinner";
+import breakfast from "../../images/breakfast.png"
+import lunch from "../../images/lunch.png"
+import dinner from "../../images/dinner.png"
+import snack from "../../images/snack.png"
 
 const Meals = () => {
   return (
@@ -26,20 +30,26 @@ const Meals = () => {
         <DashBoard />
         <div className=" my-5 flex flex-row gap-3">
           <div
-            style={{ backgroundColor: "#22223b" }}
-            className="border border-gray-500 rounded-lg py-7 px-4 w-1/2"
+            
+            className=" bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
-            <h1 className="text-xl text-gray-200 text-center">Breakfast</h1>
+            <div className="flex flex-row gap-4 items-center justify-center mb-2">
+            <h1 className="text-2xl text-gray-200 text-center">Breakfast</h1>
+            <img src={breakfast} alt=""/>
+            </div>
             <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
               <i class="bi bi-plus"></i> meal
             </button>
             <Breakfast />
           </div>
           <div
-            style={{ backgroundColor: "#2b2d42" }}
-            className=" border border-gray-500 rounded-lg py-7 px-4 w-1/2"
+            
+            className="bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
-            <h1 className="text-xl text-gray-200 text-center">Lunch</h1>
+            <div className="flex flex-row gap-4 items-center justify-center mb-2">
+            <h1 className="text-2xl text-gray-200 text-center">Lunch</h1>
+            <img src={lunch} alt="" />
+            </div>
             <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
               <i class="bi bi-plus"></i> meal
             </button>
@@ -49,20 +59,26 @@ const Meals = () => {
 
         <div className="my-5 flex flex-row gap-3">
           <div
-            style={{ backgroundColor: "#002945" }}
-            className="border border-gray-500 rounded-lg py-7 px-4 w-1/2"
+            
+            className=" bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
-            <h1 className="text-xl text-gray-200 text-center">Snack</h1>
+            <div className="flex flex-row gap-4 items-center justify-center mb-2">
+            <h1 className="text-2xl text-gray-200 text-center">Snack</h1>
+            <img src={snack} alt="" />
+            </div>
             <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
               <i class="bi bi-plus"></i> meal
             </button>
             <Snack />
           </div>
           <div
-            style={{ backgroundColor: "#33415c" }}
-            className="border border-gray-500 rounded-lg py-7 px-4 w-1/2"
+           
+            className="bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
-            <h1 className="text-xl text-gray-200 text-center">Dinner</h1>
+            <div className="flex flex-row gap-4 items-center justify-center mb-2">
+            <h1 className="text-2xl text-gray-200 text-center">Dinner</h1>
+            <img className="" src={dinner} alt=""/>
+            </div>
             <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
               <i class="bi bi-plus"></i> meal
             </button>

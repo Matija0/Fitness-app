@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Workout.css";
 import {
   Tabs,
@@ -22,11 +22,12 @@ import {
   CircularProgressLabel,
 } from "@chakra-ui/react";
 import { exerciseoptions, fetchData } from "../../utils/fetchData";
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import ExercisesList from "../../components/Exercises/ExercisesList";
+import ExercisesList from "../../components/WorkoutPlanElements/ExercisesList";
 import RepMaxForm from "../../components/WorkoutPlanElements/RepMaxForm";
+import {db} from "../../firebase-config"
+import {collection, getDocs} from "firebase/firestore"
 
 const Workout = () => {
   const OverlayOne = () => (
@@ -42,9 +43,17 @@ const Workout = () => {
   const [show, setShow] = useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
-  
+  const [exercisesData, setData]=useState([])
+  const exercisesCollectionRef= collection(db, "exercises")
 
+    useEffect(()=>{
+        const getExercises = async () =>{
+            const data= await getDocs(exercisesCollectionRef)
+            setData(data.docs.map((doc)=>({...doc.data(), id: doc.id})))
+        }
 
+        getExercises()
+    },[])
 
   const handleSearch = async () => {
     if (search) {
@@ -91,7 +100,7 @@ const Workout = () => {
         style={{ minHeight: "700px"}}
         className=" w-4/5 bg-gray-800 border border-gray-500  rounded-lg px-3 py-2 flex justify-center"
       >
-        <Tabs variant="unstyled" paddingX={"5px"}>
+        <Tabs variant={"unstyled"} paddingX={"5px"}>
           <TabList color={"gray.300"}>
             <Tab fontSize={"xl"}>Monday</Tab>
             <Tab fontSize={"xl"}>Tuesday</Tab>
@@ -121,8 +130,13 @@ const Workout = () => {
                   Add exercise
                 </button>
                 <div className="flex flex-row gap-4 my-7 py-2 bg-gray-700 rounded-md">
-                  <h1 className=" text-gray-300 pl-4 text-lg">(Exercise name)</h1>
-
+                  
+                  {exercisesData.map((exercise)=>{
+                    return <div>
+                      <h1>Title: {exercise.title}</h1>
+                      <h1>Sets: {exercise.sets}</h1>
+                    </div>
+                    })}
                   <button className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500" onClick={() => { setOverlay(<OverlayOne />); onSecondOpen(); }}><i class="bi bi-plus-lg"></i> set</button>
                 </div>
 
@@ -211,7 +225,7 @@ const Workout = () => {
         </Tabs>
         <Modal isCentered isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
           {overlay}
-          <ModalContent bg="gray.600">
+          <ModalContent bg="gray.500">
             <div>
               <div className="flex justify-end p-2">
                 <button className=" text-lg text-gray-200 " onClick={onMainClose}>
