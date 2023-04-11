@@ -2,7 +2,7 @@ import React from 'react'
 
 const Login = () => {
   return (
-    <div className=' container w-fit mx-auto px-14 rounded-xl my-14  flex flex-col items-center py-10 bg-gray-700 '>
+    <div className=' container w-2/5 mx-auto px-14 rounded-xl my-14  flex flex-col items-center py-10 bg-gray-700 '>
       <div> <h1 className='text-white text-xl font-bold mb-7'>Login to your account</h1></div>
 
 

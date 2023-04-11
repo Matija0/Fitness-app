@@ -72,3 +72,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 {updateExercise(exercise.id, exercise.sets)}
 {deleteExercise(exercise.id)}
+
+const updateExercise = async (id, sets) => {
+    const exerciseDoc = doc(db, "exercises", id);
+    const newFields = { sets: sets + 1 };
+    await updateDoc(exerciseDoc, newFields);
+  };
+
+const deleteExercise = async (id) => {
+    const exerciseDoc = doc(db, "exercises", id);
+    await deleteDoc(exerciseDoc);
+  };  
