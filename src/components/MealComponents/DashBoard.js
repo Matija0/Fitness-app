@@ -25,10 +25,10 @@ const DashBoard = () => {
                     <span>Total</span>
                 </div>
             </div>
-            <div className='flex flex-row gap-4 justify-center w-2/4 mx-auto'>
+            <div className='flex flex-row gap-4 w-full justify-center  mx-auto md:w-2/4'>
                 <div className='flex flex-col gap-3 w-1/3'>
                     <span className='text-sm'>Carbs</span>
-                    <Progress value={20} size='md' colorScheme='yellow' borderRadius={"7px"}/>
+                    <Progress value={20} size='md' colorScheme='yellow' borderRadius={"7px"} />
                     <span className='text-lg font-bold'>200/250</span>
                 </div>
                 <div className='flex flex-col gap-3 w-1/3'>

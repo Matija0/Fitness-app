@@ -30,27 +30,27 @@ const Meals = () => {
         <DashBoard />
         <div className=" my-5 flex flex-row gap-3">
           <div
-            
+
             className=" bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
             <div className="flex flex-row gap-4 items-center justify-center mb-2">
-            <h1 className="text-2xl text-gray-200 text-center">Breakfast</h1>
-            <img src={breakfast} alt=""/>
+              <h1 className="text-2xl text-gray-200 text-center">Breakfast</h1>
+              <img src={breakfast} alt="" />
             </div>
-            <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
+            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
               <i class="bi bi-plus"></i> meal
             </button>
             <Breakfast />
           </div>
           <div
-            
+
             className="bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
             <div className="flex flex-row gap-4 items-center justify-center mb-2">
-            <h1 className="text-2xl text-gray-200 text-center">Lunch</h1>
-            <img src={lunch} alt="" />
+              <h1 className="text-2xl text-gray-200 text-center">Lunch</h1>
+              <img src={lunch} alt="" />
             </div>
-            <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
+            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
               <i class="bi bi-plus"></i> meal
             </button>
             <Lunch />
@@ -59,27 +59,27 @@ const Meals = () => {
 
         <div className="my-5 flex flex-row gap-3">
           <div
-            
+
             className=" bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
             <div className="flex flex-row gap-4 items-center justify-center mb-2">
-            <h1 className="text-2xl text-gray-200 text-center">Snack</h1>
-            <img src={snack} alt="" />
+              <h1 className="text-2xl text-gray-200 text-center">Snack</h1>
+              <img src={snack} alt="" />
             </div>
-            <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
+            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
               <i class="bi bi-plus"></i> meal
             </button>
             <Snack />
           </div>
           <div
-           
+
             className="bg-gray-800 border border-gray-500 rounded-lg py-7 px-4 w-1/2"
           >
             <div className="flex flex-row gap-4 items-center justify-center mb-2">
-            <h1 className="text-2xl text-gray-200 text-center">Dinner</h1>
-            <img className="" src={dinner} alt=""/>
+              <h1 className="text-2xl text-gray-200 text-center">Dinner</h1>
+              <img className="" src={dinner} alt="" />
             </div>
-            <button className="text-lg bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white">
+            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
               <i class="bi bi-plus"></i> meal
             </button>
             <Dinner />

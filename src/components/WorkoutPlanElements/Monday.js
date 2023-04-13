@@ -130,8 +130,8 @@ const Monday = () => {
                   <h2>
                     <AccordionButton
                       bg={"none"}
-                      _expanded={{ bg: "gray.700", borderRadius: "5px" }}
-                      _hover={{ bg: "gray.700", borderRadius: "5px" }}
+                      _expanded={{ bg: "gray.600", borderRadius: "5px" }}
+                      _hover={{ bg: "gray.600", borderRadius: "5px" }}
                       paddingY={"10px"}
                       color={"gray.300"}
                     >
@@ -141,19 +141,26 @@ const Monday = () => {
                         textAlign={"left"}
                         color={"gray.200"}
                         fontSize={"lg"}
+
                       >
                         {exercise.title}
+                        <span className=" ml-14">(X)SETS</span>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <div className="flex justify-end">
+                    <div className="flex justify-end gap-3">
                       <button
                         className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
-                        onClick={()=>{deleteExercise(exercise.id)}}
+                        onClick={() => { deleteExercise(exercise.id) }}
                       >
                         <i class="bi bi-trash3"></i>
+                      </button>
+                      <button className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+
+                      >
+                        <i class="bi bi-info-circle"></i>
                       </button>
                     </div>
 

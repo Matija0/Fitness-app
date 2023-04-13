@@ -9,17 +9,27 @@ import {
 } from "@chakra-ui/react";
 
 const Breakfast = () => {
+
+  const breakpoints = {
+    sm: '30em', // 480px
+    md: '48em', // 768px
+    lg: '62em', // 992px
+    xl: '80em', // 1280px
+    '2xl': '96em', // 1536px
+  }
+
   return (
-    <div className="">
+    <div className="mt-5 w-full md:w-2/5 mx-auto">
       <Accordion
         defaultIndex={[1]}
         allowMultiple
-        width={"30%"}
+
         marginX={"auto"}
       >
         <AccordionItem border={"none"}>
           <h2>
             <AccordionButton
+              border={"1px"}
               bg={"none"}
               _expanded={{ bg: "gray.600" }}
               _hover={{ bg: "gray.600" }}
@@ -30,8 +40,9 @@ const Breakfast = () => {
                 as="span"
                 flex="1"
                 textAlign="left"
+
                 color={"gray.300"}
-                fontSize={"lg"}
+                fontSize={{ md: "md", xl: "lg" }}
               >
                 Meal 1
               </Box>

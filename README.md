@@ -83,3 +83,5 @@ const deleteExercise = async (id) => {
     const exerciseDoc = doc(db, "exercises", id);
     await deleteDoc(exerciseDoc);
   };  
+
+  

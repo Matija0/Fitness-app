@@ -1,25 +1,26 @@
 import React from 'react'
 import {
-    Accordion,
-    AccordionItem,
-    AccordionButton,
-    AccordionPanel,
-    AccordionIcon,
-    Box,
-  } from "@chakra-ui/react";
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
+} from "@chakra-ui/react";
 
 const Lunch = () => {
   return (
-    <div className="">
+    <div className="mt-5 w-full md:w-2/5 mx-auto">
       <Accordion
         defaultIndex={[1]}
         allowMultiple
-        width={"30%"}
+
         marginX={"auto"}
       >
         <AccordionItem border={"none"}>
           <h2>
             <AccordionButton
+              border={"1px"}
               bg={"none"}
               _expanded={{ bg: "gray.600" }}
               _hover={{ bg: "gray.600" }}
@@ -31,7 +32,7 @@ const Lunch = () => {
                 flex="1"
                 textAlign="left"
                 color={"gray.300"}
-                fontSize={"lg"}
+                fontSize={{ md: "md", xl: "lg" }}
               >
                 Meal 1
               </Box>

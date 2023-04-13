@@ -11,12 +11,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  TabPanel,
-  TabIndicator,
+
   ModalOverlay,
   Modal,
   ModalContent,
@@ -62,6 +57,11 @@ const Friday = () => {
       title: title,
       target: target,
     });
+  };
+
+  const deleteExercise = async (id) => {
+    const exerciseDoc = doc(db, "friday", id);
+    await deleteDoc(exerciseDoc);
   };
 
   useEffect(() => {
@@ -144,6 +144,7 @@ const Friday = () => {
                         fontSize={"lg"}
                       >
                         {exercise.title}
+                        <span className=" ml-14">(X)SETS</span>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
@@ -152,7 +153,7 @@ const Friday = () => {
                     <div className="flex justify-end">
                       <button
                         className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
-                        onClick={""}
+                        onClick={() => { deleteExercise(exercise.id) }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
