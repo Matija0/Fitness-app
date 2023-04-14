@@ -37,9 +37,7 @@ const Meals = () => {
               <h1 className="text-2xl text-gray-200 text-center">Breakfast</h1>
               <img src={breakfast} alt="" />
             </div>
-            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
-              <i class="bi bi-plus"></i> meal
-            </button>
+            
             <Breakfast />
           </div>
           <div
