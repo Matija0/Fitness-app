@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Calculators.css";
+import { useToast } from "@chakra-ui/react";
 
 const Calculator = () => {
   const [lift, setLift] = useState();
   const [reps, setReps] = useState();
-  const [unit, setUnit] = useState("kg");
+
   const [result, setResult] = useState();
+
 
   const calculate = () => {
     switch (reps) {
@@ -41,6 +43,8 @@ const Calculator = () => {
     }
   };
 
+
+
   const clear = () => {
     setLift("");
     setReps("");
@@ -48,6 +52,7 @@ const Calculator = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     calculate();
     clear();
   };

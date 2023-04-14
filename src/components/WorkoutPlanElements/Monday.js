@@ -21,6 +21,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 
 const Monday = () => {
@@ -45,18 +46,50 @@ const Monday = () => {
   const [show, setShow] = useState(false);
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
+  const [sets, setSets] = useState([{
+    setNum: 1,
+    reps: 12,
+    perc: 55
+  }])
   const [mondayData, setMondayData] = useState([]);
   const mondayCollectionRef = collection(db, "monday");
+  const toast = useToast()
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
+
+
+
     await addDoc(mondayCollectionRef, {
       bodyPart: bodyPart,
       equipment: equipment,
       gifUrl: gifUrl,
       title: title,
       target: target,
+      sets: sets
     });
   };
+
+  const updateMonday = async (id) => {
+    let obj = {
+      perc: 60,
+      reps: 10,
+      setNum: 2
+    }
+    const exerciseDoc = doc(db, "monday", id);
+    const dataObj = doc.data().sets
+    dataObj.push(obj)
+    await updateDoc(exerciseDoc, dataObj);
+  };
+
+  const notif = () => {
+    toast({
+      title: 'Exercise saved',
+
+      status: 'success',
+      duration: 4000,
+      isClosable: true,
+    })
+  }
 
   const deleteExercise = async (id) => {
     const exerciseDoc = doc(db, "monday", id);
@@ -226,14 +259,18 @@ const Monday = () => {
                     <div key={item.id}>
                       <ExercisesList
                         item={item}
-                        addExercise={() =>
+                        addExercise={() => {
                           addExercise(
                             item.bodyPart,
                             item.equipment,
                             item.gifUrl,
                             item.name,
                             item.target
-                          )
+                          );
+                          notif();
+
+                        }
+
                         }
                       />
                     </div>
@@ -284,7 +321,7 @@ const Monday = () => {
             <button
               type="submit"
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-              onClick={onSecondClose}
+              onClick={() => { onSecondClose(); updateMonday(); }}
             >
               Save
             </button>
