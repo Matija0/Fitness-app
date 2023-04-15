@@ -48,9 +48,7 @@ const Meals = () => {
               <h1 className="text-2xl text-gray-200 text-center">Lunch</h1>
               <img src={lunch} alt="" />
             </div>
-            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
-              <i class="bi bi-plus"></i> meal
-            </button>
+           
             <Lunch />
           </div>
         </div>
@@ -64,9 +62,7 @@ const Meals = () => {
               <h1 className="text-2xl text-gray-200 text-center">Snack</h1>
               <img src={snack} alt="" />
             </div>
-            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
-              <i class="bi bi-plus"></i> meal
-            </button>
+            
             <Snack />
           </div>
           <div
@@ -77,9 +73,7 @@ const Meals = () => {
               <h1 className="text-2xl text-gray-200 text-center">Dinner</h1>
               <img className="" src={dinner} alt="" />
             </div>
-            <button className="text-sm bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg">
-              <i class="bi bi-plus"></i> meal
-            </button>
+            
             <Dinner />
           </div>
         </div>

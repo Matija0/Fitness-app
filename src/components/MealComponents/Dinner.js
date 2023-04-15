@@ -11,6 +11,9 @@ import {
 const Dinner = () => {
   return (
     <div className="mt-5 w-full md:w-2/5 mx-auto">
+       <button className="text-sm bg-blue-700 py-2 px-3 my-4 rounded-lg hover:bg-blue-600 text-white md:text-lg">
+              <i class="bi bi-plus"></i> food
+            </button>
       <Accordion
         defaultIndex={[1]}
         allowMultiple
@@ -34,7 +37,7 @@ const Dinner = () => {
                 color={"gray.300"}
                 fontSize={{ md: "md", xl: "lg" }}
               >
-                Meal 1
+                Food name
               </Box>
               <AccordionIcon />
             </AccordionButton>

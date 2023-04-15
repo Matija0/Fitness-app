@@ -61,7 +61,7 @@ const Breakfast = () => {
   return (
     <div className="mt-5 w-full md:w-2/5 mx-auto">
       <button className="text-sm bg-blue-700 my-4  py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg" onClick={onMainOpen}>
-        <i class="bi bi-plus"></i> meal
+        <i class="bi bi-plus"></i> food
       </button>
       <Accordion defaultIndex={[1]} allowMultiple marginX={"auto"}>
         <AccordionItem border={"none"}>
@@ -81,7 +81,7 @@ const Breakfast = () => {
                 color={"gray.300"}
                 fontSize={{ md: "md", xl: "lg" }}
               >
-                Meal 1
+                Food name
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -106,10 +106,13 @@ const Breakfast = () => {
                 <i class="bi bi-x-lg"></i>
               </button>
             </div>
-            <h1 className="text-gray-800 text-lg my-3">Add your meal</h1>
-            <form className="flex flex-row gap-4">
-              <input type="number" placeholder="Net weight(grams)"/>
-              <input placeholder="Name of the food e.g. eggs"/>
+            <h1 className="text-gray-200 text-xl text-center my-3">Add food</h1>
+            <form className="flex flex-col gap-5 my-5 items-center">
+              <div className="flex flex-row gap-4 justify-center">
+              <input className="bg-gray-700 rounded-md w-1/4  p-2 text-white" type="number" placeholder="Weight (gr)"/>
+              <input className="bg-gray-700 rounded-md w-2/5  p-2 text-white" placeholder="Food name"/>
+              </div>
+              <button className=" bg-emerald-700 py-2 px-3 text-gray-200 rounded-lg">Save</button>
             </form>
           </div>
         </ModalContent>
