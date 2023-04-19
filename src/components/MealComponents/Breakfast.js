@@ -14,6 +14,7 @@ import {
   updateDoc,
   doc,
   deleteDoc,
+  setDoc,
 } from "firebase/firestore";
 
 const Breakfast = () => {
@@ -41,7 +42,8 @@ const Breakfast = () => {
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [weight, setWeight] = useState();
   const [name, setName] = useState();
-  const [data, setData]=useState([])
+  const [data, setData] = useState([])
+  const [breakfastData, setBreakfastData] = useState([])
   const breakfastCollectionRef = collection(db, "breakfast");
 
   const getData = () => {
@@ -58,28 +60,48 @@ const Breakfast = () => {
       options
     )
       .then((response) => response.json())
-      .then((response) => setData(response))
+      .then((response) => setData(response[0]))
       .catch((err) => console.error(err));
   };
 
-  const handleSubmit = (event) =>{
-      event.preventDefault()
-      getData()
-      addFood()
-      
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    getData()
+    addFood()
+
+
   }
 
-  const addFood = () => {
-      addDoc(breakfastCollectionRef, {
-        title: data[0].name,
-        size: Number(data[0].serving_size_g),
-        calories: Number(data[0].calories),
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getDocs(breakfastCollectionRef);
+      setBreakfastData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
 
-      })
+    getData();
+  }, []);
+
+  const addFood = async () => {
+
+
+
+    await addDoc(breakfastCollectionRef, {
+      name: data.name,
+      calories: data.calories,
+      carbohydrates: data.carbohydrates_total_g,
+      fat: data.fat_total_g,
+      protein: data.protein_g,
+      size: data.serving_size_g
+    });
+  };
+
+  const clear = () => {
+    setWeight("")
+    setName("")
   }
- 
+  console.log(data)
   return (
-    <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-1/2">
+    <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
         <h1 className="text-2xl text-gray-200 text-center">Breakfast</h1>
         <img src={breakfast} alt="" />
@@ -91,12 +113,25 @@ const Breakfast = () => {
         <i class="bi bi-plus"></i> food
       </button>
       <div className="mt-5 w-full px-4">
-        <div className="text-lg flex flex-row justify-between text-gray-200 border py-2 px-2 rounded-lg border-gray-300">
-          <div>
-            <h2>{}</h2>
-          </div>
-          <div>Cals/protein/fat/carbs</div>
-        </div>
+        {breakfastData.map((item) => {
+          return (
+            <div className="text-lg mb-4 flex flex-row justify-between bg-gray-700 text-gray-200 border py-2 px-2 rounded-lg border-gray-300">
+              <div>
+                <h2 className=" text-sm md:text-lg">{item.name}</h2>
+              </div>
+              <div className="flex flex-row justify-between w-9/12 font-bold text-sm md:text-lg">
+                <span className=" text-sky-500">{item.calories} cals</span>
+                <span className=" text-red-500">{item.protein} gr</span>
+                <span className=" text-yellow-500">{item.carbohydrates} gr</span>
+                <span className=" text-emerald-500">{item.fat} gr</span>
+              </div>
+            </div>
+          )
+        })
+
+        }
+
+
         <Modal
           isCentered
           isOpen={isMainOpen}
