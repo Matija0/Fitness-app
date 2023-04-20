@@ -41,7 +41,7 @@ const DashBoard = () => {
                                 <span className='text-sm'>Eaten</span>
                             </div>
                             <div>
-                                <CircularProgress value={40} color='teal.400' size={"150px"}>
+                                <CircularProgress value={40} color='purple.500' size={"150px"}>
                                     <CircularProgressLabel color={"gray.200"} fontWeight={"bold"}><div className='text-lg text-gray-300'>{remaining}</div> <span className='text-sm text-gray-300 font-normal'>Remaining</span></CircularProgressLabel>
                                 </CircularProgress>
                             </div>

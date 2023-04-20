@@ -45,6 +45,7 @@ const Breakfast = () => {
   const [data, setData] = useState([])
   const [breakfastData, setBreakfastData] = useState([])
   const breakfastCollectionRef = collection(db, "breakfast");
+  const time= new Date();
 
   const getData = () => {
     const options = {
@@ -60,7 +61,7 @@ const Breakfast = () => {
       options
     )
       .then((response) => response.json())
-      .then((response) => setData(response[0]))
+      .then((response) => setData(response))
       .catch((err) => console.error(err));
   };
 
@@ -72,6 +73,9 @@ const Breakfast = () => {
 
   }
 
+  breakfastData.sort((a, b) => a.time - b.time);
+  
+
   useEffect(() => {
     const getData = async () => {
       const data = await getDocs(breakfastCollectionRef);
@@ -79,6 +83,9 @@ const Breakfast = () => {
     };
 
     getData();
+    
+
+    
   }, []);
 
   const addFood = async () => {
@@ -86,12 +93,13 @@ const Breakfast = () => {
 
 
     await addDoc(breakfastCollectionRef, {
-      name: data.name,
-      calories: data.calories,
-      carbohydrates: data.carbohydrates_total_g,
-      fat: data.fat_total_g,
-      protein: data.protein_g,
-      size: data.serving_size_g
+      name: data[0].name,
+      calories: data[0].calories,
+      carbohydrates: data[0].carbohydrates_total_g,
+      fat: data[0].fat_total_g,
+      protein: data[0].protein_g,
+      size: data[0].serving_size_g,
+      time: time
     });
   };
 
@@ -99,7 +107,7 @@ const Breakfast = () => {
     setWeight("")
     setName("")
   }
-  console.log(data)
+  
   return (
     <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
@@ -115,7 +123,7 @@ const Breakfast = () => {
       <div className="mt-5 w-full px-4">
         {breakfastData.map((item) => {
           return (
-            <div className="text-lg mb-4 flex flex-row justify-between bg-gray-700 text-gray-200 border py-2 px-2 rounded-lg border-gray-300">
+            <div className="text-lg mb-4 flex flex-row justify-between  text-gray-200 border-2 py-2 px-2 rounded-lg  border-gray-300">
               <div>
                 <h2 className=" text-sm md:text-lg">{item.name}</h2>
               </div>

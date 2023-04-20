@@ -22,6 +22,7 @@ import {
   AccordionIcon,
   Box,
   useToast,
+  CircularProgress,
 } from "@chakra-ui/react";
 
 const Monday = () => {
@@ -44,6 +45,7 @@ const Monday = () => {
   } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [show, setShow] = useState(false);
+  const [loader, setLoader]=useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
   const [sets, setSets] = useState([{
@@ -54,6 +56,7 @@ const Monday = () => {
   const [mondayData, setMondayData] = useState([]);
   const mondayCollectionRef = collection(db, "monday");
   const toast = useToast()
+  const time= new Date();
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
 
@@ -65,7 +68,8 @@ const Monday = () => {
       gifUrl: gifUrl,
       title: title,
       target: target,
-      sets: sets
+      sets: sets,
+      time: time
     });
   };
 
@@ -105,7 +109,10 @@ const Monday = () => {
     getExercises();
   }, []);
 
+  mondayData.sort((a, b) => a.time - b.time);
+
   const handleSearch = async () => {
+    setLoader(true)
     if (search) {
       const exercisesData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises/",
@@ -121,10 +128,13 @@ const Monday = () => {
             exercise.bodyPart.toLowerCase().includes(search)
         )
       );
+      
       setSearch("");
       console.log(exercises);
+
     }
     setShow(true);
+    setLoader(false)
   };
 
   const handleSubmit = (event) => {
@@ -277,7 +287,9 @@ const Monday = () => {
                   );
                 })}
               </div>
-            ) : null}
+            ) : (loader? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="none"/></div>) : null)}
+              
+            
           </div>
         </ModalContent>
       </Modal>
