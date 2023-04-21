@@ -17,6 +17,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
+import Test from "./FoodItem";
 
 const Breakfast = () => {
   const breakpoints = {
@@ -48,6 +49,7 @@ const Breakfast = () => {
   const breakfastCollectionRef = collection(db, "breakfast");
   const time = new Date();
 
+
   const getAPIData = () => {
 
 
@@ -60,9 +62,8 @@ const Breakfast = () => {
       .catch((err) => console.error(err));
   };
 
+
   const addFood = async () => {
-
-
 
     await addDoc(breakfastCollectionRef, {
       name: data[0].name,
@@ -73,12 +74,13 @@ const Breakfast = () => {
       size: data[0].serving_size_g,
       time: time
     });
-  };
 
+  };
+  console.log(data[0], "test")
   const handleSubmit = (event) => {
     event.preventDefault()
-    getAPIData()
-    addFood()
+    getAPIData();
+    clear()
 
 
   }
@@ -176,10 +178,36 @@ const Breakfast = () => {
                   />
                 </div>
                 <button type="submit" className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600">
-                  Save
+                  Search
                 </button>
               </form>
             </div>
+
+            <div className="flex mx-auto">
+              {
+                data.map((item) => {
+                  return (
+
+                    <div key={item.id}>
+                      <Test
+                        item={item}
+                        addFood={() => {
+                          addFood(
+                            item.name
+
+                          );
+
+                        }
+                        }
+                      />
+                    </div>
+
+                  )
+                })
+              }
+            </div>
+
+
           </ModalContent>
         </Modal>
       </div>
