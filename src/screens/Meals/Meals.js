@@ -35,7 +35,7 @@ const Meals = () => {
 
 
   return (
-    <div className=" container mx-3 md:mx-auto my-20">
+    <div className=" container  md:mx-auto my-20">
 
       {inputData ?
 

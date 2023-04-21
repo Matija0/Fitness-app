@@ -107,6 +107,11 @@ const Breakfast = () => {
     setName("")
   }
 
+  const deleteItem = async (id) =>{
+    const foodDoc = doc(db, "breakfast", id);
+    await deleteDoc(foodDoc);
+  }
+
   return (
     <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
@@ -119,10 +124,10 @@ const Breakfast = () => {
       >
         <i class="bi bi-plus"></i> food
       </button>
-      <div className="mt-5 w-full px-4">
+      <div className="mt-5 w-full px-4 overflow-y-scroll max-h-48">
         {breakfastData.map((item) => {
           return (
-            <div className="text-lg mb-4 flex flex-row justify-between  text-gray-200 border-2 py-2 px-2 rounded-lg  border-gray-300">
+            <div className="text-lg mb-4 flex flex-row justify-between  text-gray-200 border-2 py-2 px-2 rounded-lg  border-gray-300 ">
               <div>
                 <h2 className=" text-sm md:text-lg">{item.name}</h2>
               </div>
@@ -132,12 +137,18 @@ const Breakfast = () => {
                 <span className=" text-yellow-500">{item.carbohydrates} gr</span>
                 <span className=" text-emerald-500">{item.fat} gr</span>
               </div>
+              <button
+                        className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                        onClick={() => { deleteItem(item.id) }}
+                      >
+                        <i class="bi bi-trash3"></i>
+                      </button>
             </div>
           )
         })
 
         }
-
+      </div>
 
         <Modal
           isCentered
@@ -210,7 +221,7 @@ const Breakfast = () => {
 
           </ModalContent>
         </Modal>
-      </div>
+      
     </div>
   );
 };
