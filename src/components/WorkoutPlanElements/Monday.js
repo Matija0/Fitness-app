@@ -45,18 +45,14 @@ const Monday = () => {
   } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [show, setShow] = useState(false);
-  const [loader, setLoader]=useState(false)
+  const [loader, setLoader] = useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
-  const [sets, setSets] = useState([{
-    setNum: 1,
-    reps: 12,
-    perc: 55
-  }])
+
   const [mondayData, setMondayData] = useState([]);
   const mondayCollectionRef = collection(db, "monday");
   const toast = useToast()
-  const time= new Date();
+  const time = new Date();
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
 
@@ -68,22 +64,14 @@ const Monday = () => {
       gifUrl: gifUrl,
       title: title,
       target: target,
-      sets: sets,
+
       time: time
     });
   };
 
-  const updateMonday = async (id) => {
-    let obj = {
-      perc: 60,
-      reps: 10,
-      setNum: 2
-    }
-    const exerciseDoc = doc(db, "monday", id);
-    const dataObj = doc.data().sets
-    dataObj.push(obj)
-    await updateDoc(exerciseDoc, dataObj);
-  };
+  const addSet = () => {
+
+  }
 
   const notif = () => {
     toast({
@@ -128,9 +116,9 @@ const Monday = () => {
             exercise.bodyPart.toLowerCase().includes(search)
         )
       );
-      
+
       setSearch("");
-      console.log(exercises);
+
 
     }
     setShow(true);
@@ -287,9 +275,9 @@ const Monday = () => {
                   );
                 })}
               </div>
-            ) : (loader? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="none"/></div>) : null)}
-              
-            
+            ) : (loader ? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="none" /></div>) : null)}
+
+
           </div>
         </ModalContent>
       </Modal>
@@ -306,38 +294,42 @@ const Monday = () => {
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
+          {mondayData.map((item) => {
+            <div
 
-          <form
-            onSubmit={""}
-            className="flex flex-col items-center gap-3 my-10"
-          >
-            <input
-              className="bg-gray-700 rounded-md  p-2 text-white"
-              type="number"
-              placeholder="Number of reps"
-              required
-            />
-            <div className="flex flex-row items-center gap-3">
-              <input
-                className="bg-gray-700 rounded-md  p-2 text-white"
-                type="number"
-                placeholder="Percentage"
-              />
-              <span className="text-gray-200">or</span>
-              <input
-                className="bg-gray-700 rounded-md  p-2 text-white"
-                type="number"
-                placeholder="RPE"
-              />
-            </div>
-            <button
-              type="submit"
-              className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-              onClick={() => { onSecondClose(); updateMonday(); }}
+              className="flex flex-col items-center gap-3 my-10"
             >
-              Save
-            </button>
-          </form>
+              <input
+                className="bg-gray-700 rounded-md  p-2 text-white"
+                type="number"
+                placeholder="Number of reps"
+                required
+              />
+              <div className="flex flex-row items-center gap-3">
+                <input
+                  className="bg-gray-700 rounded-md  p-2 text-white"
+                  type="number"
+                  placeholder="Percentage"
+                />
+                <span className="text-gray-200">or</span>
+                <input
+                  className="bg-gray-700 rounded-md  p-2 text-white"
+                  type="number"
+                  placeholder="RPE"
+                />
+              </div>
+              <button
+                type="submit"
+                className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
+                onClick={() => { onSecondClose(); }}
+              >
+                Save
+              </button>
+            </div>
+
+          })
+
+          }
         </ModalContent>
       </Modal>
     </>

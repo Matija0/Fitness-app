@@ -21,7 +21,7 @@ import Sunday from "../../components/WorkoutPlanElements/Sunday";
 
 const Workout = () => {
   return (
-    <div className=" container mx-auto flex flex-row gap-8 my-11">
+    <div className=" mx-12 flex flex-row gap-8 my-11">
       <div
         style={{ minHeight: "700px" }}
         className=" w-4/5 bg-gray-800 border border-gray-500  rounded-lg px-3 py-2 flex justify-center"

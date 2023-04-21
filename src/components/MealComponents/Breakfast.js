@@ -16,6 +16,7 @@ import {
   deleteDoc,
   setDoc,
 } from "firebase/firestore";
+import { options } from "../../utils/fetchNutritionData";
 
 const Breakfast = () => {
   const breakpoints = {
@@ -45,16 +46,10 @@ const Breakfast = () => {
   const [data, setData] = useState([])
   const [breakfastData, setBreakfastData] = useState([])
   const breakfastCollectionRef = collection(db, "breakfast");
-  const time= new Date();
+  const time = new Date();
 
-  const getData = () => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": "12f7d92fcdmshb29dc70d54946e3p182334jsnd9a69db0fb7a",
-        "X-RapidAPI-Host": "nutrition-by-api-ninjas.p.rapidapi.com",
-      },
-    };
+  const getAPIData = () => {
+
 
     fetch(
       `https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition?query=%20${weight}g%20${name}`,
@@ -64,29 +59,6 @@ const Breakfast = () => {
       .then((response) => setData(response))
       .catch((err) => console.error(err));
   };
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    getData()
-    addFood()
-
-
-  }
-
-  breakfastData.sort((a, b) => a.time - b.time);
-  
-
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getDocs(breakfastCollectionRef);
-      setBreakfastData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getData();
-    
-
-    
-  }, []);
 
   const addFood = async () => {
 
@@ -103,11 +75,36 @@ const Breakfast = () => {
     });
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    getAPIData()
+    addFood()
+
+
+  }
+
+
+
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getDocs(breakfastCollectionRef);
+      setBreakfastData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getData();
+
+
+
+  }, []);
+
+  breakfastData.sort((a, b) => a.time - b.time);
+
   const clear = () => {
     setWeight("")
     setName("")
   }
-  
+
   return (
     <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
@@ -178,7 +175,7 @@ const Breakfast = () => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <button type="submit" className=" bg-emerald-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-emerald-600">
+                <button type="submit" className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600">
                   Save
                 </button>
               </form>
