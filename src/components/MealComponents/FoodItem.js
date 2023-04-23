@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Test = (props) => {
+const FoodItem = (props) => {
     return (
         <div className=' bg-gray-800 rounded-lg text-gray-300 py-3 flex flex-col px-10 mb-4 items-center justify-center gap-4'>
             <div className='flex flex-col w-full'>
                 <div className=' py-4 px-3'>
                     <h1 className='text-4xl  font-bold'>{props.item.name}</h1>
-                    <span className='text-xl mt-2'>{props.item.serving_size_g} grams</span>
+                    <span className='text-xl mt-5'>{props.item.serving_size_g} grams</span>
                 </div>
                 <div className='  flex flex-col gap-2 text-lg'>
                     <span className=' text-blue-500 '>Calories: {props.item.calories}</span>
@@ -30,4 +30,4 @@ const Test = (props) => {
     )
 }
 
-export default Test
+export default FoodItem

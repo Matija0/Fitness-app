@@ -8,8 +8,9 @@ import {
 } from "@chakra-ui/react";
 import lunch from "../../images/lunch.png"
 import { db } from "../../firebase-config";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
+import FoodItem from "./FoodItem";
 
 
 const Lunch = () => {
@@ -43,20 +44,32 @@ const Lunch = () => {
       options
     )
       .then((response) => response.json())
-      .then((response) => setData(response[0]))
+      .then((response) => setData(response))
       .catch((err) => console.error(err));
 
 
   };
 
 
+  const addFood = async () => {
 
+    await addDoc(lunchCollectionRef, {
+      name: data[0].name,
+      calories: data[0].calories,
+      carbohydrates: data[0].carbohydrates_total_g,
+      fat: data[0].fat_total_g,
+      protein: data[0].protein_g,
+      size: data[0].serving_size_g,
+      time: time
+    });
+
+  };
 
 
   const handleSubmit = (event) => {
     event.preventDefault()
     getAPIData()
-
+    clear()
 
   }
 
@@ -70,6 +83,16 @@ const Lunch = () => {
   }, [])
 
   lucnhData.sort((a, b) => a.time - b.time);
+
+  const clear = () => {
+    setWeight("")
+    setName("")
+  }
+
+  const deleteItem = async (id) =>{
+    const foodDoc = doc(db, "lunch", id);
+    await deleteDoc(foodDoc);
+  }
 
 
   return (
@@ -89,7 +112,7 @@ const Lunch = () => {
           return (
             <div className="text-lg mb-4 flex flex-row justify-between  text-gray-200 border-2 py-2 px-2 rounded-lg  border-gray-300">
               <div>
-                <h2 className=" text-sm md:text-lg">{item.name}</h2>
+                <h2 className=" text-sm font-semibold md:text-lg">{item.name}</h2>
               </div>
               <div className="flex flex-row justify-between w-9/12 font-bold text-sm md:text-lg">
                 <span className=" text-sky-500">{item.calories} cals</span>
@@ -97,6 +120,12 @@ const Lunch = () => {
                 <span className=" text-yellow-500">{item.carbohydrates} gr</span>
                 <span className=" text-emerald-500">{item.fat} gr</span>
               </div>
+              <button
+                        className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                        onClick={() => { deleteItem(item.id) }}
+                      >
+                        <i class="bi bi-trash3"></i>
+                      </button>
             </div>
           )
         })
@@ -147,6 +176,29 @@ const Lunch = () => {
                 </button>
               </form>
 
+            </div>
+            <div className="flex mx-auto">
+              {
+                data.map((item) => {
+                  return (
+
+                    <div key={item.id}>
+                      <FoodItem
+                        item={item}
+                        addFood={() => {
+                          addFood(
+                            item.name
+
+                          );
+
+                        }
+                        }
+                      />
+                    </div>
+
+                  )
+                })
+              }
             </div>
           </ModalContent>
         </Modal>

@@ -18,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
 import Test from "./FoodItem";
+import FoodItem from "./FoodItem";
 
 const Breakfast = () => {
   const breakpoints = {
@@ -74,9 +75,9 @@ const Breakfast = () => {
       size: data[0].serving_size_g,
       time: time
     });
-
+    window.location.reload();
   };
-  console.log(data[0], "test")
+  
   const handleSubmit = (event) => {
     event.preventDefault()
     getAPIData();
@@ -124,12 +125,12 @@ const Breakfast = () => {
       >
         <i class="bi bi-plus"></i> food
       </button>
-      <div className="mt-5 w-full px-4 overflow-y-scroll max-h-48">
+      <div className="mt-5 w-full px-2">
         {breakfastData.map((item) => {
           return (
             <div className="text-lg mb-4 flex flex-row justify-between  text-gray-200 border-2 py-2 px-2 rounded-lg  border-gray-300 ">
               <div>
-                <h2 className=" text-sm md:text-lg">{item.name}</h2>
+                <h2 className=" text-sm font-semibold md:text-lg">{item.name}</h2>
               </div>
               <div className="flex flex-row justify-between w-9/12 font-bold text-sm md:text-lg">
                 <span className=" text-sky-500">{item.calories} cals</span>
@@ -200,7 +201,7 @@ const Breakfast = () => {
                   return (
 
                     <div key={item.id}>
-                      <Test
+                      <FoodItem
                         item={item}
                         addFood={() => {
                           addFood(
