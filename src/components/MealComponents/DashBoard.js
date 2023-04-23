@@ -4,40 +4,51 @@ import { db } from "../../firebase-config";
 import {
     collection,
     getDocs,
-    addDoc,
-    updateDoc,
-    doc,
-    deleteDoc,
-    setDoc,
+    
 } from "firebase/firestore";
 
 
 const DashBoard = () => {
 
-    const [eaten, setEaten] = useState(500)
-    const [total, setTotal] = useState(1500)
+    const [eaten, setEaten] = useState()
+    
     const [remaining, setRemaining] = useState(1200)
     const [inputData, setData] = useState([])
+    const [breakfastData, setBreakfastData] = useState([])
+    
+    const [currentCB, setCB]=useState()
+    const [currentPT, setPT]=useState()
+    const [currentFT, setFT]=useState()
     const inputCollectionRef = collection(db, "input");
+    const breakfastCollectionRef = collection(db, "breakfast");
 
+    
+    
     useEffect(() => {
         const getData = async () => {
             const data = await getDocs(inputCollectionRef);
             setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
 
+        const getBData = async () => {
+            const data = await getDocs(breakfastCollectionRef);
+            setBreakfastData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+          };
+
+       
         getData();
+        getBData()
+        
     }, [])
 
-    console.log(inputData, "sdsd")
+    
     return (
         <div className="text-gray-300 bg-gray-800 border border-gray-500 shadow-sm rounded-lg self-center py-4 px-3">
-            {inputData.map((item) => {
-                return (
+           
                     <>
                         <div className='flex flex-row justify-center items-center gap-3'>
                             <div className='flex flex-col gap-2'>
-                                <h1 className='text-lg font-bold'>{eaten}</h1>
+                                <h1 className='text-lg font-bold'>{(eaten)}</h1>
                                 <span className='text-sm'>Eaten</span>
                             </div>
                             <div>
@@ -46,7 +57,11 @@ const DashBoard = () => {
                                 </CircularProgress>
                             </div>
                             <div className='flex flex-col gap-3'>
-                                <h1 className='font-bold'>{item.tdee}</h1>
+                                <h1 className='font-bold'>{inputData.map((item)=>{
+                                    return(
+                                        item.tdee
+                                    )
+                                })}</h1>
                                 <span>Total</span>
                             </div>
                         </div>
@@ -54,24 +69,35 @@ const DashBoard = () => {
                             <div className='flex flex-col gap-3 w-1/3'>
                                 <span className='text-sm'>Carbs</span>
                                 <Progress value={20} size='md' colorScheme='yellow' borderRadius={"7px"} />
-                                <span className='text-lg font-bold'>200/{item.carbs}</span>
+                                <span className='text-lg font-bold'>200/{inputData.map((item)=>{
+                                    return(
+                                        item.carbs
+                                    )
+                                })}</span> 
                             </div>
                             <div className='flex flex-col gap-3 w-1/3'>
                                 <span className='text-sm'>Protein</span>
                                 <Progress value={20} size="md" colorScheme='red' borderRadius={"7px"} />
-                                <span className='text-lg font-bold'>35/{item.protein}</span>
+                                <span className='text-lg font-bold'>35/{inputData.map((item)=>{
+                                    return(
+                                        item.protein
+                                    )
+                                })}</span>
                             </div>
                             <div className='flex flex-col gap-3 w-1/3'>
                                 <span className='text-sm'>Fat</span>
                                 <Progress value={20} size='md' colorScheme='green' borderRadius={"7px"} />
-                                <span className='text-lg font-bold'>20/{item.fat}</span>
+                                <span className='text-lg font-bold'>20/{inputData.map((item)=>{
+                                    return(
+                                        item.fat
+                                    )
+                                })}</span>
                             </div>
                         </div>
                     </>
-                )
-            })
+                
 
-            }
+            
         </div>
     )
 }
