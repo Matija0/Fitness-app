@@ -275,7 +275,7 @@ const Monday = () => {
                   );
                 })}
               </div>
-            ) : (loader ? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="none" /></div>) : null)}
+            ) : (loader ? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="cyan.800" /></div>) : null)}
 
 
           </div>

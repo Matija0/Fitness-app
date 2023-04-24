@@ -12,11 +12,14 @@
 .App{
   position: relative;
   min-height: 100vh;
+  
 }
 
 body{
   
   background: #1f1f23!important;
+  
+
 
   
  

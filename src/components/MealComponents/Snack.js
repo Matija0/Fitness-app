@@ -77,7 +77,7 @@ const Snack = () => {
     });
 
   };
-  
+
   const handleSubmit = (event) => {
     event.preventDefault()
     getAPIData();
@@ -108,7 +108,7 @@ const Snack = () => {
     setName("")
   }
 
-  const deleteItem = async (id) =>{
+  const deleteItem = async (id) => {
     const foodDoc = doc(db, "snack", id);
     await deleteDoc(foodDoc);
   }
@@ -139,11 +139,11 @@ const Snack = () => {
                 <span className=" text-emerald-500">{item.fat} gr</span>
               </div>
               <button
-                        className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
-                        onClick={() => { deleteItem(item.id) }}
-                      >
-                        <i class="bi bi-trash3"></i>
-                      </button>
+                className="  text-gray-200 text-sm   rounded-lg   w-fit"
+                onClick={() => { deleteItem(item.id) }}
+              >
+                <i class="bi bi-trash3"></i>
+              </button>
             </div>
           )
         })
@@ -151,78 +151,78 @@ const Snack = () => {
         }
       </div>
 
-        <Modal
-          isCentered
-          isOpen={isMainOpen}
-          onClose={onMainClose}
-          size={"2xl"}
-        >
-          {overlay}
-          <ModalContent bg="gray.500">
-            <div>
-              <div className="flex justify-end p-2">
-                <button
-                  className=" text-lg text-gray-200 "
-                  onClick={() => {
-                    onMainClose();
-                  }}
-                >
-                  <i class="bi bi-x-lg"></i>
-                </button>
+      <Modal
+        isCentered
+        isOpen={isMainOpen}
+        onClose={onMainClose}
+        size={"2xl"}
+      >
+        {overlay}
+        <ModalContent bg="gray.500">
+          <div>
+            <div className="flex justify-end p-2">
+              <button
+                className=" text-lg text-gray-200 "
+                onClick={() => {
+                  onMainClose();
+                }}
+              >
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+            <h1 className="text-gray-200 text-xl text-center my-3">
+              Add food
+            </h1>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5 my-5 items-center">
+              <div className="flex flex-row gap-4 justify-center">
+                <input
+                  className="bg-gray-700 rounded-md w-1/4  p-2 text-white"
+                  type="number"
+                  placeholder="Weight (gr)"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                />
+                <input
+                  className="bg-gray-700 rounded-md w-2/5  p-2 text-white"
+                  placeholder="Food name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
-              <h1 className="text-gray-200 text-xl text-center my-3">
-                Add food
-              </h1>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5 my-5 items-center">
-                <div className="flex flex-row gap-4 justify-center">
-                  <input
-                    className="bg-gray-700 rounded-md w-1/4  p-2 text-white"
-                    type="number"
-                    placeholder="Weight (gr)"
-                    value={weight}
-                    onChange={(e) => setWeight(e.target.value)}
-                  />
-                  <input
-                    className="bg-gray-700 rounded-md w-2/5  p-2 text-white"
-                    placeholder="Food name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <button type="submit" className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600">
-                  Search
-                </button>
-              </form>
-            </div>
+              <button type="submit" className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600">
+                Search
+              </button>
+            </form>
+          </div>
 
-            <div className="flex mx-auto">
-              {
-                data.map((item) => {
-                  return (
+          <div className="flex mx-auto">
+            {
+              data.map((item) => {
+                return (
 
-                    <div key={item.id}>
-                      <FoodItem
-                        item={item}
-                        addFood={() => {
-                          addFood(
-                            item.name
+                  <div key={item.id}>
+                    <FoodItem
+                      item={item}
+                      addFood={() => {
+                        addFood(
+                          item.name
 
-                          );
+                        );
 
-                        }
-                        }
-                      />
-                    </div>
+                      }
+                      }
+                    />
+                  </div>
 
-                  )
-                })
-              }
-            </div>
+                )
+              })
+            }
+          </div>
 
 
-          </ModalContent>
-        </Modal>
-      
+        </ModalContent>
+      </Modal>
+
     </div>
   );
 };

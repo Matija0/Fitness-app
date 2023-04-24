@@ -16,6 +16,7 @@ import {
   deleteDoc,
   setDoc,
 } from "firebase/firestore";
+
 import { options } from "../../utils/fetchNutritionData";
 import Test from "./FoodItem";
 import FoodItem from "./FoodItem";
@@ -49,7 +50,8 @@ const Breakfast = () => {
   const [breakfastData, setBreakfastData] = useState([])
   const [currentStatData, setCurrentStatsData] = useState([])
   const breakfastCollectionRef = collection(db, "breakfast");
-  const currenstatsRef = doc(db, "currentstats", "mystats")
+  const currentstatsRef = doc(db, "currentstats", "mystats")
+
   const time = new Date();
 
 
@@ -65,7 +67,11 @@ const Breakfast = () => {
       .catch((err) => console.error(err));
   };
 
-
+  const updateStat = async () => {
+    await currentstatsRef.update({
+      calories: 500
+    });
+  }
 
   const addFood = async () => {
 
@@ -85,6 +91,8 @@ const Breakfast = () => {
     window.location.reload();
   };
 
+
+
   const handleSubmit = (event) => {
     event.preventDefault()
     getAPIData();
@@ -103,7 +111,7 @@ const Breakfast = () => {
     };
 
     const getStatsData = async () => {
-      const data = await getDocs(currenstatsRef);
+      const data = await getDocs(currentstatsRef);
       setCurrentStatsData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
@@ -151,7 +159,7 @@ const Breakfast = () => {
                 <span className=" text-emerald-500">{item.fat} gr</span>
               </div>
               <button
-                className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                className="  text-gray-200 text-sm  w-fit"
                 onClick={() => { deleteItem(item.id) }}
               >
                 <i class="bi bi-trash3"></i>
@@ -216,13 +224,11 @@ const Breakfast = () => {
                     <FoodItem
                       item={item}
                       addFood={() => {
-                        addFood(
-                          item.name
-
-                        );
+                        addFood();
 
                       }
                       }
+
                     />
                   </div>
 

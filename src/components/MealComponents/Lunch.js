@@ -89,7 +89,7 @@ const Lunch = () => {
     setName("")
   }
 
-  const deleteItem = async (id) =>{
+  const deleteItem = async (id) => {
     const foodDoc = doc(db, "lunch", id);
     await deleteDoc(foodDoc);
   }
@@ -121,11 +121,11 @@ const Lunch = () => {
                 <span className=" text-emerald-500">{item.fat} gr</span>
               </div>
               <button
-                        className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
-                        onClick={() => { deleteItem(item.id) }}
-                      >
-                        <i class="bi bi-trash3"></i>
-                      </button>
+                className="  text-gray-200 text-sm  rounded-lg   w-fit"
+                onClick={() => { deleteItem(item.id) }}
+              >
+                <i class="bi bi-trash3"></i>
+              </button>
             </div>
           )
         })

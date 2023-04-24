@@ -12,15 +12,16 @@ const DashBoard = () => {
 
     const [eaten, setEaten] = useState()
 
-    const [remaining, setRemaining] = useState(1200)
+
     const [inputData, setData] = useState([])
 
 
     const [currentCB, setCB] = useState()
     const [currentPT, setPT] = useState()
     const [currentFT, setFT] = useState()
+    const [breakfastData, setBreakfastData] = useState([])
     const inputCollectionRef = collection(db, "input");
-    const breakfastCollectionRef = collection(db, "breakfast");
+
 
 
 
@@ -39,6 +40,8 @@ const DashBoard = () => {
     }, [])
 
 
+
+
     return (
         <div className="text-gray-300 bg-gray-800 border border-gray-500 shadow-sm rounded-lg self-center py-4 px-3">
 
@@ -50,7 +53,7 @@ const DashBoard = () => {
                     </div>
                     <div>
                         <CircularProgress value={40} color='purple.500' size={"150px"}>
-                            <CircularProgressLabel color={"gray.200"} fontWeight={"bold"}><div className='text-lg text-gray-300'>{remaining}</div> <span className='text-sm text-gray-300 font-normal'>Remaining</span></CircularProgressLabel>
+                            <CircularProgressLabel color={"gray.200"} fontWeight={"bold"}><div className='text-lg text-gray-300'>1200</div> <span className='text-sm text-gray-300 font-normal'>Remaining</span></CircularProgressLabel>
                         </CircularProgress>
                     </div>
                     <div className='flex flex-col gap-3'>

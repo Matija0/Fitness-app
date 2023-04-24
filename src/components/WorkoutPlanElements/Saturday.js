@@ -22,6 +22,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  CircularProgress,
 } from "@chakra-ui/react";
 
 const Saturday = () => {
@@ -44,6 +45,7 @@ const Saturday = () => {
   } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [show, setShow] = useState(false);
+  const [loader, setLoader] = useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
   const [sundayData, setSundaydayData] = useState([]);
@@ -74,6 +76,7 @@ const Saturday = () => {
   }, []);
 
   const handleSearch = async () => {
+    setLoader(true)
     if (search) {
       const exercisesData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises/",
@@ -93,6 +96,7 @@ const Saturday = () => {
       console.log(exercises);
     }
     setShow(true);
+    setLoader(false)
   };
 
   const handleSubmit = (event) => {
@@ -235,7 +239,7 @@ const Saturday = () => {
                   );
                 })}
               </div>
-            ) : null}
+            ) : (loader ? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="cyan.800" /></div>) : null)}
           </div>
         </ModalContent>
       </Modal>
