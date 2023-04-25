@@ -145,7 +145,7 @@ const Wednesday = () => {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <div className="flex justify-end"><button className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit" onClick={() => { deleteExercise(exercise.id) }}><i class="bi bi-trash3"></i></button></div>
+                    <div className="flex justify-end"><button className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit" onClick={() => { deleteExercise(exercise.id) }}><i class="bi bi-trash3"></i></button></div>
 
                     <div className="my-4">
 

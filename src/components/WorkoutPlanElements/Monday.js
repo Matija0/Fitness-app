@@ -69,9 +69,7 @@ const Monday = () => {
     });
   };
 
-  const addSet = () => {
 
-  }
 
   const notif = () => {
     toast({
@@ -183,12 +181,12 @@ const Monday = () => {
                   <AccordionPanel pb={4}>
                     <div className="flex justify-end gap-3">
                       <button
-                        className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                        className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
                         onClick={() => { deleteExercise(exercise.id) }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
-                      <button className=" border border-gray-300 text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
 
                       >
                         <i class="bi bi-info-circle"></i>
@@ -294,42 +292,42 @@ const Monday = () => {
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
-          {mondayData.map((item) => {
-            <div
 
-              className="flex flex-col items-center gap-3 my-10"
-            >
+          <div
+
+            className="flex flex-col items-center gap-3 my-10"
+          >
+            <input
+              className="bg-gray-700 rounded-md  p-2 text-white"
+              type="number"
+              placeholder="Number of reps"
+              required
+            />
+            <div className="flex flex-row items-center gap-3">
               <input
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
-                placeholder="Number of reps"
-                required
+                placeholder="Percentage"
               />
-              <div className="flex flex-row items-center gap-3">
-                <input
-                  className="bg-gray-700 rounded-md  p-2 text-white"
-                  type="number"
-                  placeholder="Percentage"
-                />
-                <span className="text-gray-200">or</span>
-                <input
-                  className="bg-gray-700 rounded-md  p-2 text-white"
-                  type="number"
-                  placeholder="RPE"
-                />
-              </div>
-              <button
-                type="submit"
-                className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-                onClick={() => { onSecondClose(); }}
-              >
-                Save
-              </button>
+              <span className="text-gray-200">or</span>
+              <input
+                className="bg-gray-700 rounded-md  p-2 text-white"
+                type="number"
+                placeholder="RPE"
+              />
             </div>
+            <button
+              type="submit"
+              className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
+              onClick={() => { onSecondClose(); }}
+            >
+              Save
+            </button>
+          </div>
 
-          })
 
-          }
+
+
         </ModalContent>
       </Modal>
     </>

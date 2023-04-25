@@ -111,6 +111,7 @@ const Snack = () => {
   const deleteItem = async (id) => {
     const foodDoc = doc(db, "snack", id);
     await deleteDoc(foodDoc);
+    window.location.reload();
   }
 
   return (

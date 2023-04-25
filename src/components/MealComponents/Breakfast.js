@@ -15,6 +15,8 @@ import {
   doc,
   deleteDoc,
   setDoc,
+  FieldValue,
+  increment,
 } from "firebase/firestore";
 
 import { options } from "../../utils/fetchNutritionData";
@@ -67,11 +69,16 @@ const Breakfast = () => {
       .catch((err) => console.error(err));
   };
 
-  const updateStat = async () => {
-    await currentstatsRef.update({
-      calories: 500
-    });
-  }
+  const updateStats = async () => {
+    const statsDoc = doc(db, "currentstats", "mystats");
+    const newFields = {
+      calories: increment(Number(data[0].calories)),
+      carbs: increment(Number(data[0].carbohydrates_total_g)),
+      fat: increment(Number(data[0].fat_total_g)),
+      protein: increment(Number(data[0].protein_g))
+    };
+    await updateDoc(statsDoc, newFields);
+  };
 
   const addFood = async () => {
 
@@ -85,8 +92,7 @@ const Breakfast = () => {
       time: time
     });
 
-
-
+    updateStats()
 
     window.location.reload();
   };
@@ -131,6 +137,7 @@ const Breakfast = () => {
   const deleteItem = async (id) => {
     const foodDoc = doc(db, "breakfast", id);
     await deleteDoc(foodDoc);
+    window.location.reload();
   }
 
   return (
@@ -139,6 +146,7 @@ const Breakfast = () => {
         <h1 className="text-2xl text-gray-200 text-center">Breakfast</h1>
         <img src={breakfast} alt="" />
       </div>
+
       <button
         className="text-sm bg-blue-700 my-4 ml-4 py-2 px-3 rounded-lg hover:bg-blue-600 text-white md:text-lg"
         onClick={onMainOpen}

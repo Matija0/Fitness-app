@@ -21,10 +21,10 @@ import Sunday from "../../components/WorkoutPlanElements/Sunday";
 
 const Workout = () => {
   return (
-    <div className=" container mx-auto flex flex-row gap-8 my-11">
+    <div className=" container mx-auto my-11">
       <div
         style={{ minHeight: "700px" }}
-        className=" w-4/5 bg-gray-800 border border-gray-500  rounded-lg px-3 py-2 flex justify-center"
+        className="  bg-gray-800 border border-gray-500  rounded-lg px-3 py-2 flex justify-center"
       >
         <Tabs variant={"unstyled"} paddingX={"5px"}>
           <TabList color={"gray.300"}>
@@ -68,7 +68,7 @@ const Workout = () => {
           </TabPanels>
         </Tabs>
       </div>
-      <RepMaxForm />
+
     </div>
   );
 };
