@@ -48,7 +48,12 @@ const Monday = () => {
   const [loader, setLoader] = useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
-
+  const [exerciseSets, setExerciseSets] = useState([])
+  //edit
+  const [editId, setEditId] = useState(null);
+  const [number_reps, setNumberReps] = useState()
+  const [weight, setWeight] = useState()
+  const [rpe, setRpe] = useState()
   const [mondayData, setMondayData] = useState([]);
   const mondayCollectionRef = collection(db, "monday");
   const toast = useToast()
@@ -64,11 +69,28 @@ const Monday = () => {
       gifUrl: gifUrl,
       title: title,
       target: target,
-
       time: time
     });
   };
 
+  const addNew = () => {
+    const val = {
+      num: number_reps,
+      weight: weight,
+      rpe: rpe
+    }
+    setExerciseSets((searches) => { return [...searches, val] });
+
+
+  }
+  const updateExercise = async (e) => {
+    console.log(exerciseSets)
+    const ex = doc(db, "monday", editId);
+    await updateDoc(ex, {
+      sets: JSON.stringify(exerciseSets)
+    })
+
+  }
 
 
   const notif = () => {
@@ -93,7 +115,7 @@ const Monday = () => {
     };
 
     getExercises();
-  }, []);
+  }, [updateExercise]);
 
   mondayData.sort((a, b) => a.time - b.time);
 
@@ -173,6 +195,12 @@ const Monday = () => {
 
                       >
                         {exercise.title}
+                        {exercise.sets != undefined ? <div>
+                          <div>{JSON.parse(exercise.sets).map((set, index) => (
+                            <li>{set.num}</li>
+                          ))}</div>
+                        </div> : null}
+
                         <span className=" ml-14">(X)SETS</span>
                       </Box>
                       <AccordionIcon />
@@ -199,8 +227,11 @@ const Monday = () => {
                         onClick={() => {
                           setOverlay(<OverlayOne />);
                           onSecondOpen();
+                          setEditId(exercise.id)
+                          setExerciseSets(exercise.sets ? JSON.parse(exercise.sets) : null)
                         }}
                       >
+
                         <i class="bi bi-plus-lg"></i> set
                       </button>
                     </div>
@@ -279,6 +310,7 @@ const Monday = () => {
           </div>
         </ModalContent>
       </Modal>
+
       <Modal
         isCentered
         isOpen={isSecondOpen}
@@ -292,7 +324,7 @@ const Monday = () => {
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
-
+          {editId}
           <div
 
             className="flex flex-col items-center gap-3 my-10"
@@ -301,6 +333,7 @@ const Monday = () => {
               className="bg-gray-700 rounded-md  p-2 text-white"
               type="number"
               placeholder="Number of reps"
+              onChange={(e) => setNumberReps(e.target.value)}
               required
             />
             <div className="flex flex-row items-center gap-3">
@@ -308,21 +341,30 @@ const Monday = () => {
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
                 placeholder="Percentage"
+                onChange={(e) => setWeight(e.target.value)}
               />
               <span className="text-gray-200">or</span>
               <input
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
+                onChange={(e) => setRpe(e.target.value)}
                 placeholder="RPE"
               />
             </div>
             <button
               type="submit"
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-              onClick={() => { onSecondClose(); }}
+              onClick={() => { addNew() }}
+            >
+              Update
+            </button>
+            {!weight || !rpe ? null : <button
+              type="submit"
+              className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
+              onClick={() => { onSecondClose(); updateExercise() }}
             >
               Save
-            </button>
+            </button>}
           </div>
 
 

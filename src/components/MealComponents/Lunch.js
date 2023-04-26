@@ -62,7 +62,7 @@ const Lunch = () => {
       size: data[0].serving_size_g,
       time: time
     });
-
+    window.location.reload();
   };
 
 
