@@ -15,6 +15,7 @@ import {
   doc,
   deleteDoc,
   setDoc,
+  increment,
 } from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
 
@@ -63,6 +64,16 @@ const Dinner = () => {
       .catch((err) => console.error(err));
   };
 
+  const updateStats = async () => {
+    const statsDoc = doc(db, "currentstats", "mystats");
+    const newFields = {
+      calories: increment(Math.round(Number(data[0].calories))),
+      carbs: increment(Math.round(Number(data[0].carbohydrates_total_g))),
+      fat: increment(Math.round(Number(data[0].fat_total_g))),
+      protein: increment(Math.round(Number(data[0].protein_g)))
+    };
+    await updateDoc(statsDoc, newFields);
+  };
 
   const addFood = async () => {
 
@@ -75,6 +86,9 @@ const Dinner = () => {
       size: data[0].serving_size_g,
       time: time
     });
+
+    updateStats()
+
     window.location.reload();
   };
 
@@ -108,9 +122,17 @@ const Dinner = () => {
     setName("")
   }
 
-  const deleteItem = async (id) => {
-    const foodDoc = doc(db, "snack", id);
+  const deleteItem = async (id, calories, carbohydrates, fat, protein) => {
+    const foodDoc = doc(db, "dinner", id);
     await deleteDoc(foodDoc);
+    const statsDoc = doc(db, "currentstats", "mystats");
+    const newFields = {
+      calories: increment(-calories),
+      carbs: increment(-carbohydrates),
+      fat: increment(-fat),
+      protein: increment(-protein)
+    };
+    await updateDoc(statsDoc, newFields);
     window.location.reload();
   }
 
@@ -141,7 +163,7 @@ const Dinner = () => {
               </div>
               <button
                 className="  text-gray-200 text-sm    rounded-lg   w-fit"
-                onClick={() => { deleteItem(item.id) }}
+                onClick={() => { deleteItem(item.id, item.calories, item.carbohydrates, item.fat, item.protein) }}
               >
                 <i class="bi bi-trash3"></i>
               </button>

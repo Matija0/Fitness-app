@@ -15,6 +15,7 @@ import {
   doc,
   deleteDoc,
   setDoc,
+  increment,
 } from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
 import Test from "./FoodItem";
@@ -63,6 +64,16 @@ const Snack = () => {
       .catch((err) => console.error(err));
   };
 
+  const updateStats = async () => {
+    const statsDoc = doc(db, "currentstats", "mystats");
+    const newFields = {
+      calories: increment(Math.round(Number(data[0].calories))),
+      carbs: increment(Math.round(Number(data[0].carbohydrates_total_g))),
+      fat: increment(Math.round(Number(data[0].fat_total_g))),
+      protein: increment(Math.round(Number(data[0].protein_g)))
+    };
+    await updateDoc(statsDoc, newFields);
+  };
 
   const addFood = async () => {
 
@@ -75,6 +86,9 @@ const Snack = () => {
       size: data[0].serving_size_g,
       time: time
     });
+
+    updateStats()
+
     window.location.reload();
   };
 
@@ -108,16 +122,24 @@ const Snack = () => {
     setName("")
   }
 
-  const deleteItem = async (id) => {
+  const deleteItem = async (id, calories, carbohydrates, fat, protein) => {
     const foodDoc = doc(db, "snack", id);
     await deleteDoc(foodDoc);
+    const statsDoc = doc(db, "currentstats", "mystats");
+    const newFields = {
+      calories: increment(-calories),
+      carbs: increment(-carbohydrates),
+      fat: increment(-fat),
+      protein: increment(-protein)
+    };
+    await updateDoc(statsDoc, newFields);
     window.location.reload();
   }
 
   return (
     <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
-        <h1 className="text-2xl text-gray-200 text-center">Breakfast</h1>
+        <h1 className="text-2xl text-gray-200 text-center">Snack</h1>
         <img src={snack} alt="" />
       </div>
       <button
@@ -141,7 +163,7 @@ const Snack = () => {
               </div>
               <button
                 className="  text-gray-200 text-sm   rounded-lg   w-fit"
-                onClick={() => { deleteItem(item.id) }}
+                onClick={() => { deleteItem(item.id, item.calories, item.carbohydrates, item.fat, item.protein) }}
               >
                 <i class="bi bi-trash3"></i>
               </button>

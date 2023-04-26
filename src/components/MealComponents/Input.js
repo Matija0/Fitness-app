@@ -29,9 +29,18 @@ const Input = () => {
 
     }
 
+
     const handleSubmit = (event) => {
         event.preventDefault()
         addStats()
+        clear()
+    }
+
+    const clear = () => {
+        setTdee("")
+        setProtein("")
+        setCarbs("")
+        setFat("")
     }
     return (
         <div className='w-fit mx-auto'>
@@ -42,6 +51,7 @@ const Input = () => {
                         className="body-input"
                         type="text"
                         required
+                        value={tdee}
                         onChange={(e) => setTdee(e.target.value)}
                     />
                     <span className="highlight"></span>
@@ -53,6 +63,7 @@ const Input = () => {
                         className="body-input"
                         type="text"
                         required
+                        value={protein}
                         onChange={(e) => setProtein(e.target.value)}
                     />
                     <span className="highlight"></span>
@@ -65,6 +76,7 @@ const Input = () => {
                         className="body-input"
                         type="text"
                         required
+                        value={carbs}
                         onChange={(e) => setCarbs(e.target.value)}
                     />
                     <span className="highlight"></span>
@@ -76,6 +88,7 @@ const Input = () => {
                         className="body-input"
                         type="text"
                         required
+                        value={fat}
                         onChange={(e) => setFat(e.target.value)}
                     />
                     <span className="highlight"></span>

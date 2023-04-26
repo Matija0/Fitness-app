@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import lunch from "../../images/lunch.png"
 import { db } from "../../firebase-config";
-import { addDoc, collection, deleteDoc, doc, getDocs } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, increment, updateDoc } from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
 import FoodItem from "./FoodItem";
 
@@ -50,6 +50,16 @@ const Lunch = () => {
 
   };
 
+  const updateStats = async () => {
+    const statsDoc = doc(db, "currentstats", "mystats");
+    const newFields = {
+      calories: increment(Math.round(Number(data[0].calories))),
+      carbs: increment(Math.round(Number(data[0].carbohydrates_total_g))),
+      fat: increment(Math.round(Number(data[0].fat_total_g))),
+      protein: increment(Math.round(Number(data[0].protein_g)))
+    };
+    await updateDoc(statsDoc, newFields);
+  };
 
   const addFood = async () => {
 
@@ -62,6 +72,9 @@ const Lunch = () => {
       size: data[0].serving_size_g,
       time: time
     });
+
+    updateStats()
+
     window.location.reload();
   };
 
@@ -89,9 +102,17 @@ const Lunch = () => {
     setName("")
   }
 
-  const deleteItem = async (id) => {
+  const deleteItem = async (id, calories, carbohydrates, fat, protein) => {
     const foodDoc = doc(db, "lunch", id);
     await deleteDoc(foodDoc);
+    const statsDoc = doc(db, "currentstats", "mystats");
+    const newFields = {
+      calories: increment(-calories),
+      carbs: increment(-carbohydrates),
+      fat: increment(-fat),
+      protein: increment(-protein)
+    };
+    await updateDoc(statsDoc, newFields);
     window.location.reload();
   }
 
@@ -123,7 +144,7 @@ const Lunch = () => {
               </div>
               <button
                 className="  text-gray-200 text-sm  rounded-lg   w-fit"
-                onClick={() => { deleteItem(item.id) }}
+                onClick={() => { deleteItem(item.id, item.calories, item.carbohydrates, item.fat, item.protein) }}
               >
                 <i class="bi bi-trash3"></i>
               </button>

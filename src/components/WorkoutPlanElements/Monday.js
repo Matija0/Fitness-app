@@ -79,7 +79,13 @@ const Monday = () => {
       weight: weight,
       rpe: rpe
     }
-    setExerciseSets((searches) => { return [...searches, val] });
+    if (exerciseSets != null) {
+      setExerciseSets((searches) => { return [...searches, val] });
+    }
+    else {
+      setExerciseSets([val])
+    }
+
 
 
   }

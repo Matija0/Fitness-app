@@ -85,6 +85,7 @@ const deleteExercise = async (id) => {
   };  
 
 
+
 rgba(0, 40, 83, 1)
 
 rgba(4, 12, 24, 1)
