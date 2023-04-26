@@ -180,15 +180,15 @@ const Monday = () => {
               <Accordion
                 defaultIndex={[1]}
                 allowMultiple
-                backgroundColor={"gray.800"}
+                backgroundColor={"gray.900"}
                 borderRadius={"5px"}
               >
                 <AccordionItem border={"none"} marginBottom={"15px"}>
                   <h2>
                     <AccordionButton
                       bg={"none"}
-                      _expanded={{ bg: "gray.600", borderRadius: "5px" }}
-                      _hover={{ bg: "gray.600", borderRadius: "5px" }}
+                      _expanded={{ bg: "gray.700", borderRadius: "5px" }}
+                      _hover={{ bg: "gray.700", borderRadius: "5px" }}
                       paddingY={"10px"}
                       color={"gray.300"}
                     >
@@ -201,11 +201,7 @@ const Monday = () => {
 
                       >
                         {exercise.title}
-                        {exercise.sets != undefined ? <div>
-                          <div>{JSON.parse(exercise.sets).map((set, index) => (
-                            <li>{set.num}</li>
-                          ))}</div>
-                        </div> : null}
+                        
 
                         <span className=" ml-14">(X)SETS</span>
                       </Box>
@@ -227,8 +223,18 @@ const Monday = () => {
                       </button>
                     </div>
 
-                    <div className="my-4">
-                      <button
+                    
+                      <div className=" my-4">
+                    {exercise.sets != undefined ? (<div className="grid grid-cols-4">
+                      {JSON.parse(exercise.sets).map((set)=>{
+                        return(
+                        <div className="text-gray-200 text-lg border-2 border-gray-400 py-2 px-2 rounded-lg w-fit flex">{set.num} reps {set.weight} kg</div>
+                        
+                        )
+                      })}
+                    </div>) : null}
+                    </div>
+                    <button
                         className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
                         onClick={() => {
                           setOverlay(<OverlayOne />);
@@ -240,7 +246,7 @@ const Monday = () => {
 
                         <i class="bi bi-plus-lg"></i> set
                       </button>
-                    </div>
+                    
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
@@ -330,7 +336,7 @@ const Monday = () => {
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
-          {editId}
+         
           <div
 
             className="flex flex-col items-center gap-3 my-10"
