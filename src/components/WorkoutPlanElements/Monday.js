@@ -121,7 +121,7 @@ const Monday = () => {
     };
 
     getExercises();
-  }, [updateExercise]);
+  }, []);
 
   mondayData.sort((a, b) => a.time - b.time);
 
@@ -225,7 +225,7 @@ const Monday = () => {
 
                     
                       <div className=" my-4">
-                    {exercise.sets != undefined ? (<div className="grid grid-cols-4">
+                    {exercise.sets != undefined ? (<div className="grid grid-cols-4 gap-3">
                       {JSON.parse(exercise.sets).map((set)=>{
                         return(
                         <div className="text-gray-200 text-lg border-2 border-gray-400 py-2 px-2 rounded-lg w-fit flex">{set.num} reps {set.weight} kg</div>
