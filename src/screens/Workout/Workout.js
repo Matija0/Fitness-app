@@ -64,12 +64,12 @@ const Workout = () => {
             </TabPanel>
           </TabPanels>
         </Tabs>
-        </div>
-        <RepMaxForm/>
-        
       </div>
 
-    
+
+    </div>
+
+
   );
 };
 

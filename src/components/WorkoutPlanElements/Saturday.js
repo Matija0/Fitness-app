@@ -48,6 +48,12 @@ const Saturday = () => {
   const [loader, setLoader] = useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
+  const [exerciseSets, setExerciseSets] = useState([])
+  //edit
+  const [editId, setEditId] = useState(null);
+  const [number_reps, setNumberReps] = useState()
+  const [weight, setWeight] = useState()
+  const [rpe, setRpe] = useState()
   const [sundayData, setSundaydayData] = useState([]);
   const sundayCollectionRef = collection(db, "sunday")
 
@@ -60,6 +66,31 @@ const Saturday = () => {
       target: target,
     });
   };
+
+  const addNew = () => {
+    const val = {
+      num: number_reps,
+      weight: weight,
+      rpe: rpe
+    }
+    if (exerciseSets != null) {
+      setExerciseSets((searches) => { return [...searches, val] });
+    }
+    else {
+      setExerciseSets([val])
+    }
+
+
+
+  }
+  const updateExercise = async (e) => {
+    console.log(exerciseSets)
+    const ex = doc(db, "tuesday", editId);
+    await updateDoc(ex, {
+      sets: JSON.stringify(exerciseSets)
+    })
+
+  }
 
   const deleteExercise = async (id) => {
     const exerciseDoc = doc(db, "saturday", id);
@@ -122,13 +153,13 @@ const Saturday = () => {
           Add exercise
         </button>
 
-        <div className="mt-4">
+        <div className="mt-4 w-3/4">
           {sundayData.map((exercise) => {
             return (
               <Accordion
                 defaultIndex={[1]}
                 allowMultiple
-                backgroundColor={"gray.800"}
+                backgroundColor={"gray.900"}
                 borderRadius={"5px"}
               >
                 <AccordionItem border={"none"} marginBottom={"15px"}>
@@ -147,8 +178,7 @@ const Saturday = () => {
                         color={"gray.200"}
                         fontSize={"lg"}
                       >
-                        {exercise.title}
-                        <span className=" ml-14">(X)SETS</span>
+                        <div className=" ml-5 flex flex-row gap-7"><h1>{exercise.title}</h1>{exercise.sets != undefined ? (<span className="text-white">{(JSON.parse(exercise.sets)).length}x</span>) : null}  </div>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
@@ -163,17 +193,31 @@ const Saturday = () => {
                       </button>
                     </div>
 
-                    <div className="my-4">
-                      <button
-                        className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
-                        onClick={() => {
-                          setOverlay(<OverlayOne />);
-                          onSecondOpen();
-                        }}
-                      >
-                        <i class="bi bi-plus-lg"></i> set
-                      </button>
+                    <div className=" my-4">
+                      {exercise.sets != undefined ? (<div className="flex flex-col items-center gap-4">
+
+                        {JSON.parse(exercise.sets).map((set) => {
+                          return (
+                            <div className="text-gray-300 font-light text-base border border-gray-300 w-2/5  py-2 px-2 rounded-lg flex flex-row gap-4 justify-center items-center"><span className="">SET 1</span><span> {set.num} reps</span> <span>{set.weight} kg
+                            </span></div>
+
+                          )
+                        })}
+                      </div>) : null}
                     </div>
+                    <button
+                      className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
+                      onClick={() => {
+                        setOverlay(<OverlayOne />);
+                        onSecondOpen();
+                        setEditId(exercise.id)
+                        setExerciseSets(exercise.sets ? JSON.parse(exercise.sets) : null)
+                      }}
+
+                    >
+                      <i class="bi bi-plus-lg"></i> set
+                    </button>
+
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
@@ -283,10 +327,17 @@ const Saturday = () => {
             <button
               type="submit"
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-              onClick={onSecondClose}
+              onClick={() => { addNew() }}
+            >
+              Update
+            </button>
+            {!weight || !rpe ? null : <button
+              type="submit"
+              className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
+              onClick={() => { onSecondClose(); updateExercise() }}
             >
               Save
-            </button>
+            </button>}
           </form>
         </ModalContent>
       </Modal>

@@ -148,25 +148,26 @@ const Dinner = () => {
       >
         <i class="bi bi-plus"></i> food
       </button>
-      <div className="mt-5 w-full px-2">
+      <div className="mt-5 w-full">
         {dinnerData.map((item) => {
           return (
-            <div className="text-lg mb-4 flex flex-row justify-between  text-gray-200 border-2 py-2 px-2 rounded-lg  border-gray-300 ">
-              <div>
-                <h2 className=" text-sm font-semibold md:text-lg">{item.name}</h2>
+            <div className="text-lg mb-4 flex flex-row  text-gray-200 border px-2 py-2 rounded-lg  border-gray-300 ">
+              <div className=" w-1/4">
+                <h2 className=" text-sm font-semibold md:text-base">{item.name}</h2>
               </div>
-              <div className="flex flex-row justify-between w-9/12 font-bold text-sm md:text-lg">
+              <div className="flex flex-row justify-between w-9/12 font-bold text-sm md:text-base">
                 <span className=" text-sky-500">{item.calories} cals</span>
                 <span className=" text-red-500">{item.protein} gr</span>
                 <span className=" text-yellow-500">{item.carbohydrates} gr</span>
                 <span className=" text-emerald-500">{item.fat} gr</span>
+                <button
+                  className="  text-gray-200 text-sm  w-fit"
+                  onClick={() => { deleteItem(item.id, item.calories, item.carbohydrates, item.fat, item.protein) }}
+                >
+                  <i class="bi bi-trash3"></i>
+                </button>
               </div>
-              <button
-                className="  text-gray-200 text-sm    rounded-lg   w-fit"
-                onClick={() => { deleteItem(item.id, item.calories, item.carbohydrates, item.fat, item.protein) }}
-              >
-                <i class="bi bi-trash3"></i>
-              </button>
+
             </div>
           )
         })

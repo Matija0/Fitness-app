@@ -35,14 +35,14 @@ const Meals = () => {
 
 
   return (
-    <div className=" container  md:mx-auto my-20">
+    <div className="my-20 md:mx-20">
 
       {inputData ?
 
 
         (<div>
           <div className=" my-4">
-            <h1 className=" text-2xl text-start my-4 text-gray-200 font-bold">
+            <h1 className=" text-2xl text-center my-4 text-gray-200 font-bold md:text-start">
               Today
             </h1>
 

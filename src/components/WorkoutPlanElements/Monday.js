@@ -174,7 +174,7 @@ const Monday = () => {
           Add exercise
         </button>
 
-        <div className="mt-4">
+        <div className="mt-7 w-3/4">
           {mondayData.map((exercise) => {
             return (
               <Accordion
@@ -195,15 +195,16 @@ const Monday = () => {
                       <Box
                         as="span"
                         flex="1"
+
                         textAlign={"left"}
                         color={"gray.200"}
                         fontSize={"lg"}
 
                       >
-                        {exercise.title}
-                        
 
-                        <span className=" ml-14">(X)SETS</span>
+
+
+                        <div className=" ml-5 flex flex-row gap-7"><h1>{exercise.title}</h1>{exercise.sets != undefined ? (<span className="text-white">{(JSON.parse(exercise.sets)).length}x</span>) : null}  </div>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
@@ -223,30 +224,32 @@ const Monday = () => {
                       </button>
                     </div>
 
-                    
-                      <div className=" my-4">
-                    {exercise.sets != undefined ? (<div className="grid grid-cols-4 gap-3">
-                      {JSON.parse(exercise.sets).map((set)=>{
-                        return(
-                        <div className="text-gray-200 text-lg border-2 border-gray-400 py-2 px-2 rounded-lg w-fit flex">{set.num} reps {set.weight} kg</div>
-                        
-                        )
-                      })}
-                    </div>) : null}
+
+                    <div className=" my-4">
+                      {exercise.sets != undefined ? (<div className="flex flex-col items-center gap-4">
+
+                        {JSON.parse(exercise.sets).map((set) => {
+                          return (
+                            <div className="text-gray-300 font-light text-base border border-gray-300 w-2/5  py-2 px-2 rounded-lg flex flex-row gap-4 justify-center items-center"><span className="">SET 1</span><span> {set.num} reps</span> <span>{set.weight} kg
+                            </span></div>
+
+                          )
+                        })}
+                      </div>) : null}
                     </div>
                     <button
-                        className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
-                        onClick={() => {
-                          setOverlay(<OverlayOne />);
-                          onSecondOpen();
-                          setEditId(exercise.id)
-                          setExerciseSets(exercise.sets ? JSON.parse(exercise.sets) : null)
-                        }}
-                      >
+                      className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
+                      onClick={() => {
+                        setOverlay(<OverlayOne />);
+                        onSecondOpen();
+                        setEditId(exercise.id)
+                        setExerciseSets(exercise.sets ? JSON.parse(exercise.sets) : null)
+                      }}
+                    >
 
-                        <i class="bi bi-plus-lg"></i> set
-                      </button>
-                    
+                      <i class="bi bi-plus-lg"></i> set
+                    </button>
+
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
@@ -336,7 +339,7 @@ const Monday = () => {
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
-         
+
           <div
 
             className="flex flex-col items-center gap-3 my-10"

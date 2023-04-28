@@ -12,23 +12,23 @@ import {
     setDoc,
 } from "firebase/firestore";
 import { useToast } from '@chakra-ui/react';
-import axios from 'axios';
+
 
 const RepMaxForm = () => {
 
-   
-    
+
+
     const [time, setTime] = useState("")
     const [muscle, setMuscle] = useState("")
     const [location, setLocation] = useState("")
     const [equipment, setEquipment] = useState("")
-    const [data, setData]=useState([])
-    
+    const [data, setData] = useState([])
+
     const toast = useToast()
 
-    
 
-   
+
+
 
     const notf = () => {
         toast({
@@ -40,7 +40,7 @@ const RepMaxForm = () => {
         })
     }
 
-    
+
     const url = 'https://workout-planner1.p.rapidapi.com/?time=30&muscle=biceps&location=gym&equipment=dumbbells';
     const options = {
         method: 'GET',
@@ -50,8 +50,8 @@ const RepMaxForm = () => {
             'X-RapidAPI-Host': 'workout-planner1.p.rapidapi.com'
         }
     };
-    
-    const getData =  async() =>{
+
+    const getData = async () => {
         try {
             const response = await fetch(url, options);
             const result = await response.text();
@@ -60,17 +60,17 @@ const RepMaxForm = () => {
             console.error(error);
         }
     }
-    
 
-   useEffect(()=>{
+
+    useEffect(() => {
         getData()
-   },[]) 
+    }, [])
 
-   
+
     return (
         <div className=" bg-gray-800 border border-gray-500 flex flex-col items-center gap-5 px-2 py-3 rounded-lg">
             <h1 className="text-white text-xl">Enter data:</h1>
-            <form  className="flex flex-col gap-3 items-center">
+            <form className="flex flex-col gap-3 items-center">
                 <div class="group">
                     <input
                         className="body-input"
@@ -119,15 +119,13 @@ const RepMaxForm = () => {
                     <span className="bar"></span>
                     <label className="body-label">Equipment</label>
                 </div>
-                
+
                 <button type='submit' className=' bg-sky-600 py-2 px-3 w-fit rounded-lg hover:bg-sky-500 text-gray-800'>Get workout</button>
             </form>
-        <div>
-            {data.map(()=>{
-                
-            })}
-        </div>
-           
+            <div>
+
+            </div>
+
         </div>
     )
 }

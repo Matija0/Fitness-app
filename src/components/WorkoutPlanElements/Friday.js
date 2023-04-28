@@ -11,7 +11,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import {
-
   ModalOverlay,
   Modal,
   ModalContent,
@@ -22,6 +21,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  useToast,
   CircularProgress,
 } from "@chakra-ui/react";
 
@@ -48,18 +48,66 @@ const Friday = () => {
   const [loader, setLoader] = useState(false)
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
-  const [fridaydayData, setFridayData] = useState([]);
+  const [exerciseSets, setExerciseSets] = useState([])
+  //edit
+  const [editId, setEditId] = useState(null);
+  const [number_reps, setNumberReps] = useState()
+  const [weight, setWeight] = useState()
+  const [rpe, setRpe] = useState()
+  const [fridayData, setFridayData] = useState([]);
   const fridayCollectionRef = collection(db, "friday");
+  const toast = useToast()
+  const time = new Date();
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
+
+
+
     await addDoc(fridayCollectionRef, {
       bodyPart: bodyPart,
       equipment: equipment,
       gifUrl: gifUrl,
       title: title,
       target: target,
+      time: time
     });
   };
+
+  const addNew = () => {
+    const val = {
+      num: number_reps,
+      weight: weight,
+      rpe: rpe
+    }
+    if (exerciseSets != null) {
+      setExerciseSets((searches) => { return [...searches, val] });
+    }
+    else {
+      setExerciseSets([val])
+    }
+
+
+
+  }
+  const updateExercise = async (e) => {
+    console.log(exerciseSets)
+    const ex = doc(db, "friday", editId);
+    await updateDoc(ex, {
+      sets: JSON.stringify(exerciseSets)
+    })
+
+  }
+
+
+  const notif = () => {
+    toast({
+      title: 'Exercise saved',
+
+      status: 'success',
+      duration: 4000,
+      isClosable: true,
+    })
+  }
 
   const deleteExercise = async (id) => {
     const exerciseDoc = doc(db, "friday", id);
@@ -74,6 +122,8 @@ const Friday = () => {
 
     getExercises();
   }, []);
+
+  fridayData.sort((a, b) => a.time - b.time);
 
   const handleSearch = async () => {
     setLoader(true)
@@ -92,8 +142,10 @@ const Friday = () => {
             exercise.bodyPart.toLowerCase().includes(search)
         )
       );
+
       setSearch("");
-      console.log(exercises);
+
+
     }
     setShow(true);
     setLoader(false)
@@ -122,13 +174,13 @@ const Friday = () => {
           Add exercise
         </button>
 
-        <div className="mt-4">
-          {fridaydayData.map((exercise) => {
+        <div className="mt-7 w-3/4">
+          {fridayData.map((exercise) => {
             return (
               <Accordion
                 defaultIndex={[1]}
                 allowMultiple
-                backgroundColor={"gray.800"}
+                backgroundColor={"gray.900"}
                 borderRadius={"5px"}
               >
                 <AccordionItem border={"none"} marginBottom={"15px"}>
@@ -143,37 +195,62 @@ const Friday = () => {
                       <Box
                         as="span"
                         flex="1"
+
                         textAlign={"left"}
                         color={"gray.200"}
                         fontSize={"lg"}
+
                       >
-                        {exercise.title}
-                        <span className=" ml-14">(X)SETS</span>
+
+
+
+                        <div className=" ml-5 flex flex-row gap-7"><h1>{exercise.title}</h1>{exercise.sets != undefined ? (<span className="text-white">{(JSON.parse(exercise.sets)).length}x</span>) : null}  </div>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <div className="flex justify-end">
+                    <div className="flex justify-end gap-3">
                       <button
                         className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
                         onClick={() => { deleteExercise(exercise.id) }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
-                    </div>
+                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
 
-                    <div className="my-4">
-                      <button
-                        className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
-                        onClick={() => {
-                          setOverlay(<OverlayOne />);
-                          onSecondOpen();
-                        }}
                       >
-                        <i class="bi bi-plus-lg"></i> set
+                        <i class="bi bi-info-circle"></i>
                       </button>
                     </div>
+
+
+                    <div className=" my-4">
+                      {exercise.sets != undefined ? (<div className="flex flex-col items-center gap-4">
+
+                        {JSON.parse(exercise.sets).map((set, index) => {
+
+                          return (
+                            <div className="text-gray-300 font-light text-base border border-gray-300 w-2/5  py-2 px-2 rounded-lg flex flex-row gap-4 justify-center items-center" key={index}><span className="">SET {index + 1}</span><span> {set.num} reps</span> <span>{set.weight} kg
+                            </span></div>
+
+                          )
+                        })}
+                      </div>) : null}
+                    </div>
+                    <button
+                      className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
+                      onClick={() => {
+                        setOverlay(<OverlayOne />);
+                        onSecondOpen();
+                        setEditId(exercise.id)
+                        setExerciseSets(exercise.sets ? JSON.parse(exercise.sets) : null)
+                      }}
+                    >
+
+                      <i class="bi bi-plus-lg"></i> set
+                    </button>
+
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
@@ -225,14 +302,18 @@ const Friday = () => {
                     <div key={item.id}>
                       <ExercisesList
                         item={item}
-                        addExercise={() =>
+                        addExercise={() => {
                           addExercise(
                             item.bodyPart,
                             item.equipment,
                             item.gifUrl,
                             item.name,
                             item.target
-                          )
+                          );
+                          notif();
+
+                        }
+
                         }
                       />
                     </div>
@@ -240,9 +321,12 @@ const Friday = () => {
                 })}
               </div>
             ) : (loader ? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="cyan.800" /></div>) : null)}
+
+
           </div>
         </ModalContent>
       </Modal>
+
       <Modal
         isCentered
         isOpen={isSecondOpen}
@@ -257,37 +341,51 @@ const Friday = () => {
             </button>
           </div>
 
-          <form
-            onSubmit={""}
+          <div
+
             className="flex flex-col items-center gap-3 my-10"
           >
             <input
-              className="bg-gray-700 rounded-md  p-2 text-white"
+              className="bg-gray-700 rounded-md w-fit  p-2 text-white"
               type="number"
               placeholder="Number of reps"
+              onChange={(e) => setNumberReps(e.target.value)}
               required
             />
             <div className="flex flex-row items-center gap-3">
               <input
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
-                placeholder="Percentage"
+                placeholder="Weight"
+                onChange={(e) => setWeight(e.target.value)}
               />
               <span className="text-gray-200">or</span>
               <input
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
+                onChange={(e) => setRpe(e.target.value)}
                 placeholder="RPE"
               />
             </div>
             <button
-              type="submit"
+
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-              onClick={onSecondClose}
+              onClick={() => { addNew() }}
+            >
+              Update
+            </button>
+            {!weight || !rpe ? null : <button
+
+              className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
+              onClick={() => { onSecondClose(); updateExercise() }}
             >
               Save
-            </button>
-          </form>
+            </button>}
+          </div>
+
+
+
+
         </ModalContent>
       </Modal>
     </>
