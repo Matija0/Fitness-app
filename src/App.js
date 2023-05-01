@@ -12,6 +12,7 @@ import Login from "./screens/Sign In/Login";
 import Bodyweight from "./screens/Calculators/Bodyweight";
 import Tdee from "./screens/Calculators/Tdee";
 
+
 function App() {
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="bodyweight" element={<Bodyweight />} />
           <Route path="/tdee" element={<Tdee />} />
           <Route path="/meals" element={<Meals />} />
+          
         </Routes>
         <Footer />
       </div>

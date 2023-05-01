@@ -114,6 +114,13 @@ const Monday = () => {
     await deleteDoc(exerciseDoc);
   };
 
+  const remove = (item) =>{
+    const array= mondayData.map((exercise) => JSON.parse(exercise.sets))
+    const index=array.indexOf(item)
+    array.splice(index, 1)
+    setMondayData([...array])
+  }
+
   useEffect(() => {
     const getExercises = async () => {
       const data = await getDocs(mondayCollectionRef);
@@ -121,6 +128,7 @@ const Monday = () => {
     };
 
     getExercises();
+    remove()
   }, []);
 
   mondayData.sort((a, b) => a.time - b.time);
@@ -160,6 +168,9 @@ const Monday = () => {
     setExercises([""]);
     setShow(false);
   };
+
+  
+
 
   return (
     <>
@@ -228,9 +239,9 @@ const Monday = () => {
                     <div className=" my-4">
                       {exercise.sets != undefined ? (<div className="flex flex-col items-center gap-4">
 
-                        {JSON.parse(exercise.sets).map((set) => {
+                        {JSON.parse(exercise.sets).map((set, index) => {
                           return (
-                            <div className="text-gray-300 font-light text-base border border-gray-300 w-2/5  py-2 px-2 rounded-lg flex flex-row gap-4 justify-center items-center"><span className="">SET 1</span><span> {set.num} reps</span> <span>{set.weight} kg
+                            <div className="text-gray-300 w-full font-light text-base py-2 px-7  flex flex-row gap-4 justify-between items-center border-b border-gray-400" key={index}><div className="text-gray-400 text-sm"><button className=" text-rose-600 text-xs mr-2" onClick={()=>{remove(set)}}><i class="bi bi-archive-fill"></i></button> SET {index+1} </div><span className="text-lg"> {set.num} reps</span> <span className="text-lg">{set.weight} kg
                             </span></div>
 
                           )
@@ -355,7 +366,7 @@ const Monday = () => {
               <input
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
-                placeholder="Percentage"
+                placeholder="Weight"
                 onChange={(e) => setWeight(e.target.value)}
               />
               <span className="text-gray-200">or</span>
