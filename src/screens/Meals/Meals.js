@@ -35,7 +35,7 @@ const Meals = () => {
 
 
   return (
-    <div className="my-20 md:mx-20">
+    <div style={{maxWidth: "1440px"}} className="my-20 mx-auto ">
 
       {inputData ?
 
