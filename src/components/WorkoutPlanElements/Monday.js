@@ -114,9 +114,9 @@ const Monday = () => {
     await deleteDoc(exerciseDoc);
   };
 
-  const remove = (item) =>{
-    const array= mondayData.map((exercise) => JSON.parse(exercise.sets))
-    const index=array.indexOf(item)
+  const remove = (item) => {
+    const array = mondayData.map((exercise) => JSON.parse(exercise.sets))
+    const index = array.indexOf(item)
     array.splice(index, 1)
     setMondayData([...array])
   }
@@ -128,7 +128,7 @@ const Monday = () => {
     };
 
     getExercises();
-    remove()
+
   }, []);
 
   mondayData.sort((a, b) => a.time - b.time);
@@ -169,7 +169,7 @@ const Monday = () => {
     setShow(false);
   };
 
-  
+
 
 
   return (
@@ -241,7 +241,7 @@ const Monday = () => {
 
                         {JSON.parse(exercise.sets).map((set, index) => {
                           return (
-                            <div className="text-gray-300 w-full font-light text-base py-2 px-7  flex flex-row gap-4 justify-between items-center border-b border-gray-400" key={index}><div className="text-gray-400 text-sm"><button className=" text-rose-600 text-xs mr-2" onClick={()=>{remove(set)}}><i class="bi bi-archive-fill"></i></button> SET {index+1} </div><span className="text-lg"> {set.num} reps</span> <span className="text-lg">{set.weight} kg
+                            <div className="text-gray-300 w-full font-light text-base py-2 px-7  flex flex-row gap-4 justify-between items-center border-b border-gray-400" key={index}><div className="text-gray-400 text-sm"><button className=" text-rose-600 text-xs mr-2" onClick={() => { remove(set) }}><i class="bi bi-archive-fill"></i></button> SET {index + 1} </div><span className="text-lg"> {set.num} reps</span> <span className="text-lg">{set.weight} kg
                             </span></div>
 
                           )

@@ -12,6 +12,7 @@ import {
     setDoc,
 } from "firebase/firestore";
 import { useToast } from '@chakra-ui/react';
+import { async } from '@firebase/util';
 
 
 const RepMaxForm = () => {
@@ -51,26 +52,29 @@ const RepMaxForm = () => {
         }
     };
 
-    const getData = async () => {
+    const getAPI = async () => {
+
         try {
             const response = await fetch(url, options);
             const result = await response.text();
-            setData(result);
+            setData(JSON.parse(result));
         } catch (error) {
             console.error(error);
         }
     }
 
+    const getData = (event) => {
+        event.preventDefault()
+        getAPI()
+    }
 
-    useEffect(() => {
-        getData()
-    }, [])
+
 
 
     return (
         <div className=" bg-gray-800 border border-gray-500 flex flex-col items-center gap-5 px-2 py-3 rounded-lg">
             <h1 className="text-white text-xl">Enter data:</h1>
-            <form className="flex flex-col gap-3 items-center">
+            <form onSubmit={getData} className="flex flex-col gap-3 items-center">
                 <div class="group">
                     <input
                         className="body-input"
@@ -125,7 +129,7 @@ const RepMaxForm = () => {
             <div>
 
             </div>
-
+            {console.log(data, "test")}
         </div>
     )
 }
