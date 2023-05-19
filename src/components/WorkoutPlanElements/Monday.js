@@ -45,31 +45,28 @@ const Monday = () => {
   } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [show, setShow] = useState(false);
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const [search, setSearch] = useState("");
   const [exercises, setExercises] = useState([]);
-  const [exerciseSets, setExerciseSets] = useState([])
+  const [exerciseSets, setExerciseSets] = useState([]);
   //edit
   const [editId, setEditId] = useState(null);
-  const [number_reps, setNumberReps] = useState()
-  const [weight, setWeight] = useState()
-  const [rpe, setRpe] = useState()
-  const [mondayData, setMondayData] = useState([]);
-  const mondayCollectionRef = collection(db, "monday");
-  const toast = useToast()
+  const [number_reps, setNumberReps] = useState();
+  const [weight, setWeight] = useState();
+  const [rpe, setRpe] = useState();
+  const [data, setData] = useState([]);
+  const dbCollectionRef = collection(db, "monday");
+  const toast = useToast();
   const time = new Date();
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
-
-
-
-    await addDoc(mondayCollectionRef, {
+    await addDoc(dbCollectionRef, {
       bodyPart: bodyPart,
       equipment: equipment,
       gifUrl: gifUrl,
       title: title,
       target: target,
-      time: time
+      time: time,
     });
   };
 
@@ -77,59 +74,52 @@ const Monday = () => {
     const val = {
       num: number_reps,
       weight: weight,
-      rpe: rpe
-    }
+      rpe: rpe,
+    };
     if (exerciseSets != null) {
-      setExerciseSets((searches) => { return [...searches, val] });
+      setExerciseSets((searches) => {
+        return [...searches, val];
+      });
+    } else {
+      setExerciseSets([val]);
     }
-    else {
-      setExerciseSets([val])
-    }
-
-
-
-  }
+  };
   const updateExercise = async (e) => {
-    console.log(exerciseSets)
+    console.log(exerciseSets);
     const ex = doc(db, "monday", editId);
     await updateDoc(ex, {
-      sets: JSON.stringify(exerciseSets)
-    })
-
-  }
-
+      sets: JSON.stringify(exerciseSets),
+    });
+  };
 
   const notif = () => {
     toast({
-      title: 'Exercise saved',
+      title: "Exercise saved",
 
-      status: 'success',
+      status: "success",
       duration: 4000,
       isClosable: true,
-    })
-  }
+    });
+  };
 
   const deleteExercise = async (id) => {
     const exerciseDoc = doc(db, "monday", id);
     await deleteDoc(exerciseDoc);
   };
 
- 
-
   useEffect(() => {
     const getExercises = async () => {
-      const data = await getDocs(mondayCollectionRef);
-      setMondayData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const data = await getDocs(dbCollectionRef);
+      setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
     getExercises();
+  }, [updateExercise]);
 
-  }, []);
-
-  mondayData.sort((a, b) => a.time - b.time);
+  data.sort((a, b) => a.time - b.time);
 
   const handleSearch = async () => {
-    setLoader(true)
+    setLoader(true);
     if (search) {
       const exercisesData = await fetchData(
         "https://exercisedb.p.rapidapi.com/exercises/",
@@ -147,11 +137,9 @@ const Monday = () => {
       );
 
       setSearch("");
-
-
     }
     setShow(true);
-    setLoader(false)
+    setLoader(false);
   };
 
   const handleSubmit = (event) => {
@@ -163,9 +151,6 @@ const Monday = () => {
     setExercises([""]);
     setShow(false);
   };
-
-
-
 
   return (
     <>
@@ -181,7 +166,7 @@ const Monday = () => {
         </button>
 
         <div className="mt-7 w-3/4">
-          {mondayData.map((exercise) => {
+          {data.map((exercise) => {
             return (
               <Accordion
                 defaultIndex={[1]}
@@ -201,16 +186,18 @@ const Monday = () => {
                       <Box
                         as="span"
                         flex="1"
-
                         textAlign={"left"}
                         color={"gray.200"}
                         fontSize={"lg"}
-
                       >
-
-
-
-                        <div className=" ml-5 flex flex-row gap-7"><h1>{exercise.title}</h1>{exercise.sets != undefined ? (<span className="text-white">{(JSON.parse(exercise.sets)).length}x</span>) : null}  </div>
+                        <div className=" ml-5 flex flex-row gap-7">
+                          <h1>{exercise.title}</h1>
+                          {exercise.sets != undefined ? (
+                            <span className="text-white">
+                              {JSON.parse(exercise.sets).length}x
+                            </span>
+                          ) : null}{" "}
+                        </div>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
@@ -219,43 +206,53 @@ const Monday = () => {
                     <div className="flex justify-end gap-3">
                       <button
                         className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
-                        onClick={() => { deleteExercise(exercise.id) }}
+                        onClick={() => {
+                          deleteExercise(exercise.id);
+                        }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
-                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
-
-                      >
+                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit">
                         <i class="bi bi-info-circle"></i>
                       </button>
                     </div>
 
-
                     <div className=" my-4">
-                      {exercise.sets != undefined ? (<div className="flex flex-col items-center gap-4">
-
-                        {JSON.parse(exercise.sets).map((set, index) => {
-                          return (
-                            <div className="text-gray-300 w-full font-light text-base py-2 px-7  flex flex-row gap-4 justify-between items-center border-b border-gray-400" key={index}><div className="text-gray-400 text-sm"><button className=" text-rose-600 text-xs mr-2" onClick={() => { remove(index) }}><i class="bi bi-archive-fill"></i></button> SET {index + 1} </div><span className="text-lg"> {set.num} reps</span> <span className="text-lg">{set.weight} kg
-                            </span></div>
-
-                          )
-                        })}
-                      </div>) : null}
+                      {exercise.sets != undefined ? (
+                        <div className="flex flex-col items-center gap-4">
+                          {JSON.parse(exercise.sets).map((set, index) => {
+                            return (
+                              <div
+                                className="text-gray-300 w-full font-light py-2 px-7  flex flex-row  justify-center items-center border-b border-gray-400"
+                                key={index}
+                              >
+                                <div className="text-gray-400 text-sm w-1/3 text-center">
+                                  <button className=" text-rose-600 text-xs mr-2">
+                                    <i class="bi bi-archive-fill"></i>
+                                  </button>{" "}
+                                  SET {index + 1}{" "}
+                                </div>
+                                <div className="text-lg w-1/3 text-center"> {set.num} reps</div>
+                                <div className="text-lg w-1/3 text-center">{set.weight} kg</div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : null}
                     </div>
                     <button
                       className=" bg-sky-600 py-1  px-2 rounded-lg text-sm font-bold text-gray-100 hover:bg-sky-500 flex flex-row items-center gap-1"
                       onClick={() => {
                         setOverlay(<OverlayOne />);
                         onSecondOpen();
-                        setEditId(exercise.id)
-                        setExerciseSets(exercise.sets ? JSON.parse(exercise.sets) : null)
+                        setEditId(exercise.id);
+                        setExerciseSets(
+                          exercise.sets ? JSON.parse(exercise.sets) : null
+                        );
                       }}
                     >
-
                       <i class="bi bi-plus-lg"></i> set
                     </button>
-
                   </AccordionPanel>
                 </AccordionItem>
               </Accordion>
@@ -316,18 +313,23 @@ const Monday = () => {
                             item.target
                           );
                           notif();
-
-                        }
-
-                        }
+                        }}
                       />
                     </div>
                   );
                 })}
               </div>
-            ) : (loader ? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="cyan.800" /></div>) : null)}
-
-
+            ) : loader ? (
+              <div className="flex flex-col items-center mb-7">
+                <CircularProgress
+                  isIndeterminate
+                  color="cyan.500"
+                  size={"60px"}
+                  thickness="7px"
+                  trackColor="cyan.800"
+                />
+              </div>
+            ) : null}
           </div>
         </ModalContent>
       </Modal>
@@ -346,10 +348,7 @@ const Monday = () => {
             </button>
           </div>
 
-          <div
-
-            className="flex flex-col items-center gap-3 my-10"
-          >
+          <div className="flex flex-col items-center gap-3 my-10">
             <input
               className="bg-gray-700 rounded-md  p-2 text-white"
               type="number"
@@ -375,22 +374,25 @@ const Monday = () => {
             <button
               type="submit"
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-              onClick={() => { addNew() }}
+              onClick={() => {
+                addNew();
+              }}
             >
               Update
             </button>
-            {!weight || !rpe ? null : <button
-              type="submit"
-              className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
-              onClick={() => { onSecondClose(); updateExercise() }}
-            >
-              Save
-            </button>}
+            {!weight || !rpe ? null : (
+              <button
+                type="submit"
+                className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
+                onClick={() => {
+                  onSecondClose();
+                  updateExercise();
+                }}
+              >
+                Save
+              </button>
+            )}
           </div>
-
-
-
-
         </ModalContent>
       </Modal>
     </>

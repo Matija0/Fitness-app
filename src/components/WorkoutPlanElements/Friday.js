@@ -54,8 +54,8 @@ const Friday = () => {
   const [number_reps, setNumberReps] = useState()
   const [weight, setWeight] = useState()
   const [rpe, setRpe] = useState()
-  const [fridayData, setFridayData] = useState([]);
-  const fridayCollectionRef = collection(db, "friday");
+  const [data, setData] = useState([]);
+  const dbCollectionRef = collection(db, "friday");
   const toast = useToast()
   const time = new Date();
 
@@ -63,7 +63,7 @@ const Friday = () => {
 
 
 
-    await addDoc(fridayCollectionRef, {
+    await addDoc(dbCollectionRef, {
       bodyPart: bodyPart,
       equipment: equipment,
       gifUrl: gifUrl,
@@ -114,16 +114,19 @@ const Friday = () => {
     await deleteDoc(exerciseDoc);
   };
 
+ 
+
   useEffect(() => {
     const getExercises = async () => {
-      const data = await getDocs(fridayCollectionRef);
-      setFridayData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const data = await getDocs(dbCollectionRef);
+      setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
     getExercises();
-  }, []);
 
-  fridayData.sort((a, b) => a.time - b.time);
+  }, [updateExercise]);
+
+  data.sort((a, b) => a.time - b.time);
 
   const handleSearch = async () => {
     setLoader(true)
@@ -161,6 +164,9 @@ const Friday = () => {
     setShow(false);
   };
 
+
+
+
   return (
     <>
       <div className="mt-7">
@@ -175,7 +181,7 @@ const Friday = () => {
         </button>
 
         <div className="mt-7 w-3/4">
-          {fridayData.map((exercise) => {
+          {data.map((exercise) => {
             return (
               <Accordion
                 defaultIndex={[1]}
@@ -256,7 +262,7 @@ const Friday = () => {
             );
           })}
         </div>
-      </div >
+      </div>
       <Modal isCentered isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
         {overlay}
         <ModalContent bg="gray.500">
@@ -345,7 +351,7 @@ const Friday = () => {
             className="flex flex-col items-center gap-3 my-10"
           >
             <input
-              className="bg-gray-700 rounded-md w-fit  p-2 text-white"
+              className="bg-gray-700 rounded-md  p-2 text-white"
               type="number"
               placeholder="Number of reps"
               onChange={(e) => setNumberReps(e.target.value)}
@@ -367,14 +373,14 @@ const Friday = () => {
               />
             </div>
             <button
-
+              type="submit"
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
               onClick={() => { addNew() }}
             >
               Update
             </button>
             {!weight || !rpe ? null : <button
-
+              type="submit"
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
               onClick={() => { onSecondClose(); updateExercise() }}
             >

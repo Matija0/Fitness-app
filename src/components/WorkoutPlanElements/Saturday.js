@@ -11,7 +11,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import {
-
   ModalOverlay,
   Modal,
   ModalContent,
@@ -22,6 +21,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  useToast,
   CircularProgress,
 } from "@chakra-ui/react";
 
@@ -54,16 +54,22 @@ const Saturday = () => {
   const [number_reps, setNumberReps] = useState()
   const [weight, setWeight] = useState()
   const [rpe, setRpe] = useState()
-  const [sundayData, setSundaydayData] = useState([]);
-  const sundayCollectionRef = collection(db, "sunday")
+  const [data, setData] = useState([]);
+  const dbCollectionRef = collection(db, "saturday");
+  const toast = useToast()
+  const time = new Date();
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
-    await addDoc(sundayCollectionRef, {
+
+
+
+    await addDoc(dbCollectionRef, {
       bodyPart: bodyPart,
       equipment: equipment,
       gifUrl: gifUrl,
       title: title,
       target: target,
+      time: time
     });
   };
 
@@ -85,11 +91,22 @@ const Saturday = () => {
   }
   const updateExercise = async (e) => {
     console.log(exerciseSets)
-    const ex = doc(db, "tuesday", editId);
+    const ex = doc(db, "saturday", editId);
     await updateDoc(ex, {
       sets: JSON.stringify(exerciseSets)
     })
 
+  }
+
+
+  const notif = () => {
+    toast({
+      title: 'Exercise saved',
+
+      status: 'success',
+      duration: 4000,
+      isClosable: true,
+    })
   }
 
   const deleteExercise = async (id) => {
@@ -97,14 +114,19 @@ const Saturday = () => {
     await deleteDoc(exerciseDoc);
   };
 
+ 
+
   useEffect(() => {
     const getExercises = async () => {
-      const data = await getDocs(sundayCollectionRef);
-      setSundaydayData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const data = await getDocs(dbCollectionRef);
+      setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
 
     getExercises();
-  }, []);
+
+  }, [updateExercise]);
+
+  data.sort((a, b) => a.time - b.time);
 
   const handleSearch = async () => {
     setLoader(true)
@@ -123,8 +145,10 @@ const Saturday = () => {
             exercise.bodyPart.toLowerCase().includes(search)
         )
       );
+
       setSearch("");
-      console.log(exercises);
+
+
     }
     setShow(true);
     setLoader(false)
@@ -140,6 +164,9 @@ const Saturday = () => {
     setShow(false);
   };
 
+
+
+
   return (
     <>
       <div className="mt-7">
@@ -153,8 +180,8 @@ const Saturday = () => {
           Add exercise
         </button>
 
-        <div className="mt-4 w-3/4">
-          {sundayData.map((exercise) => {
+        <div className="mt-7 w-3/4">
+          {data.map((exercise) => {
             return (
               <Accordion
                 defaultIndex={[1]}
@@ -174,31 +201,42 @@ const Saturday = () => {
                       <Box
                         as="span"
                         flex="1"
+
                         textAlign={"left"}
                         color={"gray.200"}
                         fontSize={"lg"}
+
                       >
+
+
+
                         <div className=" ml-5 flex flex-row gap-7"><h1>{exercise.title}</h1>{exercise.sets != undefined ? (<span className="text-white">{(JSON.parse(exercise.sets)).length}x</span>) : null}  </div>
                       </Box>
                       <AccordionIcon />
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <div className="flex justify-end">
+                    <div className="flex justify-end gap-3">
                       <button
                         className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
                         onClick={() => { deleteExercise(exercise.id) }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
+                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+
+                      >
+                        <i class="bi bi-info-circle"></i>
+                      </button>
                     </div>
+
 
                     <div className=" my-4">
                       {exercise.sets != undefined ? (<div className="flex flex-col items-center gap-4">
 
                         {JSON.parse(exercise.sets).map((set, index) => {
                           return (
-                            <div className="text-gray-300 w-full font-light text-base py-2 px-7  flex flex-row gap-4 justify-between items-center border-b border-gray-400" key={index}><div className="text-gray-400 text-sm"><button className=" text-rose-600 text-xs mr-2" ><i class="bi bi-archive-fill"></i></button> SET {index + 1} </div><span className="text-lg"> {set.num} reps</span> <span className="text-lg">{set.weight} kg
+                            <div className="text-gray-300 w-full font-light text-base py-2 px-7  flex flex-row gap-4 justify-between items-center border-b border-gray-400" key={index}><div className="text-gray-400 text-sm"><button className=" text-rose-600 text-xs mr-2"><i class="bi bi-archive-fill"></i></button> SET {index + 1} </div><span className="text-lg"> {set.num} reps</span> <span className="text-lg">{set.weight} kg
                             </span></div>
 
                           )
@@ -213,8 +251,8 @@ const Saturday = () => {
                         setEditId(exercise.id)
                         setExerciseSets(exercise.sets ? JSON.parse(exercise.sets) : null)
                       }}
-
                     >
+
                       <i class="bi bi-plus-lg"></i> set
                     </button>
 
@@ -269,14 +307,18 @@ const Saturday = () => {
                     <div key={item.id}>
                       <ExercisesList
                         item={item}
-                        addExercise={() =>
+                        addExercise={() => {
                           addExercise(
                             item.bodyPart,
                             item.equipment,
                             item.gifUrl,
                             item.name,
                             item.target
-                          )
+                          );
+                          notif();
+
+                        }
+
                         }
                       />
                     </div>
@@ -284,9 +326,12 @@ const Saturday = () => {
                 })}
               </div>
             ) : (loader ? (<div className="flex flex-col items-center mb-7"><CircularProgress isIndeterminate color='cyan.500' size={"60px"} thickness="7px" trackColor="cyan.800" /></div>) : null)}
+
+
           </div>
         </ModalContent>
       </Modal>
+
       <Modal
         isCentered
         isOpen={isSecondOpen}
@@ -301,26 +346,29 @@ const Saturday = () => {
             </button>
           </div>
 
-          <form
-            onSubmit={""}
+          <div
+
             className="flex flex-col items-center gap-3 my-10"
           >
             <input
               className="bg-gray-700 rounded-md  p-2 text-white"
               type="number"
               placeholder="Number of reps"
+              onChange={(e) => setNumberReps(e.target.value)}
               required
             />
             <div className="flex flex-row items-center gap-3">
               <input
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
-                placeholder="Percentage"
+                placeholder="Weight"
+                onChange={(e) => setWeight(e.target.value)}
               />
               <span className="text-gray-200">or</span>
               <input
                 className="bg-gray-700 rounded-md  p-2 text-white"
                 type="number"
+                onChange={(e) => setRpe(e.target.value)}
                 placeholder="RPE"
               />
             </div>
@@ -338,7 +386,11 @@ const Saturday = () => {
             >
               Save
             </button>}
-          </form>
+          </div>
+
+
+
+
         </ModalContent>
       </Modal>
     </>
