@@ -124,7 +124,7 @@ const Saturday = () => {
 
     getExercises();
 
-  }, [updateExercise]);
+  }, [data]);
 
   data.sort((a, b) => a.time - b.time);
 

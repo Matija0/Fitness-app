@@ -124,7 +124,7 @@ const Tuesday = () => {
 
     getExercises();
 
-  }, [updateExercise]);
+  }, [data]);
 
   data.sort((a, b) => a.time - b.time);
 
