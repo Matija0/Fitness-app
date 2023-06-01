@@ -4,11 +4,12 @@ import ExercisesList from "../../components/WorkoutPlanElements/ExercisesList";
 import { db } from "../../firebase-config";
 import {
   collection,
-  getDocs,
+ 
   addDoc,
   updateDoc,
   doc,
   deleteDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import {
   ModalOverlay,
@@ -55,9 +56,12 @@ const Monday = () => {
   const [weight, setWeight] = useState();
   const [rpe, setRpe] = useState();
   const [data, setData] = useState([]);
+  
   const dbCollectionRef = collection(db, "monday");
   const toast = useToast();
   const time = new Date();
+
+  
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
     await addDoc(dbCollectionRef, {
@@ -106,16 +110,21 @@ const Monday = () => {
     const exerciseDoc = doc(db, "monday", id);
     await deleteDoc(exerciseDoc);
   };
+  
+  useEffect(()=>{
+    const unsub= onSnapshot(dbCollectionRef, (snapshot)=>{
+      let items= []
+      snapshot.docs.forEach((doc)=>{
+        items.push({...doc.data(), id: doc.id})
+      })
+      
+      setData(items);
+    })
 
-  useEffect(() => {
-    const getExercises = async () => {
-      const data = await getDocs(dbCollectionRef);
-      setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getExercises();
-  }, [data]);
-
+    return () => unsub()
+  },[])
+  
+  
   data.sort((a, b) => a.time - b.time);
 
   const handleSearch = async () => {
@@ -125,7 +134,7 @@ const Monday = () => {
         "https://exercisedb.p.rapidapi.com/exercises/",
         exerciseoptions
       );
-
+      
       setExercises(
         exercisesData.filter(
           (exercise) =>
@@ -138,7 +147,8 @@ const Monday = () => {
 
       setSearch("");
     }
-    setShow(true);
+    
+    setShow(true)
     setLoader(false);
   };
 
@@ -171,15 +181,15 @@ const Monday = () => {
               <Accordion
                 defaultIndex={[1]}
                 allowMultiple
-                backgroundColor={"gray.900"}
+                backgroundColor={"blackAlpha.600"}
                 borderRadius={"5px"}
               >
                 <AccordionItem border={"none"} marginBottom={"15px"}>
                   <h2>
                     <AccordionButton
                       bg={"none"}
-                      _expanded={{ bg: "gray.700", borderRadius: "5px" }}
-                      _hover={{ bg: "gray.700", borderRadius: "5px" }}
+                      _expanded={{ bg: "blackAlpha.400", borderRadius: "5px" }}
+                      _hover={{ bg: "blackAlpha.400", borderRadius: "5px" }}
                       paddingY={"10px"}
                       color={"gray.300"}
                     >
@@ -192,7 +202,7 @@ const Monday = () => {
                       >
                         <div className=" ml-5 flex flex-row gap-7">
                           <h1>{exercise.title}</h1>
-                          {exercise.sets != undefined ? (
+                          {exercise.sets !== undefined ? (
                             <span className="text-white">
                               {JSON.parse(exercise.sets).length}x
                             </span>
@@ -298,8 +308,9 @@ const Monday = () => {
               </form>
             </div>
             {show ? (
-              <div className="row-el">
-                {exercises.map((item) => {
+              <div >
+                
+               {!exercises.length==0? (<div className="row-el">{exercises.map((item) => {
                   return (
                     <div key={item.id}>
                       <ExercisesList
@@ -317,7 +328,8 @@ const Monday = () => {
                       />
                     </div>
                   );
-                })}
+                })}</div>) : (<div className=" rounded-lg flex mx-auto my-4 py-4 w-fit px-2"><h1 className=" text-2xl text-gray-900">No exercises found!</h1></div>)}
+               
               </div>
             ) : loader ? (
               <div className="flex flex-col items-center mb-7">

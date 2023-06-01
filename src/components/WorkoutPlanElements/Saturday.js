@@ -116,15 +116,7 @@ const Saturday = () => {
 
  
 
-  useEffect(() => {
-    const getExercises = async () => {
-      const data = await getDocs(dbCollectionRef);
-      setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getExercises();
-
-  }, [data]);
+ 
 
   data.sort((a, b) => a.time - b.time);
 
