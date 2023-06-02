@@ -25,7 +25,9 @@ body{
  
 }
 /* #1f1f23 dark
-   #22223b*/
+   #22223b
+   #030711 dark blue
+   */
 
 
  input:focus{
@@ -44,15 +46,6 @@ footer {
             
 }
 
-@media screen and (max-width: 768px) {
-  footer{
-     height: 12rem !important;
-  }
-  .content-wrap {
-    padding-bottom: 12rem !important;   
-  }
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -64,5 +57,18 @@ body::-webkit-scrollbar{
 html {
   scrollbar-width: none;
 }
+
+
+
+@media screen and (max-width: 768px) {
+  footer{
+     height: 12rem !important;
+  }
+  .content-wrap {
+    padding-bottom: 12rem !important;   
+  }
+}
+
+
 
 

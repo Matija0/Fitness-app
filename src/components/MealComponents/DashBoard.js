@@ -12,7 +12,7 @@ import { db } from "../../firebase-config";
 import {
   collection,
   doc,
-  getDocs,
+ 
   onSnapshot,
   updateDoc,
 } from "firebase/firestore";
