@@ -4,31 +4,27 @@ import {
   useDisclosure,
   Modal,
   ModalContent,
+  useToast,
 } from "@chakra-ui/react";
 import snack from "../../images/snack.png";
 import { db } from "../../firebase-config";
 import {
   collection,
-  getDocs,
+  
   addDoc,
   updateDoc,
   doc,
   deleteDoc,
-  setDoc,
+  
   increment,
+  onSnapshot,
 } from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
-import Test from "./FoodItem";
+
 import FoodItem from "./FoodItem";
 
 const Snack = () => {
-  const breakpoints = {
-    sm: "30em", // 480px
-    md: "48em", // 768px
-    lg: "62em", // 992px
-    xl: "80em", // 1280px
-    "2xl": "96em", // 1536px
-  };
+  
 
   const OverlayOne = () => (
     <ModalOverlay
@@ -46,15 +42,12 @@ const Snack = () => {
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [weight, setWeight] = useState();
   const [name, setName] = useState();
-  const [data, setData] = useState([])
-  const [snackData, setSnacktData] = useState([])
+  const [data, setData] = useState([]);
+  const [snackData, setSnacktData] = useState([]);
   const snackCollectionRef = collection(db, "snack");
   const time = new Date();
 
-
   const getAPIData = () => {
-
-
     fetch(
       `https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition?query=%20${weight}g%20${name}`,
       options
@@ -70,13 +63,12 @@ const Snack = () => {
       calories: increment(Math.round(Number(data[0].calories))),
       carbs: increment(Math.round(Number(data[0].carbohydrates_total_g))),
       fat: increment(Math.round(Number(data[0].fat_total_g))),
-      protein: increment(Math.round(Number(data[0].protein_g)))
+      protein: increment(Math.round(Number(data[0].protein_g))),
     };
     await updateDoc(statsDoc, newFields);
   };
 
   const addFood = async () => {
-
     await addDoc(snackCollectionRef, {
       name: data[0].name,
       calories: data[0].calories,
@@ -84,43 +76,37 @@ const Snack = () => {
       fat: data[0].fat_total_g,
       protein: data[0].protein_g,
       size: data[0].serving_size_g,
-      time: time
+      time: time,
     });
 
-    updateStats()
-
-    window.location.reload();
+    updateStats();
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     getAPIData();
-    clear()
-
-
-  }
-
-
-
+    clear();
+  };
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getDocs(snackCollectionRef);
-      setSnacktData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+    const unsub = onSnapshot(snackCollectionRef, (snapshot) => {
+      let items = [];
+      snapshot.docs.forEach((doc) => {
+        items.push({ ...doc.data(), id: doc.id });
+      });
 
-    getData();
+      setSnacktData(items);
+    });
 
-
-
+    return () => unsub();
   }, []);
 
   snackData.sort((a, b) => a.time - b.time);
 
   const clear = () => {
-    setWeight("")
-    setName("")
-  }
+    setWeight("");
+    setName("");
+  };
 
   const deleteItem = async (id, calories, carbohydrates, fat, protein) => {
     const foodDoc = doc(db, "snack", id);
@@ -130,11 +116,20 @@ const Snack = () => {
       calories: increment(-calories),
       carbs: increment(-carbohydrates),
       fat: increment(-fat),
-      protein: increment(-protein)
+      protein: increment(-protein),
     };
     await updateDoc(statsDoc, newFields);
-    window.location.reload();
-  }
+  };
+
+  const toast = useToast();
+  const notif = () => {
+    toast({
+      title: "Food saved!",
+      status: "info",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
 
   return (
     <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
@@ -153,34 +148,38 @@ const Snack = () => {
           return (
             <div className="text-lg mb-4 flex flex-row  text-gray-200 border py-2 px-2 rounded-lg  border-gray-300 ">
               <div className=" w-1/4">
-                <h2 className=" text-sm font-semibold md:text-base">{item.name}</h2>
+                <h2 className=" text-sm font-semibold md:text-base">
+                  {item.name}
+                </h2>
               </div>
               <div className="flex flex-row justify-between w-9/12 font-bold text-sm md:text-base">
                 <span className=" text-sky-500">{item.calories} cals</span>
                 <span className=" text-red-500">{item.protein} gr</span>
-                <span className=" text-yellow-500">{item.carbohydrates} gr</span>
+                <span className=" text-yellow-500">
+                  {item.carbohydrates} gr
+                </span>
                 <span className=" text-emerald-500">{item.fat} gr</span>
                 <button
                   className="  text-gray-200 text-sm  w-fit"
-                  onClick={() => { deleteItem(item.id, item.calories, item.carbohydrates, item.fat, item.protein) }}
+                  onClick={() => {
+                    deleteItem(
+                      item.id,
+                      item.calories,
+                      item.carbohydrates,
+                      item.fat,
+                      item.protein
+                    );
+                  }}
                 >
                   <i class="bi bi-trash3"></i>
                 </button>
               </div>
-
             </div>
-          )
-        })
-
-        }
+          );
+        })}
       </div>
 
-      <Modal
-        isCentered
-        isOpen={isMainOpen}
-        onClose={onMainClose}
-        size={"2xl"}
-      >
+      <Modal isCentered isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
         {overlay}
         <ModalContent bg="gray.500">
           <div>
@@ -194,10 +193,11 @@ const Snack = () => {
                 <i class="bi bi-x-lg"></i>
               </button>
             </div>
-            <h1 className="text-gray-200 text-xl text-center my-3">
-              Add food
-            </h1>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-5 my-5 items-center">
+            <h1 className="text-gray-200 text-xl text-center my-3">Add food</h1>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-5 my-5 items-center"
+            >
               <div className="flex flex-row gap-4 justify-center">
                 <input
                   className="bg-gray-700 rounded-md w-1/4  p-2 text-white"
@@ -213,40 +213,32 @@ const Snack = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <button type="submit" className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600">
+              <button
+                type="submit"
+                className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600"
+              >
                 Search
               </button>
             </form>
           </div>
 
           <div className="flex mx-auto">
-            {
-              data.map((item) => {
-                return (
-
-                  <div key={item.id}>
-                    <FoodItem
-                      item={item}
-                      addFood={() => {
-                        addFood(
-                          item.name
-
-                        );
-
-                      }
-                      }
-                    />
-                  </div>
-
-                )
-              })
-            }
+            {data.map((item) => {
+              return (
+                <div key={item.id}>
+                  <FoodItem
+                    item={item}
+                    addFood={() => {
+                      addFood(item.name);
+                      notif()
+                    }}
+                  />
+                </div>
+              );
+            })}
           </div>
-
-
         </ModalContent>
       </Modal>
-
     </div>
   );
 };

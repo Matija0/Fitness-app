@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import {
-
   useDisclosure,
   ModalOverlay,
   Modal,
   ModalContent,
+  useToast,
 } from "@chakra-ui/react";
-import lunch from "../../images/lunch.png"
+import lunch from "../../images/lunch.png";
 import { db } from "../../firebase-config";
-import { addDoc, collection, deleteDoc, doc, getDocs, increment, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  increment,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import { options } from "../../utils/fetchNutritionData";
 import FoodItem from "./FoodItem";
 
-
 const Lunch = () => {
-
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -31,14 +37,13 @@ const Lunch = () => {
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [weight, setWeight] = useState();
   const [name, setName] = useState();
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
 
-  const [lucnhData, setLunchData] = useState([])
+  const [lucnhData, setLunchData] = useState([]);
   const lunchCollectionRef = collection(db, "lunch");
   const time = new Date();
 
   const getAPIData = async () => {
-
     await fetch(
       `https://nutrition-by-api-ninjas.p.rapidapi.com/v1/nutrition?query=%20${weight}g%20${name}`,
       options
@@ -46,8 +51,6 @@ const Lunch = () => {
       .then((response) => response.json())
       .then((response) => setData(response))
       .catch((err) => console.error(err));
-
-
   };
 
   const updateStats = async () => {
@@ -56,13 +59,12 @@ const Lunch = () => {
       calories: increment(Math.round(Number(data[0].calories))),
       carbs: increment(Math.round(Number(data[0].carbohydrates_total_g))),
       fat: increment(Math.round(Number(data[0].fat_total_g))),
-      protein: increment(Math.round(Number(data[0].protein_g)))
+      protein: increment(Math.round(Number(data[0].protein_g))),
     };
     await updateDoc(statsDoc, newFields);
   };
 
   const addFood = async () => {
-
     await addDoc(lunchCollectionRef, {
       name: data[0].name,
       calories: data[0].calories,
@@ -70,37 +72,37 @@ const Lunch = () => {
       fat: data[0].fat_total_g,
       protein: data[0].protein_g,
       size: data[0].serving_size_g,
-      time: time
+      time: time,
     });
 
-    updateStats()
-
-    window.location.reload();
+    updateStats();
   };
 
-
   const handleSubmit = (event) => {
-    event.preventDefault()
-    getAPIData()
-    clear()
-
-  }
+    event.preventDefault();
+    getAPIData();
+    clear();
+  };
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getDocs(lunchCollectionRef);
-      setLunchData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+    const unsub = onSnapshot(lunchCollectionRef, (snapshot) => {
+      let items = [];
+      snapshot.docs.forEach((doc) => {
+        items.push({ ...doc.data(), id: doc.id });
+      });
 
-    getData();
-  }, [])
+      setLunchData(items);
+    });
+
+    return () => unsub();
+  }, []);
 
   lucnhData.sort((a, b) => a.time - b.time);
 
   const clear = () => {
-    setWeight("")
-    setName("")
-  }
+    setWeight("");
+    setName("");
+  };
 
   const deleteItem = async (id, calories, carbohydrates, fat, protein) => {
     const foodDoc = doc(db, "lunch", id);
@@ -110,12 +112,20 @@ const Lunch = () => {
       calories: increment(-calories),
       carbs: increment(-carbohydrates),
       fat: increment(-fat),
-      protein: increment(-protein)
+      protein: increment(-protein),
     };
     await updateDoc(statsDoc, newFields);
-    window.location.reload();
-  }
+  };
 
+  const toast = useToast();
+  const notif = () => {
+    toast({
+      title: "Food saved!",
+      status: "info",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
 
   return (
     <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
@@ -134,27 +144,35 @@ const Lunch = () => {
           return (
             <div className="text-lg mb-4 flex flex-row  text-gray-200 border py-2 px-2 rounded-lg  border-gray-300 ">
               <div className=" w-1/4">
-                <h2 className=" text-sm font-semibold md:text-base">{item.name}</h2>
+                <h2 className=" text-sm font-semibold md:text-base">
+                  {item.name}
+                </h2>
               </div>
               <div className="flex flex-row justify-between w-9/12 font-bold text-sm md:text-base">
                 <span className=" text-sky-500">{item.calories} cals</span>
                 <span className=" text-red-500">{item.protein} gr</span>
-                <span className=" text-yellow-500">{item.carbohydrates} gr</span>
+                <span className=" text-yellow-500">
+                  {item.carbohydrates} gr
+                </span>
                 <span className=" text-emerald-500">{item.fat} gr</span>
                 <button
                   className="  text-gray-200 text-sm  w-fit"
-                  onClick={() => { deleteItem(item.id, item.calories, item.carbohydrates, item.fat, item.protein) }}
+                  onClick={() => {
+                    deleteItem(
+                      item.id,
+                      item.calories,
+                      item.carbohydrates,
+                      item.fat,
+                      item.protein
+                    );
+                  }}
                 >
                   <i class="bi bi-trash3"></i>
                 </button>
               </div>
-
             </div>
-          )
-        })
-
-        }
-
+          );
+        })}
 
         <Modal
           isCentered
@@ -178,7 +196,10 @@ const Lunch = () => {
               <h1 className="text-gray-200 text-xl text-center my-3">
                 Add food
               </h1>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5 my-5 items-center">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col gap-5 my-5 items-center"
+              >
                 <div className="flex flex-row gap-4 justify-center">
                   <input
                     className="bg-gray-700 rounded-md w-1/4  p-2 text-white"
@@ -194,34 +215,28 @@ const Lunch = () => {
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
-                <button type="submit" className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600">
+                <button
+                  type="submit"
+                  className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600"
+                >
                   Save
                 </button>
               </form>
-
             </div>
             <div className="flex mx-auto">
-              {
-                data.map((item) => {
-                  return (
-
-                    <div key={item.id}>
-                      <FoodItem
-                        item={item}
-                        addFood={() => {
-                          addFood(
-                            item.name
-
-                          );
-
-                        }
-                        }
-                      />
-                    </div>
-
-                  )
-                })
-              }
+              {data.map((item) => {
+                return (
+                  <div key={item.id}>
+                    <FoodItem
+                      item={item}
+                      addFood={() => {
+                        addFood(item.name);
+                        notif()
+                      }}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </ModalContent>
         </Modal>
