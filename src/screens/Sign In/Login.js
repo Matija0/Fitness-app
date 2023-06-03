@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword, signOut, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  console.log(auth?.currentUser?.email, "test");
+  const navigate= useNavigate()
+  
 
   const signIn = async () => {
     try {
@@ -13,7 +15,7 @@ const Login = () => {
     } catch (err) {
       console.error(err);
     }
-    console.log("fun done")
+    navigate("/")
   };
 
   const signInWithGoogle= async() =>{
@@ -22,7 +24,7 @@ const Login = () => {
     } catch(err){
       console.error(err)
     }
-      
+    navigate("/")  
   }
 
   const logout= async() =>{
@@ -33,7 +35,7 @@ const Login = () => {
     }
       
   }
-
+  console.log(auth?.currentUser?.email, "test")
   return (
     <div className=" container mx-auto w-fit my-7 px-3 rounded-xl  flex flex-col items-center bg-gray-700 py-7 md:px-14">
       <div>

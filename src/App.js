@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./screens/Home/Home";
@@ -11,15 +11,18 @@ import Register from "./screens/Sign In/Register";
 import Login from "./screens/Sign In/Login";
 import Bodyweight from "./screens/Calculators/Bodyweight";
 import Tdee from "./screens/Calculators/Tdee";
+import { auth } from "./firebase-config";
 
 
 function App() {
-
+  const user=auth?.currentUser
 
   return (
     <div className="App">
+     
       <div className="content-wrap">
-        <Navbar />
+       
+       
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="register" element={<Register />} />

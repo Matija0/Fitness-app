@@ -35,14 +35,15 @@ body{
 }
 
 .content-wrap {
-  padding-bottom: 7rem !important;   
+  padding-bottom: 4rem !important;   
 }
 
 footer {
-  height: 7rem !important;
+  height: 4rem !important;
   position: absolute;
   bottom: 0;
   width: 100%;
+  
             
 }
 

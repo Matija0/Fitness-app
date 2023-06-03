@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { exerciseoptions, fetchData } from "../../utils/fetchData";
 import ExercisesList from "../../components/WorkoutPlanElements/ExercisesList";
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import {
   collection,
   addDoc,
@@ -67,6 +67,7 @@ const Saturday = () => {
       title: title,
       target: target,
       time: time,
+      userId: auth?.currentUser?.uid
     });
   };
 
@@ -111,7 +112,10 @@ const Saturday = () => {
     const unsub = onSnapshot(dbCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        items.push({ ...doc.data(), id: doc.id });
+        if(auth.currentUser.uid==doc.data().userId){
+          items.push({ ...doc.data(), id: doc.id });
+        }
+        
       });
 
       setData(items);
@@ -171,6 +175,7 @@ const Saturday = () => {
 
         <div className="mt-7 w-3/4">
           {data.map((exercise) => {
+            
             return (
               <Accordion
                 defaultIndex={[1]}
@@ -182,8 +187,8 @@ const Saturday = () => {
                   <h2>
                     <AccordionButton
                       bg={"none"}
-                      _expanded={{ bg: "blackAlpha.500", borderRadius: "5px" }}
-                      _hover={{ bg: "blackAlpha.500", borderRadius: "5px" }}
+                      _expanded={{ bg: "blackAlpha.400", borderRadius: "5px" }}
+                      _hover={{ bg: "blackAlpha.400", borderRadius: "5px" }}
                       paddingY={"10px"}
                       color={"gray.300"}
                     >

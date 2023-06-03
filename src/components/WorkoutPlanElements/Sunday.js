@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { exerciseoptions, fetchData } from "../../utils/fetchData";
 import ExercisesList from "../../components/WorkoutPlanElements/ExercisesList";
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import {
   collection,
   addDoc,
@@ -111,7 +111,10 @@ const Sunday = () => {
     const unsub = onSnapshot(dbCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        items.push({ ...doc.data(), id: doc.id });
+        if(auth.currentUser.uid==doc.data().userId){
+          items.push({ ...doc.data(), id: doc.id });
+        }
+        
       });
 
       setData(items);
