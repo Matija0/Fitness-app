@@ -9,7 +9,7 @@ import {
   TabIndicator,
 } from "@chakra-ui/react";
 
-import RepMaxForm from "../../components/WorkoutPlanElements/RepMaxForm";
+
 
 import Monday from "../../components/WorkoutPlanElements/Monday";
 import Tuesday from "../../components/WorkoutPlanElements/Tuesday";

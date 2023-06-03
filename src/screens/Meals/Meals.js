@@ -10,11 +10,7 @@ import { db } from "../../firebase-config";
 import {
   collection,
   getDocs,
-  addDoc,
-  updateDoc,
-  doc,
-  deleteDoc,
-  setDoc,
+  
 } from "firebase/firestore";
 
 

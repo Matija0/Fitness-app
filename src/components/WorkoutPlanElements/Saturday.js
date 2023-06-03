@@ -160,7 +160,7 @@ const Saturday = () => {
     <>
       <div className="mt-7">
         <button
-          className=" bg-red-800 rounded-lg text-gray-300 px-3 py-2 hover:bg-red-700"
+          className=" bg-gray-200 rounded-lg text-gray-900 font-semibold px-3 py-2 hover:bg-gray-300"
           onClick={() => {
             setOverlay(<OverlayOne />);
             onMainOpen();
@@ -175,15 +175,15 @@ const Saturday = () => {
               <Accordion
                 defaultIndex={[1]}
                 allowMultiple
-                backgroundColor={"gray.900"}
+                backgroundColor={"blackAlpha.600"}
                 borderRadius={"5px"}
               >
                 <AccordionItem border={"none"} marginBottom={"15px"}>
                   <h2>
                     <AccordionButton
                       bg={"none"}
-                      _expanded={{ bg: "gray.700", borderRadius: "5px" }}
-                      _hover={{ bg: "gray.700", borderRadius: "5px" }}
+                      _expanded={{ bg: "blackAlpha.500", borderRadius: "5px" }}
+                      _hover={{ bg: "blackAlpha.500", borderRadius: "5px" }}
                       paddingY={"10px"}
                       color={"gray.300"}
                     >
