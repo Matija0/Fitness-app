@@ -16,13 +16,14 @@ import { auth } from "./firebase-config";
 
 function App() {
   const user=auth?.currentUser
-
+  
   return (
     <div className="App">
      
       <div className="content-wrap">
        
-       
+        <Navbar/>
+        
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="register" element={<Register />} />

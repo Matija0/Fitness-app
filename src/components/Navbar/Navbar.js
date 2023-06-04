@@ -1,35 +1,29 @@
-import React, { useState } from "react";
-import {signOut} from "firebase/auth";
-import { auth} from "../../firebase-config";
+import React from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase-config";
 import { GiWeightLiftingUp, GiMeal } from "react-icons/gi";
 import { BiHomeAlt2 } from "react-icons/bi";
 import { HiOutlineCalculator } from "react-icons/hi";
-import { AiOutlineBarChart } from "react-icons/ai";
+
 import { MdOutlineAccountCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Button,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 
 const Navbar = () => {
+  const navigate = useNavigate();
 
-  const logout= async() =>{
-    try{
-      await signOut(auth)
-    } catch(err){
-      console.error(err)
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
     }
-      
-  }
+    
+    window.location.reload();
+    navigate("/login");
+  };
+
   return (
     <navbar className="flex flex-row justify-between px-7 py-2  bg-blue-900">
       <div className=" hidden md:flex flex-row gap-11  items-center">
@@ -104,48 +98,35 @@ const Navbar = () => {
           </div>
         </Link>
       </div>
-      <div>
-          <Menu>
-            {({ isOpen }) => (
-              <>
-                <MenuButton
-                  isActive={isOpen}
-                  as={Button}
-                  bg="none"
-                  color={"white"}
-                  _hover={{ bg: "gray.500" }}
-                  _expanded={{ bg: "gray.500" }}
-                >
-                  <div className="text-lg flex flex-row items-center gap-2 font-normal">
+      <div className=" hidden md:block">
+        <Menu>
+          {({ isOpen }) => (
+            <>
+              <MenuButton
+                isActive={isOpen}
+                as={Button}
+                bg="none"
+                color={"white"}
+                _hover={{ bg: "gray.500" }}
+                _expanded={{ bg: "gray.500" }}
+              >
+                <div className="text-lg flex flex-row items-center gap-2 font-normal">
                   <i class="bi bi-person-circle"></i>
-                    
-                  </div>
-                </MenuButton>
-                <MenuList bg={"gray.800"}>
-                  <Link to="/account">
-                    <MenuItem
-                      bg={"gray.800"}
-                      color="white"
-                      _hover={{ bg: "gray.700" }}
-                    >
-                      My account
-                    </MenuItem>
-                  </Link>
-                  
-                    <MenuItem
-                      bg={"gray.800"}
-                      color="white"
-                      _hover={{ bg: "gray.700" }}
-                    >
-                      Sign out
-                    </MenuItem>
-                  
-                  
-                </MenuList>
-              </>
-            )}
-          </Menu>
-        </div>
+                </div>
+              </MenuButton>
+              <MenuList bg={"gray.800"}>
+                <Link to="/account">
+                  <button className=" text-white hover:bg-gray-700 w-full py-2">My account</button>
+                </Link>
+
+                
+                  <button onClick={logout} className=" text-white hover:bg-gray-700 w-full py-2">Sign out</button>
+                
+              </MenuList>
+            </>
+          )}
+        </Menu>
+      </div>
       {/*Mobile menu */}
       <div className="flex flex-row gap-7 items-center md:hidden">
         <Link to="/">

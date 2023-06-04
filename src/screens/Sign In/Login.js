@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword, signOut, signInWithPopup } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate= useNavigate()
-  
+  const navigate = useNavigate();
 
   const signIn = async () => {
     try {
@@ -15,27 +18,19 @@ const Login = () => {
     } catch (err) {
       console.error(err);
     }
-    navigate("/")
+    navigate("/");
   };
 
-  const signInWithGoogle= async() =>{
-    try{
-      await signInWithPopup(auth, googleProvider)
-    } catch(err){
-      console.error(err)
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+    } catch (err) {
+      console.error(err);
     }
-    navigate("/")  
-  }
+    navigate("/");
+  };
 
-  const logout= async() =>{
-    try{
-      await signOut(auth)
-    } catch(err){
-      console.error(err)
-    }
-      
-  }
-  console.log(auth?.currentUser?.email, "test")
+  console.log(auth?.currentUser?.email, "test");
   return (
     <div className=" container mx-auto w-fit my-7 px-3 rounded-xl  flex flex-col items-center bg-gray-700 py-7 md:px-14">
       <div>
@@ -45,10 +40,12 @@ const Login = () => {
         </h1>
       </div>
       <div className=" flex flex-row gap-4">
-        <button className=" bg-none border border-1 rounded-lg text-sm py-2 px-3 text-white hover:bg-gray-600 md:text-lg" onClick={signInWithGoogle}>
+        <button
+          className=" bg-none border border-1 rounded-lg text-sm py-2 px-3 text-white hover:bg-gray-600 md:text-lg"
+          onClick={signInWithGoogle}
+        >
           <i class="bi bi-google"></i> Sign in with Google
         </button>
-        
       </div>
       <div className="mt-3 flex flex-row items-center">
         <hr className=" w-48 border border-gray-600" />
@@ -79,18 +76,13 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        
-        
         <button
-         
           className="bg-blue-700 hover:bg-blue-600  font-medium rounded-lg text-sm px-5 py-2.5 text-center text-gray-300"
           onClick={signIn}
         >
           Login
         </button>
-       
       </div>
-      <button onClick={logout}>Logout</button>
     </div>
   );
 };

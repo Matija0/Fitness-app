@@ -8,7 +8,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import {
   collection,
   doc,
@@ -41,7 +41,7 @@ const DashBoard = () => {
   const currentstatsRef = collection(db, "currentstats");
 
   const updateStats = async () => {
-    const statsDoc = doc(db, "currentstats", "mystats");
+    const statsDoc = doc(db, "currentstats", `${auth.currentUser.uid}`);
     const newFields = {
       calories: 0,
       carbs: 0,
@@ -59,7 +59,10 @@ const DashBoard = () => {
     const input = onSnapshot(inputCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        items.push({ ...doc.data(), id: doc.id });
+        if(auth.currentUser.uid==doc.data().userId){
+          items.push({ ...doc.data(), id: doc.id });
+        }
+        
       });
 
       setData(items);
@@ -68,7 +71,9 @@ const DashBoard = () => {
     const current = onSnapshot(currentstatsRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        items.push({ ...doc.data(), id: doc.id });
+        if(auth.currentUser.uid==doc.data().userId){
+          items.push({ ...doc.data(), id: doc.id });
+        }
       });
 
       setStatsData(items);

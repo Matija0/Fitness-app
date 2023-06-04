@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
 import "./mc.css"
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import {
-    collection,
-    getDocs,
-    addDoc,
-    updateDoc,
+    
     doc,
-    deleteDoc,
+    
     setDoc,
 } from "firebase/firestore";
 
@@ -20,12 +17,21 @@ const Input = () => {
 
     const addStats = async () => {
 
-        await setDoc(doc(db, "input", "mealdata"), {
+        await setDoc(doc(db, "input", `${auth.currentUser.uid}`), {
             tdee: tdee,
             protein: protein,
             carbs: carbs,
-            fat: fat
+            fat: fat,
+            userId: auth.currentUser.uid
         });
+        
+        await setDoc(doc(db, "currentstats", `${auth.currentUser.uid}`),{
+            calories: 0,
+            carbs: 0,
+            fat: 0,
+            protein: 0,
+            userId: auth.currentUser.uid
+        })
 
     }
 

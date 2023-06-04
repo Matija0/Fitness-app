@@ -7,7 +7,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import snack from "../../images/snack.png";
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import {
   collection,
   
@@ -58,7 +58,7 @@ const Snack = () => {
   };
 
   const updateStats = async () => {
-    const statsDoc = doc(db, "currentstats", "mystats");
+    const statsDoc = doc(db, "currentstats", `${auth.currentUser.uid}`);
     const newFields = {
       calories: increment(Math.round(Number(data[0].calories))),
       carbs: increment(Math.round(Number(data[0].carbohydrates_total_g))),
@@ -77,6 +77,7 @@ const Snack = () => {
       protein: data[0].protein_g,
       size: data[0].serving_size_g,
       time: time,
+      userId: auth.currentUser.uid
     });
 
     updateStats();
@@ -92,7 +93,9 @@ const Snack = () => {
     const unsub = onSnapshot(snackCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        items.push({ ...doc.data(), id: doc.id });
+        if(auth.currentUser.uid==doc.data().userId){
+          items.push({ ...doc.data(), id: doc.id });
+        }
       });
 
       setSnacktData(items);
@@ -111,7 +114,7 @@ const Snack = () => {
   const deleteItem = async (id, calories, carbohydrates, fat, protein) => {
     const foodDoc = doc(db, "snack", id);
     await deleteDoc(foodDoc);
-    const statsDoc = doc(db, "currentstats", "mystats");
+    const statsDoc = doc(db, "currentstats", `${auth.currentUser.uid}`);
     const newFields = {
       calories: increment(-calories),
       carbs: increment(-carbohydrates),
@@ -146,7 +149,7 @@ const Snack = () => {
       <div className="mt-5 w-full">
         {snackData.map((item) => {
           return (
-            <div className="text-lg mb-4 flex flex-row  text-gray-200 border py-2 px-2 rounded-lg  border-gray-300 ">
+            <div className="text-lg mb-4 flex flex-row  text-gray-200 border-b py-2 px-2  border-gray-400 ">
               <div className=" w-1/4">
                 <h2 className=" text-sm font-semibold md:text-base">
                   {item.name}
@@ -215,9 +218,9 @@ const Snack = () => {
               </div>
               <button
                 type="submit"
-                className=" bg-sky-700 py-2 px-3 text-gray-200 rounded-lg hover:bg-sky-600"
+                className=" bg-gray-200 py-2 px-3 text-gray-900 rounded-lg hover:bg-gray-300"
               >
-                Search
+                Search <i class="bi bi-search"></i>
               </button>
             </form>
           </div>

@@ -6,42 +6,37 @@ import Lunch from "../../components/MealComponents/Lunch";
 import Snack from "../../components/MealComponents/Snack";
 import Dinner from "../../components/MealComponents/Dinner";
 import Input from "../../components/MealComponents/Input";
-import { db } from "../../firebase-config";
-import {
-  collection,
-  getDocs,
-  
-} from "firebase/firestore";
-
-
+import { auth, db } from "../../firebase-config";
+import { collection,  onSnapshot } from "firebase/firestore";
 
 const Meals = () => {
-
-  const [inputData, setData] = useState([])
+  const [inputData, setData] = useState([]);
   const inputCollectionRef = collection(db, "input");
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getDocs(inputCollectionRef);
-      setData(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+    const unsub = onSnapshot(inputCollectionRef, (snapshot) => {
+      let items = [];
+      snapshot.docs.forEach((doc) => {
+        if (auth.currentUser.uid == doc.data().userId) {
+          items.push({ ...doc.data(), id: doc.id });
+        }
+      });
 
-    getData();
-  }, [])
+      setData(items);
+    });
 
+    return () => unsub();
+  }, []);
 
   return (
-    <div style={{maxWidth: "1440px"}} className="my-20 mx-auto ">
-
-      {inputData ?
-
-
-        (<div>
+    <div style={{ maxWidth: "1440px" }} className="my-20 mx-auto ">
+      {console.log(inputData, "test")}
+      {!inputData.length == 0 ? (
+        <div>
           <div className=" my-4">
             <h1 className=" text-2xl text-center my-4 text-gray-200 font-bold md:text-start">
               Today
             </h1>
-
           </div>
           <div>
             <DashBoard />
@@ -55,27 +50,22 @@ const Meals = () => {
               <Dinner />
             </div>
           </div>
-        </div>) :
-        (
-          <>
-            <h1 className='text-gray-200 text-xl my-4'>To log calories enter your TDEE and macros</h1>
-            <h2 className="text-xl text-gray-300 mb-4">
-              You can calculate your daily TDEE and macros{" "}
-              <Link to={"/tdee"}>
-                <span className=" text-sky-600 hover:underline decoration-sky-600">
-                  here
-                </span>
-              </Link>
-            </h2>
-            <div className="py-7 px-5 bg-gray-800 border border-gray-500  rounded-lg">
-
-              <Input />
-            </div>
-          </>
-        )
-
-      }
-
+        </div>
+      ) : (
+        <>
+          <h2 className="text-base text-gray-300 mb-7">
+            You can calculate your daily TDEE and macros{" "}
+            <Link to={"/tdee"}>
+              <span className=" text-sky-600 hover:underline decoration-sky-600">
+                here
+              </span>
+            </Link>
+          </h2>
+          <div className=" w-full py-7 px-5 bg-gray-800 border border-gray-500  rounded-lg md:w-1/2">
+            <Input />
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -67,6 +67,7 @@ const Tuesday = () => {
       title: title,
       target: target,
       time: time,
+      userId: auth.currentUser.uid
     });
   };
 
