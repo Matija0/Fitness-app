@@ -11,13 +11,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  console.log(auth?.currentUser?.email, "test")
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.error(err);
     }
+    window.location.reload()
     navigate("/");
   };
 
@@ -27,10 +28,11 @@ const Login = () => {
     } catch (err) {
       console.error(err);
     }
+    window.location.reload()
     navigate("/");
   };
 
-  console.log(auth?.currentUser?.email, "test");
+  
   return (
     <div className=" container mx-auto w-fit my-7 px-3 rounded-xl  flex flex-col items-center bg-gray-700 py-7 md:px-14">
       <div>

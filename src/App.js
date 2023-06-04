@@ -1,6 +1,6 @@
 import React from "react";
 import "./index.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./screens/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Workout from "./screens/Workout/Workout";
@@ -13,17 +13,14 @@ import Bodyweight from "./screens/Calculators/Bodyweight";
 import Tdee from "./screens/Calculators/Tdee";
 import { auth } from "./firebase-config";
 
-
 function App() {
-  const user=auth?.currentUser
-  
+  const user = auth?.currentUser;
+
   return (
     <div className="App">
-     
       <div className="content-wrap">
-       
-        <Navbar/>
-        
+        <Navbar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="register" element={<Register />} />
@@ -33,7 +30,6 @@ function App() {
           <Route path="bodyweight" element={<Bodyweight />} />
           <Route path="/tdee" element={<Tdee />} />
           <Route path="/meals" element={<Meals />} />
-          
         </Routes>
         <Footer />
       </div>

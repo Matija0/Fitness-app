@@ -19,7 +19,7 @@ const Navbar = () => {
     } catch (err) {
       console.error(err);
     }
-    
+
     window.location.reload();
     navigate("/login");
   };
@@ -116,12 +116,17 @@ const Navbar = () => {
               </MenuButton>
               <MenuList bg={"gray.800"}>
                 <Link to="/account">
-                  <button className=" text-white hover:bg-gray-700 w-full py-2">My account</button>
+                  <button className=" text-white hover:bg-gray-700 w-full py-2">
+                    My account
+                  </button>
                 </Link>
 
-                
-                  <button onClick={logout} className=" text-white hover:bg-gray-700 w-full py-2">Sign out</button>
-                
+                <button
+                  onClick={logout}
+                  className=" text-white hover:bg-gray-700 w-full py-2"
+                >
+                  Sign out
+                </button>
               </MenuList>
             </>
           )}
@@ -148,8 +153,11 @@ const Navbar = () => {
                 as={Button}
                 bg="none"
                 color={"white"}
-                _hover={{ bg: "gray.500" }}
-                _expanded={{ bg: "gray.500" }}
+                _hover={{ bg: "none" }}
+                _expanded={{ bg: "none" }}
+                padding={0}
+                height={"fit-content"}
+                width={"fit-content"}
               >
                 <div className="text-lg flex flex-row items-center gap-2 font-normal">
                   <HiOutlineCalculator />
@@ -198,10 +206,48 @@ const Navbar = () => {
             <GiMeal />
           </div>
         </Link>
-      </div>
+        <div className="">
+          <Menu>
+            {({ isOpen }) => (
+              <>
+                <MenuButton
+                  isActive={isOpen}
+                  as={Button}
+                  bg="none"
+                  color={"white"}
+                  _hover={{ bg: "none" }}
+                  _expanded={{ bg: "none" }}
+                  padding={0}
+                  height={"fit-content"}
+                  width={"fit-content"}
+                >
+                  <div className="text-lg flex flex-row items-center gap-2 font-normal">
+                    <i class="bi bi-person-circle"></i>
+                  </div>
+                </MenuButton>
+                <MenuList bg={"gray.800"}>
+                  <Link to="/account">
+                    <button className=" text-white hover:bg-gray-700 w-full py-2">
+                      My account
+                    </button>
+                  </Link>
 
-      <div className=" text-2xl text-white flex flex-row  py-2 px-3 items-center gap-2 hover:bg-slate-500 cursor-pointer md:hidden rounded-lg">
-        <MdOutlineAccountCircle />
+                  <button
+                    onClick={logout}
+                    className=" text-white hover:bg-gray-700 w-full py-2"
+                  >
+                    Sign out
+                  </button>
+                  <Link to={"/login"}>
+                    <button className=" text-white hover:bg-gray-700 w-full py-2">
+                      Login
+                    </button>
+                  </Link>
+                </MenuList>
+              </>
+            )}
+          </Menu>
+        </div>
       </div>
     </navbar>
   );
