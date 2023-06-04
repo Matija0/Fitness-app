@@ -1,6 +1,7 @@
 {
   "name": "workout-app",
   "version": "0.1.0",
+  "homepage": "https://github.com/Matija0/Fitness-app.git",
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.5.3",
