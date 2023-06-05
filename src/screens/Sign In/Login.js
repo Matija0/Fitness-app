@@ -95,9 +95,7 @@ const Login = () => {
         >
           Login
         </button>
-        <button onClick={logout}>
-          logout
-        </button>
+        
       </div>
     </div>
   );
