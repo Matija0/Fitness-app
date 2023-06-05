@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup} from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
+import { useToast } from "@chakra-ui/react";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useToast();
   const navigate=useNavigate()
   console.log(auth?.currentUser?.email, "test")
 
   const signIn= async() =>{
     try{
       await createUserWithEmailAndPassword(auth, email, password)
+      await sendEmailVerification(auth?.currentUser)
+      await notif()
     } catch(err){
       console.error(err)
     }
@@ -38,7 +42,15 @@ const Register = () => {
 
   };
 
-  
+  const notif = () => {
+    toast({
+      title: "Account created",
+
+      status: "success",
+      duration: 4000,
+      isClosable: true,
+    });
+  };
   
   return (
     <div className=" container mx-auto my-7 px-3 rounded-lg bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-fit">

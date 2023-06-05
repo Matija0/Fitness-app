@@ -18,9 +18,6 @@ const Tdee = () => {
   const [BMR, setBMR] = useState("");
   const [TDEE, setTDEE] = useState();
   const [deficit, setDeficit] = useState("");
-  const [test, setTest]=useState("")
-
-  
 
   const calculateBMR = () => {
     switch (gender) {
@@ -33,27 +30,20 @@ const Tdee = () => {
       default:
         console.log("No gender was entered!");
     }
-    
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     calculateBMR();
-    
   };
 
-  
-  
-
-  
   const clear = () => {
-    setGender("")
-    setAge("")
-    setWeight("")
-    setHeight("")
+    setGender("");
+    setAge("");
+    setWeight("");
+    setHeight("");
   };
-  
-  
+
   return (
     <>
       <div className=" container mx-auto my-10">
@@ -67,7 +57,7 @@ const Tdee = () => {
             calorie calculator will also display your BMI, BMR, Macros & many
             other useful statistics!
           </h2>
-          <div className=" w-3/4 self-center bg-gray-800 border border-gray-500 py-5 px-4 my-4 rounded-lg flex flex-col items-center md:w-1/2 ">
+          <div className=" w-full self-center bg-gray-800 border border-gray-500 py-5 px-4 my-4 rounded-lg flex flex-col items-center md:w-1/2 ">
             <form onSubmit={handleSubmit} className=" my-7">
               <div className="mb-3 text-gray-300">Gender:</div>
               <div className=" space-x-1 text-gray-300">
@@ -76,7 +66,7 @@ const Tdee = () => {
                   id="Male"
                   name="gender"
                   value="Male"
-                  checked={gender === 'Male'}
+                  checked={gender === "Male"}
                   onChange={(e) => setGender(e.target.value)}
                 />
                 <label for="Male">Male</label>
@@ -87,7 +77,7 @@ const Tdee = () => {
                   id="Female"
                   name="gender"
                   value="Female"
-                  checked={gender === 'Female'}
+                  checked={gender === "Female"}
                   onChange={(e) => setGender(e.target.value)}
                 />
                 <label for="Female">Female</label>
@@ -165,13 +155,14 @@ const Tdee = () => {
             </div>
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg ">
-                Maintaining weight: {Math.round(BMR*activity)} cal
+                Maintaining weight: {Math.round(BMR * activity)} cal
               </span>
               <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">
-                Losing weight: {Math.round((BMR*activity)-((BMR*activity)*0.2))} cal
+                Losing weight:{" "}
+                {Math.round(BMR * activity - BMR * activity * 0.2)} cal
               </span>
               <span className=" border-2 border-blue-500 bg-none py-2 px-3 rounded-lg">
-                Gaining weight: {Math.round((BMR*activity)+300)} cal
+                Gaining weight: {Math.round(BMR * activity + 300)} cal
               </span>
             </div>
           </div>
@@ -214,23 +205,35 @@ const Tdee = () => {
             <div className="grid grid-cols-3 gap-4 w-11/12 font-light text-lg text-gray-300">
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Maintaining weight:{" "}
-                {Math.round((BMR*activity) - (weight * 2 - weight * 1) / 4)} gr
+                {Math.round(
+                  (BMR * activity - weight * 2 * 4 - weight * 1 * 9) / 4
+                )}{" "}
+                gr
               </span>
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Losing weight:{" "}
-                {Math.round((BMR*activity) - (weight * 2.2 - weight * 1.2) / 4)}{" "}
+                {Math.round(
+                  (BMR * activity -
+                    BMR * activity * 0.2 -
+                    weight * 2.2 * 4 -
+                    weight * 1.2 * 9) /
+                    4
+                )}{" "}
                 gr
               </span>
               <span className=" border-2 border-yellow-500 py-2 px-3 rounded-lg">
                 Gaining weight:{" "}
-                {Math.round(((BMR*activity) - (weight * 2.5) - (weight * 1.1)) / 4)}{" "}
+                {Math.round(
+                  (BMR * activity + 300 - weight * 2.5 * 4 - weight * 1.1 * 9) /
+                    4
+                )}{" "}
                 gr
               </span>
             </div>
           </div>
         </div>
       ) : null}
-      {console.log(activity, "acti")}
+      
 
       {BMR ? (
         <div className="text-white my-7 mx-auto w-3/4  md:hidden">
@@ -240,9 +243,8 @@ const Tdee = () => {
             width={"100%"}
             mx={"auto"}
             py={"5px"}
-            
           >
-            <AccordionItem border={"none"}  marginBottom={"5px"}>
+            <AccordionItem border={"none"} marginBottom={"5px"}>
               <div>
                 <AccordionButton
                   bg={"blue.700"}
@@ -257,9 +259,14 @@ const Tdee = () => {
                 </AccordionButton>
               </div>
               <AccordionPanel pb={4} color="gray.300">
-                <Box>Maintaining weight: {Math.round(BMR*activity)} cal</Box>
-                <Box>Losing weight: {Math.round((BMR*activity)-((BMR*activity)*0.2))} cal</Box>
-                <Box>Gaining weight: {Math.round((BMR*activity)+300)} cal</Box>
+                <Box>Maintaining weight: {Math.round(BMR * activity)} cal</Box>
+                <Box>
+                  Losing weight:{" "}
+                  {Math.round(BMR * activity - BMR * activity * 0.2)} cal
+                </Box>
+                <Box>
+                  Gaining weight: {Math.round(BMR * activity + 300)} cal
+                </Box>
               </AccordionPanel>
             </AccordionItem>
 
@@ -278,13 +285,9 @@ const Tdee = () => {
                 </AccordionButton>
               </div>
               <AccordionPanel pb={4} color="gray.300">
-                <Box>
-                  Maintaining weight: { Math.round(weight * 2)} gr
-                </Box>
-                <Box>Losing weight: { Math.round(weight * 2.5)} gr</Box>
-                <Box>
-                  Gaining weight: { Math.round(weight * 2.5)} gr{" "}
-                </Box>
+                <Box>Maintaining weight: {Math.round(weight * 2)} gr</Box>
+                <Box>Losing weight: {Math.round(weight * 2.5)} gr</Box>
+                <Box>Gaining weight: {Math.round(weight * 2.5)} gr </Box>
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem border={"none"} marginBottom={"5px"}>
@@ -302,11 +305,9 @@ const Tdee = () => {
                 </AccordionButton>
               </div>
               <AccordionPanel pb={4} color="gray.300">
-                <Box>
-                  Maintaining weight: {Math.round(weight * 0.95)} gr
-                </Box>
-                <Box>Losing weight: { Math.round(weight * 1.1)} gr</Box>
-                <Box>Gaining weight: { Math.round(weight * 1)} gr </Box>
+                <Box>Maintaining weight: {Math.round(weight * 0.95)} gr</Box>
+                <Box>Losing weight: {Math.round(weight * 1.1)} gr</Box>
+                <Box>Gaining weight: {Math.round(weight * 1)} gr </Box>
               </AccordionPanel>
             </AccordionItem>
             <AccordionItem border={"none"} marginBottom={"5px"}>
@@ -326,24 +327,31 @@ const Tdee = () => {
               <AccordionPanel pb={4} color="gray.300">
                 <Box>
                   Maintaining weight:{" "}
-                  {Math.round((BMR*activity) - (weight * 2)-(weight * 1) / 4)} gr
+                  {Math.round(
+                    (BMR * activity - weight * 2 * 4 - weight * 1 * 9) / 4
+                  )}{" "}
+                  gr
                 </Box>
                 <Box>
                   Losing weight:{" "}
-                  {
-                    Math.round(
-                      ((BMR*activity) - (weight * 2.2) - (weight * 1.2)) / 4
-                    )
-                  }{" "}
+                  {Math.round(
+                    (BMR * activity -
+                      BMR * activity * 0.2 -
+                      weight * 2.2 * 4 -
+                      weight * 1.2 * 9) /
+                      4
+                  )}{" "}
                   gr
                 </Box>
                 <Box>
                   Gaining weight:{" "}
-                  {
-                    Math.round(
-                      (BMR*activity) - (weight * 2.5) - (weight * 1.1) / 4
-                    )
-                  }{" "}
+                  {Math.round(
+                    (BMR * activity +
+                      300 -
+                      weight * 2.5 * 4 -
+                      weight * 1.1 * 9) /
+                      4
+                  )}{" "}
                   gr{" "}
                 </Box>
               </AccordionPanel>

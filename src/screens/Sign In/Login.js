@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
+  sendEmailVerification
 } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,12 +16,14 @@ const Login = () => {
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      await sendEmailVerification(auth?.currentUser)
     } catch (err) {
       console.error(err);
     }
     window.localStorage.setItem("ID",auth?.currentUser?.uid)
-   
+    window.location.reload()
     navigate("/");
+    
   };
 
   const signInWithGoogle = async () => {
@@ -30,7 +33,7 @@ const Login = () => {
       console.error(err);
     }
     window.localStorage.setItem("ID",auth?.currentUser?.uid)
-    
+    window.location.reload()
     navigate("/");
   };
   

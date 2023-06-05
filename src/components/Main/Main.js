@@ -71,7 +71,7 @@ const Main = () => {
           </h2>
         ) : (
           <div className="mt-7">
-            <div className="mt-7 w-3/4 px-4">
+            <div className="mt-7 w-full px-4 md:w-3/4">
               {data.map((exercise) => {
                 return (
                   <Accordion

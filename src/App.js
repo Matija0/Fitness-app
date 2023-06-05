@@ -12,6 +12,7 @@ import Login from "./screens/Sign In/Login";
 import Bodyweight from "./screens/Calculators/Bodyweight";
 import Tdee from "./screens/Calculators/Tdee";
 import { auth } from "./firebase-config";
+import Account from "./screens/Account/Account";
 
 function App() {
   const user = auth?.currentUser;
@@ -30,6 +31,7 @@ function App() {
           <Route path="bodyweight" element={<Bodyweight />} />
           <Route path="/tdee" element={<Tdee />} />
           <Route path="/meals" element={<Meals />} />
+          <Route path="/myaccount" element={<Account/>} />
         </Routes>
         <Footer />
       </div>

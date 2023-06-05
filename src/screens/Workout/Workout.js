@@ -28,7 +28,7 @@ const Workout = () => {
     <>
     <div
       style={{ minHeight: "700px" }}
-      className="  mx-auto my-11 w-full bg-gray-800 border border-gray-500  rounded-lg px-0 py-2 md:px-12 md:w-fit"
+      className=" hidden mx-auto my-11 w-full bg-gray-800 border border-gray-500  rounded-lg px-0 py-2 md:px-12 md:w-fit md:block"
     >
       
       <Tabs variant={"unstyled"}>
@@ -75,12 +75,12 @@ const Workout = () => {
       
       
     </div>
-    {/*<div className="block md:hidden w-full mt-14">
-        <Accordion defaultIndex={[0]} allowMultiple>
+    <div className="  w-full mt-14 md:hidden">
+        <Accordion defaultIndex={[0]} allowMultiple color={"white"}>
           <AccordionItem>
             <h2>
               <AccordionButton>
-                <Box as="span" flex="1" textAlign="left" color={"white"}>
+                <Box as="span" flex="1" textAlign="left" >
                   Monday
                 </Box>
                 <AccordionIcon />
@@ -94,7 +94,7 @@ const Workout = () => {
           <AccordionItem>
             <h2>
               <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
+                <Box as="span" flex="1" textAlign="left" >
                   Tuesday
                 </Box>
                 <AccordionIcon />
@@ -171,7 +171,7 @@ const Workout = () => {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-  </div>*/}
+  </div>
     </>
   );
 };

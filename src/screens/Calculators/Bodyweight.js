@@ -60,10 +60,10 @@ const Bodyweight = () => {
   }
 
   return (
-    <div className="container mx-auto my-14 grid grid-cols-2 gap-7">
+    <div className="container mx-auto my-14 flex flex-col-reverse gap-2 md:flex-row md:gap-7">
       <div className="p-4 bg-gray-800 border border-gray-500 shadow-sm rounded-lg">
-        <h1 className='text-xl text-gray-300 mb-3'>Calculate your BMI and ideal bodyweight for your height</h1>
-        <p className='text-lg text-gray-300'>Maintaning ideal bodyweight is beneficial for your long term health</p>
+        <h1 className='text-base text-gray-300 mb-3 md:text-xl'>Calculate your BMI and ideal bodyweight for your height</h1>
+        <p className='text-sm text-gray-300 md:text-lg'>Maintaning ideal bodyweight is beneficial for your long term health</p>
 
         <form onSubmit={handleSubmit} className=" my-10 ml-4">
           <div className="text-gray-300">
@@ -94,11 +94,11 @@ const Bodyweight = () => {
       <div className="">
         <div className="flex flex-col border border-gray-500">
           <div className="  flex flex-row">
-            <div className=" w-1/5 bg-indigo-400 text-black text-lg py-2 px-2 flex flex-col justify-center"> Bellow 18.5 <span className="text-sm text-gray-800">Underweight</span> </div>
-            <div className=" w-1/5 bg-emerald-400 text-black text-lg py-2  px-2 flex flex-col">Between 18.5-24.9 <span className="text-sm text-gray-800">Normal weight</span></div>
-            <div className=" w-1/5 bg-yellow-400 text-black text-lg py-2  px-2 flex flex-col  ">Between 25-29.9 <span className="text-sm text-gray-800">Overweight</span></div>
-            <div className=" w-1/5 bg-orange-400 text-black text-lg py-2  px-2 flex flex-col">Between 30-34.9 <span className="text-sm text-gray-800">Obese</span></div>
-            <div className=" w-1/5 bg-red-400 text-black text-lg py-2  px-2 flex flex-col justify-center">35 or higher <span className="text-sm text-gray-800">Extremly obese</span></div>
+            <div className=" w-1/5 bg-indigo-400 text-black text-xs py-2 px-2 flex flex-col justify-center md:text-lg">&lt; 18.5 <span className="text-xs text-gray-800 md:text-sm">Underweight</span> </div>
+            <div className=" w-1/5 bg-emerald-400 text-black text-xs py-2  px-2 flex flex-col md:text-lg">18.5-24.9 <span className="text-xs text-gray-800  md:text-sm">Normal weight</span></div>
+            <div className=" w-1/5 bg-yellow-400 text-black text-xs py-2  px-2 flex flex-col  md:text-lg"> 25-29.9 <span className="text-xs text-gray-800  md:text-sm">Overweight</span></div>
+            <div className=" w-1/5 bg-orange-400 text-black text-xs py-2  px-2 flex flex-col md:text-lg"> 30-34.9 <span className="text-xs text-gray-800  md:text-sm">Obese</span></div>
+            <div className=" w-1/5 bg-red-400 text-black text-xs py-2  px-2 flex flex-col justify-center md:text-lg">35 &gt; <span className="text-xs text-gray-800  md:text-sm">Extremly obese</span></div>
           </div>
 
           <div className=" bg-gray-800 text-4xl py-4 "><motion.div className=" text-gray-300" animate={{ x: `${percentage}%` }} transition={{ type: "tween", duration: 0.5 }}><i class="bi bi-arrow-up-square"></i></motion.div></div>
