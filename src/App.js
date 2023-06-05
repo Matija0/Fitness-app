@@ -15,14 +15,14 @@ import { auth } from "./firebase-config";
 
 function App() {
   const user = auth?.currentUser;
-
+  const verify= window.localStorage.getItem("ID")
   return (
     <div className="App">
       <div className="content-wrap">
-        <Navbar />
+        {verify? (<Navbar/>) : null}
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={verify? (<Home />) : (<Login/>)} />
           <Route path="register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/workout" element={<Workout />} />

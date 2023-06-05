@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { createUserWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
@@ -7,6 +7,7 @@ import { auth, googleProvider } from "../../firebase-config";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate=useNavigate()
   console.log(auth?.currentUser?.email, "test")
 
   const signIn= async() =>{
@@ -15,7 +16,8 @@ const Register = () => {
     } catch(err){
       console.error(err)
     }
-      
+    localStorage.setItem("ID",auth?.currentUser?.uid)
+    navigate("/")    
   }
 
   const signInWithGoogle= async() =>{
@@ -24,7 +26,9 @@ const Register = () => {
     } catch(err){
       console.error(err)
     }
-      
+    window.localStorage.setItem("ID",auth?.currentUser?.uid)
+    navigate("/")  
+    
   }
 
   
@@ -34,20 +38,13 @@ const Register = () => {
 
   };
 
-  const logout= async() =>{
-    try{
-      await signOut(auth)
-    } catch(err){
-      console.error(err)
-    }
-      
-  }
+  
   
   return (
     <div className=" container mx-auto w-fit my-7 px-3 rounded-xl  flex flex-col items-center bg-gray-700 py-7 md:px-14">
       <div>
         {" "}
-        <h1 className="text-white text-xl font-bold mb-4">
+        <h1 className="text-white text-xl font-bold mb-7">
           Create your free account
         </h1>
       </div>
@@ -55,9 +52,7 @@ const Register = () => {
         <button className=" bg-none border border-1 rounded-lg text-sm py-2 px-3 text-white hover:bg-gray-600 md:text-lg" onClick={signInWithGoogle}>
           <i class="bi bi-google"></i> Sign up with Google
         </button>
-        <button className="  bg-none border border-1 rounded-lg text-sm py-2 px-3 text-white hover:bg-gray-600 md:text-lg">
-          <i class="bi bi-github"></i> Sign up with Github
-        </button>
+        
       </div>
       <div className="mt-3 flex flex-row items-center">
         <hr className=" w-48 border border-gray-600" />
@@ -130,7 +125,7 @@ const Register = () => {
           </p>
         </Link>
       </form>
-      <button onClick={logout}>Logout</button>
+      
     </div>
   );
 };

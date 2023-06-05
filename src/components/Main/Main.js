@@ -14,7 +14,7 @@ import DashBoard from "../MealComponents/DashBoard";
 
 const Main = () => {
   const [currentDay, setCurrentDay] = useState();
-  const [dbDay, setDay] = useState();
+  
   const weekday = [
     "Sunday",
     "Monday",
@@ -52,6 +52,7 @@ const Main = () => {
       getDay();
     };
   }, []);
+  data.sort((a, b) => a.time - b.time);
   return (
     <div
       id="container"

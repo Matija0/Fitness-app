@@ -18,6 +18,7 @@ const Login = () => {
     } catch (err) {
       console.error(err);
     }
+    window.localStorage.setItem("ID",auth?.currentUser?.uid)
     window.location.reload()
     navigate("/");
   };
@@ -28,16 +29,26 @@ const Login = () => {
     } catch (err) {
       console.error(err);
     }
+    window.localStorage.setItem("ID",auth?.currentUser?.uid)
     window.location.reload()
     navigate("/");
   };
-
+  const logout = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
+    }
+    
+    window.location.reload();
+    
+  };
   
   return (
     <div className=" container mx-auto w-fit my-7 px-3 rounded-xl  flex flex-col items-center bg-gray-700 py-7 md:px-14">
       <div>
         {" "}
-        <h1 className="text-white text-xl font-bold mb-4">
+        <h1 className="text-white text-xl font-bold mb-7">
           Login to your account
         </h1>
       </div>
@@ -83,6 +94,9 @@ const Login = () => {
           onClick={signIn}
         >
           Login
+        </button>
+        <button onClick={logout}>
+          logout
         </button>
       </div>
     </div>

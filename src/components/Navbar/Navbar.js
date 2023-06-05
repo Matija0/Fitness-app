@@ -5,7 +5,7 @@ import { GiWeightLiftingUp, GiMeal } from "react-icons/gi";
 import { BiHomeAlt2 } from "react-icons/bi";
 import { HiOutlineCalculator } from "react-icons/hi";
 
-import { MdOutlineAccountCircle } from "react-icons/md";
+
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
@@ -19,9 +19,10 @@ const Navbar = () => {
     } catch (err) {
       console.error(err);
     }
-
-    window.location.reload();
+    window.localStorage.removeItem("ID")
     navigate("/login");
+    window.location.reload();
+    
   };
 
   return (
