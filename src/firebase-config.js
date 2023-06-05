@@ -4,17 +4,17 @@ import {getAuth, GoogleAuthProvider} from "firebase/auth"
 
 const firebaseConfig = {
 
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: "AIzaSyAyQxNWaZFBbYvh9VuMnG2TF84sFGDfq5s",
 
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  authDomain: "fitness-app-17bba.firebaseapp.com",
 
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  projectId: "fitness-app-17bba",
 
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  storageBucket: "fitness-app-17bba.appspot.com",
 
-  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER,
+  messagingSenderId: "779331865394",
   
-  appId: process.env.REACT_APP_APP_ID
+  appId: "1:779331865394:web:703abfee6f5a741c7ba52b"
 
 };
 
