@@ -5,7 +5,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const Login = () => {
       console.error(err);
     }
     window.localStorage.setItem("ID",auth?.currentUser?.uid)
-    window.location.reload()
+   
     navigate("/");
   };
 
@@ -30,29 +30,20 @@ const Login = () => {
       console.error(err);
     }
     window.localStorage.setItem("ID",auth?.currentUser?.uid)
-    window.location.reload()
+    
     navigate("/");
   };
-  const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (err) {
-      console.error(err);
-    }
-    
-    window.location.reload();
-    
-  };
+  
   
   return (
-    <div className=" container mx-auto w-fit my-7 px-3 rounded-xl  flex flex-col items-center bg-gray-700 py-7 md:px-14">
+    <div className=" container mx-auto    my-7 px-3 rounded-lg   bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-fit">
       <div>
         {" "}
-        <h1 className="text-white text-xl font-bold mb-7">
+        <h1 className="text-white text-xl text-center font-bold mb-7">
           Login to your account
         </h1>
       </div>
-      <div className=" flex flex-row gap-4">
+      <div className=" flex justify-center gap-4">
         <button
           className=" bg-none border border-1 rounded-lg text-sm py-2 px-3 text-white hover:bg-gray-600 md:text-lg"
           onClick={signInWithGoogle}
@@ -97,6 +88,17 @@ const Login = () => {
         </button>
         
       </div>
+      
+          <p class="text-sm font-light text-gray-500 mt-4">
+            Don't have an account?{" "}
+            <Link
+              to="/register"
+              className="font-medium text-primary-600 hover:underline"
+            >
+              Register here
+            </Link>
+          </p>
+        
     </div>
   );
 };

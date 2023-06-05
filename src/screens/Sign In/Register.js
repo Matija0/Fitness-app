@@ -41,14 +41,14 @@ const Register = () => {
   
   
   return (
-    <div className=" container mx-auto w-fit my-7 px-3 rounded-xl  flex flex-col items-center bg-gray-700 py-7 md:px-14">
+    <div className=" container mx-auto my-7 px-3 rounded-lg bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-fit">
       <div>
         {" "}
-        <h1 className="text-white text-xl font-bold mb-7">
+        <h1 className="text-white text-xl font-bold mb-7 text-center">
           Create your free account
         </h1>
       </div>
-      <div className=" flex flex-row gap-4">
+      <div className=" flex justify-center">
         <button className=" bg-none border border-1 rounded-lg text-sm py-2 px-3 text-white hover:bg-gray-600 md:text-lg" onClick={signInWithGoogle}>
           <i class="bi bi-google"></i> Sign up with Google
         </button>
@@ -113,7 +113,7 @@ const Register = () => {
         >
           Create account
         </button>
-        <Link to="/login">
+        
           <p class="text-sm font-light text-gray-500">
             Already have an account?{" "}
             <Link
@@ -123,7 +123,7 @@ const Register = () => {
               Login here
             </Link>
           </p>
-        </Link>
+        
       </form>
       
     </div>

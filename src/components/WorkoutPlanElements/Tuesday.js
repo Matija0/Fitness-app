@@ -268,7 +268,7 @@ const Tuesday = () => {
           })}
         </div>
       </div>
-      <Modal isCentered isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
+      <Modal  isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
         {overlay}
         <ModalContent bg="gray.500">
           <div>
@@ -343,7 +343,7 @@ const Tuesday = () => {
       </Modal>
 
       <Modal
-        isCentered
+        
         isOpen={isSecondOpen}
         onClose={onSecondClose}
         size={"2xl"}
