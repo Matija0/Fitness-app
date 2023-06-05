@@ -4,7 +4,7 @@ import {getAuth, GoogleAuthProvider} from "firebase/auth"
 
 const firebaseConfig = {
 
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: "AIzaSyAyQxNWaZFBbYvh9VuMnG2TF84sFGDfq5s",
 
   authDomain: "fitness-app-17bba.firebaseapp.com",
 

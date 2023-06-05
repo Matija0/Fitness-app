@@ -147,7 +147,7 @@ const Main = () => {
         )}
       </div>
       <div className="w-full  rounded-lg md:w-2/5">
-        
+        <DashBoard/>
       </div>
     </div>
   );
