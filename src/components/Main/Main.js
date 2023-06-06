@@ -40,14 +40,10 @@ const Main = () => {
   );
 
   useEffect(() => {
-    const getDay = () => {
-      setCurrentDay(weekday[d.getDay()]);
-    };
-    
     const unsub = onSnapshot(dbCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        if(auth.currentUser.uid==doc.data().userId){
+        if (auth.currentUser.uid == doc.data().userId) {
           items.push({ ...doc.data(), id: doc.id });
         }
       });
@@ -79,7 +75,7 @@ const Main = () => {
 
     return () => {
       unsub();
-      getDay();
+
       input();
       current();
     };
@@ -130,7 +126,7 @@ const Main = () => {
         className="bg-gray-800 border  border-gray-500 w-full  rounded-lg py-2 md:w-3/5"
       >
         <h1 className="text-gray-200 text-2xl font-semibold text-center">
-        {currentDay}
+          {weekday[d.getDay()]}
         </h1>
         {data.length == 0 ? (
           <h2 className=" text-2xl text-gray-200 font-light text-center mt-20">
@@ -141,7 +137,6 @@ const Main = () => {
             <div className="mt-7 w-full  px-4 md:w-3/4">
               {data.map((exercise) => {
                 return (
-                  
                   <Accordion
                     defaultIndex={[1]}
                     allowMultiple
