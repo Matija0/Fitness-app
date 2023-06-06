@@ -112,7 +112,7 @@ const Workout = () => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Monday />
+              <Tuesday />
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
@@ -130,7 +130,7 @@ const Workout = () => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Monday />
+              <Wednesday />
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
@@ -148,7 +148,7 @@ const Workout = () => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Monday />
+              <Thursday />
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
@@ -166,7 +166,7 @@ const Workout = () => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Monday />
+              <Friday />
             </AccordionPanel>
           </AccordionItem>
 
@@ -185,7 +185,7 @@ const Workout = () => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Monday />
+              <Saturday />
             </AccordionPanel>
           </AccordionItem>
           <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
@@ -203,7 +203,7 @@ const Workout = () => {
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Monday />
+              <Sunday />
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
