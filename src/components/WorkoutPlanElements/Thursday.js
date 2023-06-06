@@ -174,7 +174,7 @@ const Thursday = () => {
           Add exercise
         </button>
 
-        <div className="mt-7 w-3/4">
+        <div className="mt-7 w-full md:w-3/4">
           {data.map((exercise) => {
             return (
               <Accordion

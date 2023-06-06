@@ -162,7 +162,7 @@ const Sunday = () => {
 
   return (
     <>
-      <div className="mt-7">
+      <div className="mt-7 w-full md:w-3/4">
         <button
           className=" bg-red-800 rounded-lg text-gray-300 px-3 py-2 hover:bg-red-700"
           onClick={() => {
