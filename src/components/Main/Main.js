@@ -47,7 +47,9 @@ const Main = () => {
     const unsub = onSnapshot(dbCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        items.push({ ...doc.data(), id: doc.id });
+        if(auth.currentUser.uid==doc.data().userId){
+          items.push({ ...doc.data(), id: doc.id });
+        }
       });
 
       setData(items);

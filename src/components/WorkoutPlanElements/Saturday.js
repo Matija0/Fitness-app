@@ -358,8 +358,8 @@ const Saturday = () => {
           </div>
 
           <div className="flex flex-col items-center gap-3 my-10">
-            <input
-              className="bg-gray-700 rounded-md  p-2 text-white"
+          <input
+              className="bg-gray-700 rounded-md w-48  p-2 text-white"
               type="number"
               placeholder="Number of reps"
               onChange={(e) => setNumberReps(e.target.value)}
@@ -367,14 +367,14 @@ const Saturday = () => {
             />
             <div className="flex flex-row items-center gap-3">
               <input
-                className="bg-gray-700 rounded-md  p-2 text-white"
+                className="bg-gray-700 w-20 rounded-md  p-2 text-white"
                 type="number"
                 placeholder="Weight"
                 onChange={(e) => setWeight(e.target.value)}
               />
               <span className="text-gray-200">or</span>
               <input
-                className="bg-gray-700 rounded-md  p-2 text-white"
+                className="bg-gray-700 rounded-md w-20  p-2 text-white"
                 type="number"
                 onChange={(e) => setRpe(e.target.value)}
                 placeholder="RPE"
