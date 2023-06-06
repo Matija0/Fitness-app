@@ -4,3 +4,18 @@
    
     margin-bottom: 40px;
 }
+
+
+#workoutplan-el, #dashboard-el{
+    height: 500px;
+}
+
+
+@media screen and (max-width: 768px) {
+    #workoutplan-el{
+        height: fit-content;
+    }
+    #dashboard-el{
+        height: fit-content;
+    }
+  }

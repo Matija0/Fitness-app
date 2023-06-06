@@ -227,7 +227,7 @@ const Navbar = () => {
                   </div>
                 </MenuButton>
                 <MenuList bg={"gray.800"}>
-                  <Link to="/account">
+                  <Link to="/myaccount">
                     <button className=" text-white hover:bg-gray-700 w-full py-2">
                       My account
                     </button>
@@ -239,11 +239,7 @@ const Navbar = () => {
                   >
                     Sign out
                   </button>
-                  <Link to={"/login"}>
-                    <button className=" text-white hover:bg-gray-700 w-full py-2">
-                      Login
-                    </button>
-                  </Link>
+                  
                 </MenuList>
               </>
             )}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import { createUserWithEmailAndPassword, sendEmailVerification, signInWithPopup} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup} from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
 import { useToast } from "@chakra-ui/react";
 
@@ -15,23 +15,25 @@ const Register = () => {
   const signIn= async() =>{
     try{
       await createUserWithEmailAndPassword(auth, email, password)
-      await sendEmailVerification(auth?.currentUser)
+      localStorage.setItem("ID",auth?.currentUser?.uid)
+      navigate("/") 
       await notif()
     } catch(err){
       console.error(err)
+      notifError()
     }
-    localStorage.setItem("ID",auth?.currentUser?.uid)
-    navigate("/")    
+       
   }
 
   const signInWithGoogle= async() =>{
     try{
       await signInWithPopup(auth, googleProvider)
+      window.localStorage.setItem("ID",auth?.currentUser?.uid)
+      navigate("/")
     } catch(err){
       console.error(err)
     }
-    window.localStorage.setItem("ID",auth?.currentUser?.uid)
-    navigate("/")  
+      
     
   }
 
@@ -47,10 +49,21 @@ const Register = () => {
       title: "Account created",
 
       status: "success",
-      duration: 4000,
+      duration: 2000,
       isClosable: true,
     });
   };
+
+  const notifError = () => {
+    toast({
+      title: "Email already in use",
+
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
+
   
   return (
     <div className=" container mx-auto my-7 px-3 rounded-lg bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-fit">
@@ -113,7 +126,7 @@ const Register = () => {
             type="checkbox"
             id="terms"
             className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 mr-2"
-            required=""
+            required
           />
           <label for="terms" className="font-light text-gray-500">
             I accept the Terms and Conditions

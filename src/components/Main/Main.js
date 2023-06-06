@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Main.css";
-import { db } from "../../firebase-config";
+import { auth, db } from "../../firebase-config";
 import { collection, onSnapshot } from "firebase/firestore";
 import {
   Accordion,
@@ -9,12 +9,14 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Progress,
 } from "@chakra-ui/react";
-import DashBoard from "../MealComponents/DashBoard";
 
 const Main = () => {
   const [currentDay, setCurrentDay] = useState();
-  
+
   const weekday = [
     "Sunday",
     "Monday",
@@ -26,6 +28,10 @@ const Main = () => {
   ];
 
   const [data, setData] = useState([]);
+  const [inputData, setInputData] = useState([]);
+  const [statsData, setStatsData] = useState([]);
+  const inputCollectionRef = collection(db, "input");
+  const currentstatsRef = collection(db, "currentstats");
   const d = new Date();
 
   const dbCollectionRef = collection(
@@ -47,20 +53,79 @@ const Main = () => {
       setData(items);
     });
 
+    const input = onSnapshot(inputCollectionRef, (snapshot) => {
+      let items = [];
+      snapshot.docs.forEach((doc) => {
+        if (auth.currentUser.uid == doc.data().userId) {
+          items.push({ ...doc.data(), id: doc.id });
+        }
+      });
+
+      setInputData(items);
+    });
+
+    const current = onSnapshot(currentstatsRef, (snapshot) => {
+      let items = [];
+      snapshot.docs.forEach((doc) => {
+        if (auth.currentUser.uid == doc.data().userId) {
+          items.push({ ...doc.data(), id: doc.id });
+        }
+      });
+
+      setStatsData(items);
+    });
+
     return () => {
       unsub();
       getDay();
+      input();
+      current();
     };
   }, []);
   data.sort((a, b) => a.time - b.time);
+
+  const count1 = inputData.map((item) => {
+    return item.tdee;
+  });
+
+  const count2 = statsData.map((item) => {
+    return item.calories;
+  });
+
+  const carbCount = statsData.map((item) => {
+    return item.carbs;
+  });
+
+  const carbTotal = inputData.map((item) => {
+    return item.carbs;
+  });
+
+  const protCount = statsData.map((item) => {
+    return item.protein;
+  });
+
+  const protTotal = inputData.map((item) => {
+    return item.protein;
+  });
+
+  const fatCount = statsData.map((item) => {
+    return item.fat;
+  });
+
+  const fatTotal = inputData.map((item) => {
+    return item.fat;
+  });
+
+  let res = count1[0] - count2[0];
+
   return (
     <div
       id="container"
       className=" w-full flex flex-col gap-5 md:flex md:flex-row md:gap-5"
     >
       <div
-        style={{ minHeight: "500px" }}
-        className="bg-gray-800 border border-gray-500 w-full  rounded-lg py-2 md:w-3/5"
+        id="workoutplan-el"
+        className="bg-gray-800 border  border-gray-500 w-full  rounded-lg py-2 md:w-3/5"
       >
         <h1 className="text-gray-200 text-2xl font-semibold text-center">
           {currentDay}
@@ -71,7 +136,7 @@ const Main = () => {
           </h2>
         ) : (
           <div className="mt-7">
-            <div className="mt-7 w-full px-4 md:w-3/4">
+            <div className="mt-7 w-full  px-4 md:w-3/4">
               {data.map((exercise) => {
                 return (
                   <Accordion
@@ -99,7 +164,7 @@ const Main = () => {
                             color={"gray.200"}
                             fontSize={"lg"}
                           >
-                            <div className=" ml-5 flex flex-row gap-7">
+                            <div className=" ml-5 text-sm flex flex-row gap-7 md:text-lg">
                               <h1>{exercise.title}</h1>
                               {exercise.sets !== undefined ? (
                                 <span className="text-white">
@@ -124,11 +189,11 @@ const Main = () => {
                                     <div className="text-gray-400 text-sm w-1/3 text-center">
                                       SET {index + 1}{" "}
                                     </div>
-                                    <div className="text-lg w-1/3 text-center">
+                                    <div className="text-base w-1/3 text-center md:text-lg">
                                       {" "}
                                       {set.num} reps
                                     </div>
-                                    <div className="text-lg w-1/3 text-center">
+                                    <div className="text-base w-1/3 text-center md:text-lg">
                                       {set.weight} kg
                                     </div>
                                   </div>
@@ -146,8 +211,82 @@ const Main = () => {
           </div>
         )}
       </div>
-      <div className="w-full  rounded-lg md:w-2/5">
-        <DashBoard/>
+      <div
+        id="dashboard-el"
+        className=" w-full bg-gray-800 border border-gray-500   rounded-lg md:w-2/5"
+      >
+        <div className="text-gray-300 mt-0 rounded-lg  py-4 px-3 md:mt-20">
+          <div>
+            <div className="flex flex-row justify-center items-center gap-3">
+              <div className="flex flex-col items-center gap-2">
+                <h1 className="text-lg font-bold">{Math.round(count2)}</h1>
+                <span className="text-sm">Eaten</span>
+              </div>
+              <div>
+                <CircularProgress
+                  value={Math.round(count2)}
+                  max={count1}
+                  color="purple.500"
+                  size={"150px"}
+                >
+                  <CircularProgressLabel color={"gray.200"} fontWeight={"bold"}>
+                    <div className="text-lg text-gray-300">
+                      {Math.round(res)}
+                    </div>{" "}
+                    <span className="text-sm text-gray-300 font-normal">
+                      Remaining
+                    </span>
+                  </CircularProgressLabel>
+                </CircularProgress>
+              </div>
+              <div className="flex flex-col gap-3">
+                <h1 className="font-bold">{Math.round(count1)}</h1>
+                <span>Total</span>
+              </div>
+            </div>
+            <div className="flex flex-row gap-4 w-full justify-center mx-auto px-2">
+              <div className="flex flex-col gap-3 w-1/3">
+                <span className="text-sm">Carbs</span>
+                <Progress
+                  value={Math.round(carbCount)}
+                  max={carbTotal}
+                  size="md"
+                  colorScheme="yellow"
+                  borderRadius={"7px"}
+                />
+                <span className="text-lg font-bold">
+                  {Math.round(carbCount)}/{carbTotal}
+                </span>
+              </div>
+              <div className="flex flex-col gap-3 w-1/3">
+                <span className="text-sm">Protein</span>
+                <Progress
+                  value={Math.round(protCount)}
+                  max={protTotal}
+                  size="md"
+                  colorScheme="red"
+                  borderRadius={"7px"}
+                />
+                <span className="text-lg font-bold">
+                  {Math.round(protCount)}/{protTotal}
+                </span>
+              </div>
+              <div className="flex flex-col gap-3 w-1/3">
+                <span className="text-sm">Fat</span>
+                <Progress
+                  value={Math.round(fatCount)}
+                  max={fatTotal}
+                  size="md"
+                  colorScheme="green"
+                  borderRadius={"7px"}
+                />
+                <span className="text-lg font-bold">
+                  {Math.round(fatCount)}/{fatTotal}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

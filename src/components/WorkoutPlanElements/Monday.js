@@ -204,7 +204,7 @@ const Monday = () => {
                         color={"gray.200"}
                         fontSize={"lg"}
                       >
-                        <div className=" ml-5 flex flex-row gap-7">
+                        <div className=" ml-5 flex flex-row gap-7 text-sm md:text-lg">
                           <h1>{exercise.title}</h1>
                           {exercise.sets !== undefined ? (
                             <span className="text-white">

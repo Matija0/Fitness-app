@@ -3,41 +3,51 @@ import {
   signInWithEmailAndPassword,
   signOut,
   signInWithPopup,
-  sendEmailVerification
+  sendEmailVerification,
 } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase-config";
 import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useToast();
   const navigate = useNavigate();
-  console.log(auth?.currentUser?.email, "test")
+  console.log(auth?.currentUser?.email, "test");
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      await sendEmailVerification(auth?.currentUser)
+      window.localStorage.setItem("ID", auth?.currentUser?.uid);
+      navigate("/");
+      window.location.reload();
     } catch (err) {
       console.error(err);
+      notif();
     }
-    window.localStorage.setItem("ID",auth?.currentUser?.uid)
-    window.location.reload()
-    navigate("/");
-    
   };
 
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+      window.localStorage.setItem("ID", auth?.currentUser?.uid);
+
+      navigate("/");
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
-    window.localStorage.setItem("ID",auth?.currentUser?.uid)
-    window.location.reload()
-    navigate("/");
   };
-  
-  
+
+  const notif = () => {
+    toast({
+      title: "Wrong credentials!",
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
+
   return (
     <div className=" container mx-auto    my-7 px-3 rounded-lg   bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-fit">
       <div>
@@ -89,19 +99,17 @@ const Login = () => {
         >
           Login
         </button>
-        
       </div>
-      
-          <p class="text-sm font-light text-gray-500 mt-4">
-            Don't have an account?{" "}
-            <Link
-              to="/register"
-              className="font-medium text-primary-600 hover:underline"
-            >
-              Register here
-            </Link>
-          </p>
-        
+
+      <p class="text-sm font-light text-gray-500 mt-4">
+        Don't have an account?{" "}
+        <Link
+          to="/register"
+          className="font-medium text-primary-600 hover:underline"
+        >
+          Register here
+        </Link>
+      </p>
     </div>
   );
 };

@@ -76,10 +76,16 @@ const Workout = () => {
       
     </div>
     <div className="  w-full mt-14 md:hidden">
-        <Accordion defaultIndex={[0]} allowMultiple color={"white"}>
-          <AccordionItem>
+        <Accordion  allowMultiple color={"white"}>
+          
+          <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
             <h2>
-              <AccordionButton>
+              <AccordionButton
+                 bg={"#1f2937"}
+                 _expanded={{ bg: "#1f2937" }}
+                 _hover={{ bg: "#1f2937" }}
+                 
+              >
                 <Box as="span" flex="1" textAlign="left" >
                   Monday
                 </Box>
@@ -90,84 +96,114 @@ const Workout = () => {
               <Monday />
             </AccordionPanel>
           </AccordionItem>
-
-          <AccordionItem>
+          
+          <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
             <h2>
-              <AccordionButton>
+              <AccordionButton
+                 bg={"#1f2937"}
+                 _expanded={{ bg: "#1f2937" }}
+                 _hover={{ bg: "#1f2937" }}
+                 
+              >
                 <Box as="span" flex="1" textAlign="left" >
-                  Tuesday
+                 Tuesday
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Tuesday />
+              <Monday />
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem>
+          <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
             <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
+              <AccordionButton
+                 bg={"#1f2937"}
+                 _expanded={{ bg: "#1f2937" }}
+                 _hover={{ bg: "#1f2937" }}
+                 
+              >
+                <Box as="span" flex="1" textAlign="left" >
                   Wednesday
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Wednesday />
+              <Monday />
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem>
+          <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
             <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
+              <AccordionButton
+                 bg={"#1f2937"}
+                 _expanded={{ bg: "#1f2937" }}
+                 _hover={{ bg: "#1f2937" }}
+                 
+              >
+                <Box as="span" flex="1" textAlign="left" >
                   Thursday
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Thursday />
+              <Monday />
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem>
+          <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
             <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
+              <AccordionButton
+                 bg={"#1f2937"}
+                 _expanded={{ bg: "#1f2937" }}
+                 _hover={{ bg: "#1f2937" }}
+                 
+              >
+                <Box as="span" flex="1" textAlign="left" >
                   Friday
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Friday />
+              <Monday />
             </AccordionPanel>
           </AccordionItem>
 
-          <AccordionItem>
+          <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
             <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
+              <AccordionButton
+                 bg={"#1f2937"}
+                 _expanded={{ bg: "#1f2937" }}
+                 _hover={{ bg: "#1f2937" }}
+                 
+              >
+                <Box as="span" flex="1" textAlign="left" >
                   Saturday
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Saturday />
+              <Monday />
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem>
+          <AccordionItem border={"none"} bg="gray.700" marginBottom={"10px"}>
             <h2>
-              <AccordionButton>
-                <Box as="span" flex="1" textAlign="left">
-                  Sunday
+              <AccordionButton
+                 bg={"#1f2937"}
+                 _expanded={{ bg: "#1f2937" }}
+                 _hover={{ bg: "#1f2937" }}
+                 
+              >
+                <Box as="span" flex="1" textAlign="left" >
+                 Sunday
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              <Sunday />
+              <Monday />
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
