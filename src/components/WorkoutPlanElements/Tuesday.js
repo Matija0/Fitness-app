@@ -4,6 +4,7 @@ import ExercisesList from "../../components/WorkoutPlanElements/ExercisesList";
 import { auth, db } from "../../firebase-config";
 import {
   collection,
+ 
   addDoc,
   updateDoc,
   doc,
@@ -55,9 +56,12 @@ const Tuesday = () => {
   const [weight, setWeight] = useState();
   const [rpe, setRpe] = useState();
   const [data, setData] = useState([]);
+  
   const dbCollectionRef = collection(db, "tuesday");
   const toast = useToast();
   const time = new Date();
+
+  
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
     await addDoc(dbCollectionRef, {
@@ -66,6 +70,7 @@ const Tuesday = () => {
       gifUrl: gifUrl,
       title: title,
       target: target,
+      sets: null,
       time: time,
       userId: auth.currentUser.uid
     });
@@ -93,6 +98,13 @@ const Tuesday = () => {
     });
   };
 
+  const deleteSets = async(id) =>{
+    const ex = doc(db, "tuesday", id);
+    await updateDoc(ex, {
+        sets: null
+    })
+  }
+
   const notif = () => {
     toast({
       title: "Exercise saved",
@@ -107,7 +119,7 @@ const Tuesday = () => {
     const exerciseDoc = doc(db, "tuesday", id);
     await deleteDoc(exerciseDoc);
   };
-
+  
   useEffect(() => {
     const unsub = onSnapshot(dbCollectionRef, (snapshot) => {
       let items = [];
@@ -124,6 +136,7 @@ const Tuesday = () => {
     return () => unsub();
   }, []);
 
+  
   data.sort((a, b) => a.time - b.time);
 
   const handleSearch = async () => {
@@ -133,7 +146,7 @@ const Tuesday = () => {
         "https://exercisedb.p.rapidapi.com/exercises/",
         exerciseoptions
       );
-
+      
       setExercises(
         exercisesData.filter(
           (exercise) =>
@@ -146,7 +159,8 @@ const Tuesday = () => {
 
       setSearch("");
     }
-    setShow(true);
+    
+    setShow(true)
     setLoader(false);
   };
 
@@ -186,8 +200,8 @@ const Tuesday = () => {
                   <h2>
                     <AccordionButton
                       bg={"none"}
-                      _expanded={{ bg: "blackAlpha.500", borderRadius: "5px" }}
-                      _hover={{ bg: "blackAlpha.500", borderRadius: "5px" }}
+                      _expanded={{ bg: "blackAlpha.400", borderRadius: "5px" }}
+                      _hover={{ bg: "blackAlpha.400", borderRadius: "5px" }}
                       paddingY={"10px"}
                       color={"gray.300"}
                     >
@@ -198,9 +212,9 @@ const Tuesday = () => {
                         color={"gray.200"}
                         fontSize={"lg"}
                       >
-                        <div className=" ml-5  flex flex-row gap-7 text-sm md:text-lg">
+                        <div className=" ml-5 flex flex-row gap-7 text-sm md:text-lg">
                           <h1>{exercise.title}</h1>
-                          {exercise.sets !== undefined ? (
+                          {exercise.sets !== null ? (
                             <span className="text-white">
                               {JSON.parse(exercise.sets).length}x
                             </span>
@@ -211,37 +225,34 @@ const Tuesday = () => {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <div className="flex justify-end gap-3">
+                    <div className="flex justify-between gap-3">
+                    {exercise.sets==null? null : (<button className=" text-rose-700" onClick={()=>{deleteSets(exercise.id)}}><i class="bi bi-archive-fill"></i></button>)}
                       <button
-                        className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                        className="  text-gray-200 text-sm ml-auto  py-1  rounded-lg px-3  w-fit"
                         onClick={() => {
                           deleteExercise(exercise.id);
                         }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
-                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit">
-                        <i class="bi bi-info-circle"></i>
-                      </button>
+                      
                     </div>
 
                     <div className=" my-4">
-                      {exercise.sets !== undefined ? (
+                      {exercise.sets != null ? (
                         <div className="flex flex-col items-center gap-4">
                           {JSON.parse(exercise.sets).map((set, index) => {
                             return (
                               <div
-                                className="text-gray-300 w-full font-light text-base py-2 px-7  flex flex-row gap-4 justify-between items-center border-b border-gray-400"
+                                className="text-gray-300 w-full font-light py-2 px-7  flex flex-row  justify-center items-center border-b border-gray-400"
                                 key={index}
                               >
-                                <div className="text-gray-400 text-sm">
-                                  <button className=" text-rose-600 text-xs mr-2">
-                                    <i class="bi bi-archive-fill"></i>
-                                  </button>{" "}
+                                <div className="text-gray-400 text-sm w-1/3 text-center">
+                                  
                                   SET {index + 1}{" "}
                                 </div>
-                                <span className="text-lg"> {set.num} reps</span>{" "}
-                                <span className="text-lg">{set.weight} kg</span>
+                                <div className="text-lg w-1/3 text-center"> {set.num} reps</div>
+                                <div className="text-lg w-1/3 text-center">{set.weight} kg</div>
                               </div>
                             );
                           })}
@@ -306,8 +317,9 @@ const Tuesday = () => {
               </form>
             </div>
             {show ? (
-              <div className="row-el">
-                {exercises.map((item) => {
+              <div >
+                
+               {!exercises.length==0? (<div className="row-el">{exercises.map((item) => {
                   return (
                     <div key={item.id}>
                       <ExercisesList
@@ -325,7 +337,8 @@ const Tuesday = () => {
                       />
                     </div>
                   );
-                })}
+                })}</div>) : (<div className=" rounded-lg flex mx-auto my-4 py-4 w-fit px-2"><h1 className=" text-2xl text-gray-900">No exercises found!</h1></div>)}
+               
               </div>
             ) : loader ? (
               <div className="flex flex-col items-center mb-7">
@@ -357,7 +370,7 @@ const Tuesday = () => {
           </div>
 
           <div className="flex flex-col items-center gap-3 my-10">
-          <input
+            <input
               className="bg-gray-700 rounded-md w-48  p-2 text-white"
               type="number"
               placeholder="Number of reps"
@@ -380,7 +393,7 @@ const Tuesday = () => {
               />
             </div>
             <button
-              type="submit"
+             
               className=" bg-blue-700 py-2 px-3 rounded-lg hover:bg-blue-600 text-white"
               onClick={() => {
                 addNew();

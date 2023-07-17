@@ -70,6 +70,7 @@ const Monday = () => {
       gifUrl: gifUrl,
       title: title,
       target: target,
+      sets: null,
       time: time,
       userId: auth.currentUser.uid
     });
@@ -96,6 +97,13 @@ const Monday = () => {
       sets: JSON.stringify(exerciseSets),
     });
   };
+
+  const deleteSets = async(id) =>{
+    const ex = doc(db, "monday", id);
+    await updateDoc(ex, {
+        sets: null
+    })
+  }
 
   const notif = () => {
     toast({
@@ -206,7 +214,7 @@ const Monday = () => {
                       >
                         <div className=" ml-5 flex flex-row gap-7 text-sm md:text-lg">
                           <h1>{exercise.title}</h1>
-                          {exercise.sets !== undefined ? (
+                          {exercise.sets !== null ? (
                             <span className="text-white">
                               {JSON.parse(exercise.sets).length}x
                             </span>
@@ -217,22 +225,21 @@ const Monday = () => {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <div className="flex justify-end gap-3">
+                    <div className="flex justify-between gap-3">
+                    {exercise.sets==null? null : (<button className=" text-rose-700" onClick={()=>{deleteSets(exercise.id)}}><i class="bi bi-archive-fill"></i></button>)}
                       <button
-                        className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                        className="  text-gray-200 text-sm ml-auto  py-1  rounded-lg px-3  w-fit"
                         onClick={() => {
                           deleteExercise(exercise.id);
                         }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
-                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit">
-                        <i class="bi bi-info-circle"></i>
-                      </button>
+                      
                     </div>
 
                     <div className=" my-4">
-                      {exercise.sets != undefined ? (
+                      {exercise.sets != null ? (
                         <div className="flex flex-col items-center gap-4">
                           {JSON.parse(exercise.sets).map((set, index) => {
                             return (
@@ -241,9 +248,7 @@ const Monday = () => {
                                 key={index}
                               >
                                 <div className="text-gray-400 text-sm w-1/3 text-center">
-                                  <button className=" text-rose-600 text-xs mr-2">
-                                    <i class="bi bi-archive-fill"></i>
-                                  </button>{" "}
+                                  
                                   SET {index + 1}{" "}
                                 </div>
                                 <div className="text-lg w-1/3 text-center"> {set.num} reps</div>

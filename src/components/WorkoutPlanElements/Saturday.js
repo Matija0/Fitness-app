@@ -66,8 +66,9 @@ const Saturday = () => {
       gifUrl: gifUrl,
       title: title,
       target: target,
+      sets: null,
       time: time,
-      userId: auth?.currentUser?.uid
+      userId: auth?.currentUser?.uid,
     });
   };
 
@@ -93,6 +94,13 @@ const Saturday = () => {
     });
   };
 
+  const deleteSets = async (id) => {
+    const ex = doc(db, "saturday", id);
+    await updateDoc(ex, {
+      sets: null,
+    });
+  };
+
   const notif = () => {
     toast({
       title: "Exercise saved",
@@ -112,10 +120,9 @@ const Saturday = () => {
     const unsub = onSnapshot(dbCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        if(auth.currentUser.uid==doc.data().userId){
+        if (auth.currentUser.uid == doc.data().userId) {
           items.push({ ...doc.data(), id: doc.id });
         }
-        
       });
 
       setData(items);
@@ -175,7 +182,6 @@ const Saturday = () => {
 
         <div className="mt-7 w-full md:w-3/4">
           {data.map((exercise) => {
-            
             return (
               <Accordion
                 defaultIndex={[1]}
@@ -201,7 +207,7 @@ const Saturday = () => {
                       >
                         <div className=" ml-5 flex flex-row gap-7 text-sm md:text-lg">
                           <h1>{exercise.title}</h1>
-                          {exercise.sets !== undefined ? (
+                          {exercise.sets !== null ? (
                             <span className="text-white">
                               {JSON.parse(exercise.sets).length}x
                             </span>
@@ -212,22 +218,29 @@ const Saturday = () => {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    <div className="flex justify-end gap-3">
+                    <div className="flex justify-between gap-3">
+                      {exercise.sets == null ? null : (
+                        <button
+                          className=" text-rose-700"
+                          onClick={() => {
+                            deleteSets(exercise.id);
+                          }}
+                        >
+                          <i class="bi bi-archive-fill"></i>
+                        </button>
+                      )}
                       <button
-                        className="  text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit"
+                        className="  text-gray-200 text-sm ml-auto  py-1  rounded-lg px-3  w-fit"
                         onClick={() => {
                           deleteExercise(exercise.id);
                         }}
                       >
                         <i class="bi bi-trash3"></i>
                       </button>
-                      <button className=" text-gray-200 text-sm  py-1  rounded-lg px-3  w-fit">
-                        <i class="bi bi-info-circle"></i>
-                      </button>
                     </div>
 
                     <div className=" my-4">
-                      {exercise.sets !== undefined ? (
+                      {exercise.sets !== null ? (
                         <div className="flex flex-col items-center gap-4">
                           {JSON.parse(exercise.sets).map((set, index) => {
                             return (
@@ -236,9 +249,7 @@ const Saturday = () => {
                                 key={index}
                               >
                                 <div className="text-gray-400 text-sm">
-                                  <button className=" text-rose-600 text-xs mr-2">
-                                    <i class="bi bi-archive-fill"></i>
-                                  </button>{" "}
+                                 
                                   SET {index + 1}{" "}
                                 </div>
                                 <span className="text-lg"> {set.num} reps</span>{" "}
@@ -269,7 +280,7 @@ const Saturday = () => {
           })}
         </div>
       </div>
-      <Modal  isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
+      <Modal isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
         {overlay}
         <ModalContent bg="gray.500">
           <div>
@@ -343,12 +354,7 @@ const Saturday = () => {
         </ModalContent>
       </Modal>
 
-      <Modal
-       
-        isOpen={isSecondOpen}
-        onClose={onSecondClose}
-        size={"2xl"}
-      >
+      <Modal isOpen={isSecondOpen} onClose={onSecondClose} size={"2xl"}>
         {overlay}
         <ModalContent bg="gray.500">
           <div className="flex justify-end p-2">
@@ -358,7 +364,7 @@ const Saturday = () => {
           </div>
 
           <div className="flex flex-col items-center gap-3 my-10">
-          <input
+            <input
               className="bg-gray-700 rounded-md w-48  p-2 text-white"
               type="number"
               placeholder="Number of reps"
