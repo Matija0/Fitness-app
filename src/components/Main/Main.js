@@ -15,8 +15,7 @@ import {
 } from "@chakra-ui/react";
 
 const Main = () => {
-  const [currentDay, setCurrentDay] = useState();
-
+ 
   const weekday = [
     "Sunday",
     "Monday",
@@ -43,7 +42,7 @@ const Main = () => {
     const unsub = onSnapshot(dbCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        if (auth.currentUser.uid == doc.data().userId) {
+        if (auth.currentUser.uid === doc.data().userId) {
           items.push({ ...doc.data(), id: doc.id });
         }
       });
@@ -54,7 +53,7 @@ const Main = () => {
     const input = onSnapshot(inputCollectionRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        if (auth.currentUser.uid == doc.data().userId) {
+        if (auth.currentUser.uid === doc.data().userId) {
           items.push({ ...doc.data(), id: doc.id });
         }
       });
@@ -65,7 +64,7 @@ const Main = () => {
     const current = onSnapshot(currentstatsRef, (snapshot) => {
       let items = [];
       snapshot.docs.forEach((doc) => {
-        if (auth.currentUser.uid == doc.data().userId) {
+        if (auth.currentUser.uid === doc.data().userId) {
           items.push({ ...doc.data(), id: doc.id });
         }
       });
@@ -128,7 +127,7 @@ const Main = () => {
         <h1 className="text-gray-200 text-2xl font-semibold text-center">
           {weekday[d.getDay()]}
         </h1>
-        {data.length == 0 ? (
+        {data.length === 0 ? (
           <h2 className=" text-2xl text-gray-200 font-light text-center mt-20">
             Rest Day!
           </h2>
@@ -164,7 +163,7 @@ const Main = () => {
                           >
                             <div className=" ml-5 text-sm flex flex-row gap-7 md:text-lg">
                               <h1>{exercise.title}</h1>
-                              {exercise.sets !== undefined ? (
+                              {exercise.sets !== null ? (
                                 <span className="text-white">
                                   {JSON.parse(exercise.sets).length}x
                                 </span>
@@ -176,7 +175,7 @@ const Main = () => {
                       </h2>
                       <AccordionPanel pb={4}>
                         <div className=" my-4">
-                          {exercise.sets != undefined ? (
+                          {exercise.sets !== null ? (
                             <div className="flex flex-col items-center gap-4">
                               {JSON.parse(exercise.sets).map((set, index) => {
                                 return (

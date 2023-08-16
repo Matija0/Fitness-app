@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./mc.css"
 import { auth, db } from "../../firebase-config";
 import {
     
+    collection,
     doc,
+    
+    onSnapshot,
     
     setDoc,
 } from "firebase/firestore";
@@ -14,6 +17,8 @@ const Input = () => {
     const [protein, setProtein] = useState()
     const [carbs, setCarbs] = useState()
     const [fat, setFat] = useState()
+    
+    const inputCollectionRef = collection(db, "input");
 
     const addStats = async () => {
 
@@ -34,7 +39,27 @@ const Input = () => {
         })
 
     }
+    useEffect(() => {
+        const input = onSnapshot(inputCollectionRef, (snapshot) => {
+            let items = [];
+            snapshot.docs.forEach((doc) => {
+              if (auth.currentUser.uid === doc.data().userId) {
+                items.push({ ...doc.data(), id: doc.id });
+              }
+            });
+      
+            setTdee(items[0].tdee)
+            setProtein(items[0].protein)
+            setCarbs(items[0].carbs)
+            setFat(items[0].fat)
 
+           
+          });
+
+          return () => {
+            input();
+          };
+        }, []);      
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -50,7 +75,7 @@ const Input = () => {
     }
     return (
         <div className='w-fit mx-auto'>
-
+            
             <form onSubmit={handleSubmit}>
                 <div class="group">
                     <input

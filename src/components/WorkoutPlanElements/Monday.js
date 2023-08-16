@@ -61,7 +61,7 @@ const Monday = () => {
   const toast = useToast();
   const time = new Date();
 
-  
+ 
 
   const addExercise = async (bodyPart, equipment, gifUrl, title, target) => {
     await addDoc(dbCollectionRef, {
