@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <navbar className="flex flex-row justify-between px-7 py-2  bg-blue-900">
-      <div className=" hidden md:flex flex-row gap-11  items-center">
+      <div className=" hidden lg:flex flex-row gap-11  items-center">
         <Link to="/">
           <div className=" text-lg text-white flex flex-row gap-2 items-center py-1 px-3 hover:bg-slate-500 cursor-pointer rounded-lg">
             <BiHomeAlt2 /> <h1>Home</h1>
@@ -99,7 +99,7 @@ const Navbar = () => {
           </div>
         </Link>
       </div>
-      <div className=" hidden md:block">
+      <div className=" hidden lg:block">
         <Menu>
           {({ isOpen }) => (
             <>
@@ -134,7 +134,7 @@ const Navbar = () => {
         </Menu>
       </div>
       {/*Mobile menu */}
-      <div className="flex flex-row gap-7 items-center md:hidden">
+      <div className="flex justify-between items-center w-full  lg:hidden">
         <Link to="/">
           <div className=" text-2xl text-white flex flex-row py-2 px-3 gap-2 items-center hover:bg-slate-500 cursor-pointer rounded-lg">
             <BiHomeAlt2 />

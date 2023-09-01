@@ -118,11 +118,11 @@ const Main = () => {
   return (
     <div
       id="container"
-      className=" w-full flex flex-col gap-5 md:flex md:flex-row md:gap-5"
+      className=" w-full flex flex-col gap-5 lg:flex-row lg:gap-5"
     >
       <div
         id="workoutplan-el"
-        className="bg-gray-800 border  border-gray-500 w-full  rounded-lg py-2 md:w-3/5"
+        className="bg-gray-800 border  border-gray-500 w-full  rounded-lg py-2 lg:w-3/5"
       >
         <h1 className="text-gray-200 text-2xl font-semibold text-center">
           {weekday[d.getDay()]}
@@ -210,7 +210,7 @@ const Main = () => {
       </div>
       <div
         id="dashboard-el"
-        className=" w-full bg-gray-800 border border-gray-500   rounded-lg md:w-2/5"
+        className=" w-full bg-gray-800 border border-gray-500   rounded-lg lg:w-2/5"
       >
         <div className="text-gray-300 mt-0 rounded-lg  py-4 px-3 md:mt-20">
           <div>

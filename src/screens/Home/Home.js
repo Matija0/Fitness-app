@@ -28,7 +28,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className=" container mx-auto flex flex-col items-center">
+    <div className=" container  mx-auto flex flex-col items-center xl:px-8 2xl:px-0">
       <div className="w-full my-5">
         <h1 className=" text-gray-200 text-lg w-fit font-bold">
           Good {timeOfDay} {auth?.currentUser?.displayName}
