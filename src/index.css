@@ -11,11 +11,7 @@
   -webkit-tap-highlight-color: transparent;  
 }
 
-.App{
-  position: relative;
-  min-height: 100vh;
-  
-}
+
 
 body{
   
@@ -36,18 +32,8 @@ body{
   outline: black;
 }
 
-.content-wrap {
-  padding-bottom: 4rem !important;   
-}
 
-footer {
-  height: 4rem !important;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  
-            
-}
+
 
 html {
   scroll-behavior: smooth;
@@ -69,14 +55,7 @@ button{
   outline: none;
 }
 
-@media screen and (max-width: 768px) {
-  footer{
-     height: 12rem !important;
-  }
-  .content-wrap {
-    padding-bottom: 12rem !important;   
-  }
-}
+
 
 
 

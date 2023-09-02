@@ -14,7 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const toast = useToast();
   const navigate = useNavigate();
-  console.log(auth?.currentUser?.email, "test");
+  
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -49,7 +49,7 @@ const Login = () => {
   };
 
   return (
-    <div className=" container mx-auto    my-7 px-3 rounded-lg   bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-fit">
+    <div className=" container mx-auto   my-7 px-3 rounded-lg   bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-[40%]">
       <div>
         {" "}
         <h1 className="text-white text-xl text-center font-bold mb-7">
@@ -69,7 +69,7 @@ const Login = () => {
         <span className="text-gray-600 "> or </span>
         <hr className="w-48 border border-gray-600" />
       </div>
-      <div className="flex flex-col mt-3 space-y-4">
+      <div className="flex flex-col w-[60%] mt-3 space-y-4">
         <label for="email" className=" text-sm font-medium text-white mb-2">
           Your email:
         </label>

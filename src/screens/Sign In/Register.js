@@ -10,7 +10,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const toast = useToast();
   const navigate=useNavigate()
-  console.log(auth?.currentUser?.email, "test")
+  
 
   const signIn= async() =>{
     try{
@@ -91,7 +91,7 @@ const Register = () => {
         <input
           type="email"
           id="email"
-          className=" bg-gray-500 border-2 border-gray-400 rounded-lg focus:ring-blue-600 focus:border-blue-600 text-white p-2.5"
+          className=" bg-gray-500 border-2 border-gray-400 rounded-lg focus:ring-blue-600 focus:border-blue-600 text-white p-2.5 outline-none"
           placeholder="name@company.com"
           required
           onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +103,7 @@ const Register = () => {
           type="password"
           id="password"
           placeholder="••••••••"
-          className="bg-gray-500 border-2 border-gray-400  rounded-lg focus:ring-blue-600 focus:border-blue-600 w-full p-2.5 text-white "
+          className="bg-gray-500 border-2 border-gray-400  rounded-lg focus:ring-blue-600 focus:border-blue-600 w-full p-2.5 text-white outline-none"
           required
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -118,7 +118,7 @@ const Register = () => {
           type="password"
           id="confirm-password"
           placeholder="••••••••"
-          className="bg-gray-500 border-2 border-gray-400  rounded-lg focus:ring-blue-600 focus:border-blue-600  p-2.5 holder-gray-400 text-white"
+          className="bg-gray-500 border-2 border-gray-400  rounded-lg focus:ring-blue-600 focus:border-blue-600  p-2.5 holder-gray-400 text-white outline-none"
           
         />
         <div className="flex flex-row items-center justify-start">

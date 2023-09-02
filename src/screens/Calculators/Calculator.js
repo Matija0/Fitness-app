@@ -75,7 +75,8 @@ const Calculator = () => {
           <div class="group">
             <input
               className="body-input"
-              type="text"
+              type="number"
+              
               required
               onChange={(e) => setLift(e.target.value)}
             />
@@ -87,7 +88,9 @@ const Calculator = () => {
           <div class="group">
             <input
               className="body-input"
-              type="text"
+              type="number"
+              min={2}
+              max={10}
               required
               onChange={(e) => setReps(e.target.value)}
             />
