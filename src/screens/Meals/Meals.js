@@ -29,8 +29,8 @@ const Meals = () => {
   }, []);
 
   return (
-    <div style={{ maxWidth: "1440px" }} className="my-20 mx-auto ">
-      {console.log(inputData, "test")}
+    <div className="my-20 container mx-auto">
+      
       {!inputData.length == 0 ? (
         <div>
           <div className=" my-4">
@@ -40,12 +40,12 @@ const Meals = () => {
           </div>
           <div>
             <DashBoard />
-            <div className=" my-5 flex flex-col gap-3 md:flex-row">
+            <div className=" my-5 flex flex-col gap-3 lg:flex-row">
               <Breakfast />
               <Lunch />
             </div>
 
-            <div className="my-5 flex flex-col gap-3 md:flex-row">
+            <div className="my-5 flex flex-col gap-3 lg:flex-row">
               <Snack />
               <Dinner />
             </div>
@@ -53,7 +53,7 @@ const Meals = () => {
         </div>
       ) : (
         <>
-          <h2 className="text-base text-gray-300 mb-7">
+          <h2 className="text-base text-gray-300 mb-7 ">
             You can calculate your daily TDEE and macros{" "}
             <Link to={"/tdee"}>
               <span className=" text-sky-600 hover:underline decoration-sky-600">

@@ -47,7 +47,9 @@ const Input = () => {
                 items.push({ ...doc.data(), id: doc.id });
               }
             });
-      
+            if (items.length === 0) {
+              return;
+            }
             setTdee(items[0].tdee)
             setProtein(items[0].protein)
             setCarbs(items[0].carbs)
@@ -75,14 +77,13 @@ const Input = () => {
     }
     return (
         <div className='w-fit mx-auto'>
-            
-            <form onSubmit={handleSubmit}>
+             <form onSubmit={handleSubmit}>
                 <div class="group">
                     <input
                         className="body-input"
                         type="text"
                         required
-                        value={tdee}
+                        value={tdee? tdee : ""}
                         onChange={(e) => setTdee(e.target.value)}
                     />
                     <span className="highlight"></span>
@@ -94,7 +95,7 @@ const Input = () => {
                         className="body-input"
                         type="text"
                         required
-                        value={protein}
+                        value={protein? protein : ""}
                         onChange={(e) => setProtein(e.target.value)}
                     />
                     <span className="highlight"></span>
@@ -107,7 +108,7 @@ const Input = () => {
                         className="body-input"
                         type="text"
                         required
-                        value={carbs}
+                        value={carbs? carbs : ""}
                         onChange={(e) => setCarbs(e.target.value)}
                     />
                     <span className="highlight"></span>
@@ -119,7 +120,7 @@ const Input = () => {
                         className="body-input"
                         type="text"
                         required
-                        value={fat}
+                        value={fat? fat : ""}
                         onChange={(e) => setFat(e.target.value)}
                     />
                     <span className="highlight"></span>
@@ -130,6 +131,7 @@ const Input = () => {
                     Save
                 </button>
             </form>
+           
         </div>
     )
 }

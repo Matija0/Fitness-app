@@ -131,7 +131,7 @@ const Lunch = () => {
   };
 
   return (
-    <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full md:w-1/2">
+    <div className=" bg-gray-800 border border-gray-500 rounded-lg pb-24 pt-7 px-4 w-full lg:w-1/2">
       <div className="flex flex-row gap-4 items-center justify-center mb-2">
         <h1 className="text-2xl text-gray-200 text-center">Lunch</h1>
         <img src={lunch} alt="" />

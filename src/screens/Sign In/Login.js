@@ -49,7 +49,8 @@ const Login = () => {
   };
 
   return (
-    <div className=" container mx-auto   my-7 px-3 rounded-lg   bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-[40%]">
+    <div className="container mx-auto h-screen flex items-center justify-center">
+    <div className="my-7 px-3 rounded-lg  bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center lg:w-[50%]">
       <div>
         {" "}
         <h1 className="text-white text-xl text-center font-bold mb-7">
@@ -110,6 +111,7 @@ const Login = () => {
           Register here
         </Link>
       </p>
+    </div>
     </div>
   );
 };

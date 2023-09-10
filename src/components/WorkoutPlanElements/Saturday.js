@@ -282,7 +282,7 @@ const Saturday = () => {
       </div>
       <Modal isOpen={isMainOpen} onClose={onMainClose} size={"2xl"}>
         {overlay}
-        <ModalContent bg="gray.500">
+        <ModalContent bg="gray.900" border={"1px"} borderColor="gray.400" paddingBottom={"20px"}>
           <div>
             <div className="flex justify-end p-2">
               <button
@@ -304,14 +304,14 @@ const Saturday = () => {
                 className="flex flex-row gap-2  mb-4"
               >
                 <input
-                  className="bg-gray-700 rounded-md  p-2 text-white"
+                  className="border bg-gray-200 rounded-md  p-2 text-black"
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value.toLowerCase())}
                 />
                 <button
                   type="submit"
-                  className="py-2 px-3 text-gray-700 rounded-md border-2 border-gray-700 hover:bg-gray-700 hover:text-gray-200"
+                  className="py-2 px-3 text-gray-900 rounded-md bg-gray-200 hover:bg-gray-300"
                 >
                   <i class="bi bi-search"></i>
                 </button>
@@ -356,16 +356,17 @@ const Saturday = () => {
 
       <Modal isOpen={isSecondOpen} onClose={onSecondClose} size={"2xl"}>
         {overlay}
-        <ModalContent bg="gray.500">
+        <ModalContent bg="gray.900" border={"1px"} borderColor="gray.400">
           <div className="flex justify-end p-2">
-            <button className=" text-lg text-gray-900 " onClick={onSecondClose}>
+            <button className=" text-lg text-gray-200 " onClick={onSecondClose}>
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
 
           <div className="flex flex-col items-center gap-3 my-10">
             <input
-              className="bg-gray-700 rounded-md w-48  p-2 text-white"
+              style={{backgroundColor: "#171923"}}
+              className="border border-gray-300 rounded-md  w-48  p-2 text-white"
               type="number"
               placeholder="Number of reps"
               onChange={(e) => setNumberReps(e.target.value)}
@@ -373,14 +374,16 @@ const Saturday = () => {
             />
             <div className="flex flex-row items-center gap-3">
               <input
-                className="bg-gray-700 w-20 rounded-md  p-2 text-white"
+                style={{backgroundColor: "#171923"}}
+                className="border border-gray-300 w-20 rounded-md bg-none  p-2 text-white"
                 type="number"
                 placeholder="Weight"
                 onChange={(e) => setWeight(e.target.value)}
               />
               <span className="text-gray-200">or</span>
               <input
-                className="bg-gray-700 rounded-md w-20  p-2 text-white"
+              style={{backgroundColor: "#171923"}}
+                className="border border-gray-300 rounded-md w-20 bg-none  p-2 text-white"
                 type="number"
                 onChange={(e) => setRpe(e.target.value)}
                 placeholder="RPE"

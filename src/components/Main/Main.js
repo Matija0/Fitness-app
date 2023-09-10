@@ -114,7 +114,7 @@ const Main = () => {
   });
 
   let res = count1[0] - count2[0];
-
+  
   return (
     <div
       id="container"
@@ -212,7 +212,7 @@ const Main = () => {
         id="dashboard-el"
         className=" w-full bg-gray-800 border border-gray-500   rounded-lg lg:w-2/5"
       >
-        <div className="text-gray-300 mt-0 rounded-lg  py-4 px-3 md:mt-20">
+        {inputData.length===0? (<div className="text-center mt-20 text-gray-300 font-semibold text-lg">No data available. Please enter your stats in Meals Page!</div>) : <div className="text-gray-300 mt-0 rounded-lg  py-4 px-3 md:mt-20">
           <div>
             <div className="flex flex-row justify-center items-center gap-3">
               <div className="flex flex-col items-center gap-2">
@@ -283,7 +283,7 @@ const Main = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );

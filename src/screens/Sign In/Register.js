@@ -66,7 +66,8 @@ const Register = () => {
 
   
   return (
-    <div className=" container mx-auto my-7 px-3 rounded-lg bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center md:w-fit">
+    <div className="container mx-auto h-screen flex items-center justify-center">
+    <div className="  my-7 px-3 rounded-lg bg-gray-700 py-7 md:px-14 md:flex md:flex-col md:items-center lg:w-[50%]">
       <div>
         {" "}
         <h1 className="text-white text-xl font-bold mb-7 text-center">
@@ -80,11 +81,11 @@ const Register = () => {
         
       </div>
       <div className="mt-3 flex flex-row items-center">
-        <hr className=" w-48 border border-gray-600" />
+        <hr className=" w-56 border border-gray-600" />
         <span className="text-gray-600 "> or </span>
-        <hr className="w-48 border border-gray-600" />
+        <hr className="w-56 border border-gray-600" />
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4 lg:w-[80%]">
         <label for="email" className=" text-sm font-medium text-white mb-2">
           Your email
         </label>
@@ -150,7 +151,7 @@ const Register = () => {
           </p>
         
       </form>
-      
+    </div>
     </div>
   );
 };
